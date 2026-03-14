@@ -3,8 +3,22 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nexus SMM — Grow Your Social Media</title>
-  <meta name="description" content="India's premium SMM panel. Instagram, YouTube, TikTok growth services."/>
+  <title>Nexus SMM – Best Social Media Marketing Panel India</title>
+  <meta name="description" content="Buy Instagram followers, YouTube views, TikTok likes and social media growth services with Nexus SMM. Fast delivery, secure UPI payments, 24/7 support."/>
+  <meta name="keywords" content="SMM panel India, buy Instagram followers, YouTube views, TikTok likes, social media marketing, cheap SMM panel"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:title" content="Nexus SMM – Best Social Media Marketing Panel"/>
+  <meta property="og:description" content="Buy Instagram followers, YouTube views, TikTok likes and more. Fast delivery. Starting from ₹0.09."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://nexus-smm.vercel.app"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Nexus SMM – Best SMM Panel India"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Nexus SMM","url":"https://nexus-smm.vercel.app","description":"India's best SMM panel for Instagram, YouTube, TikTok growth","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"English, Hindi"}}
+  </script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -136,6 +150,8 @@ const fmt = (n) => "₹" + parseFloat(n).toFixed(2);
 (()=>{ try{ Object.keys(localStorage).filter(k=>k.startsWith("nx_")).forEach(k=>localStorage.removeItem(k)); }catch{} })();
 const uid = () => "ORD-" + String(Math.floor(Math.random()*9000)+1000);
 const today = () => new Date().toISOString().slice(0,10);
+const sanitize = (str) => String(str||"").replace(/<[^>]*>/g,"").replace(/[<>"'&]/g,"").trim().slice(0,500);
+const isValidURL = (url) => { try{ const u=new URL(url); return ["http:","https:"].includes(u.protocol); }catch{ return false; } };
 
 // ─── Colors ───────────────────────────────────────────────────
 const C = {
@@ -343,6 +359,138 @@ const DB = {
   },
 };
 
+
+// ─── Toast / Notification System ─────────────────────────────
+let _toastCb = null;
+const Toast = {
+  _listeners: [],
+  show(msg, type="info", dur=3500){
+    const id = Date.now();
+    this._listeners.forEach(fn=>fn({id,msg,type,dur}));
+  },
+  success(msg){ this.show(msg,"success"); },
+  error(msg){ this.show(msg,"error",5000); },
+  info(msg){ this.show(msg,"info"); },
+  warning(msg){ this.show(msg,"warning"); },
+  on(fn){ this._listeners.push(fn); return ()=>{ this._listeners=this._listeners.filter(f=>f!==fn); }; }
+};
+
+const ToastContainer = () => {
+  const [toasts,setToasts] = useState([]);
+  useEffect(()=>{
+    const unsub = Toast.on(t=>{
+      setToasts(p=>[...p,t]);
+      setTimeout(()=>setToasts(p=>p.filter(x=>x.id!==t.id)), t.dur);
+    });
+    return unsub;
+  },[]);
+  const cols = {success:"#34d399",error:"#f87171",info:"#60a5fa",warning:"#fbbf24"};
+  const icons = {success:"✅",error:"❌",info:"ℹ️",warning:"⚠️"};
+  return (
+    <div style={{position:"fixed",top:20,right:20,zIndex:9999,display:"flex",flexDirection:"column",gap:10,maxWidth:340,pointerEvents:"none"}}>
+      {toasts.map(t=>(
+        <div key={t.id} className="toast-enter" style={{
+          background:"rgba(12,12,20,.97)",backdropFilter:"blur(20px)",
+          border:`1px solid ${cols[t.type]}40`,borderLeft:`3px solid ${cols[t.type]}`,
+          borderRadius:12,padding:"12px 16px",color:"#e8e8f2",fontSize:13,fontWeight:600,
+          display:"flex",alignItems:"center",gap:10,
+          boxShadow:"0 8px 32px rgba(0,0,0,.5)"}}>
+          <span style={{fontSize:16,flexShrink:0}}>{icons[t.type]}</span>
+          <span style={{flex:1,lineHeight:1.4}}>{t.msg}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// ─── Skeleton Loader ──────────────────────────────────────────
+const Skel = ({h=16,w="100%",mb=8,br=8})=>(
+  <div className="skeleton" style={{height:h,width:w,marginBottom:mb,borderRadius:br}}/>
+);
+const CardSkel = ()=>(
+  <Card style={{padding:22}}>
+    <Skel h={12} w="40%" mb={14}/>
+    <Skel h={28} mb={8}/>
+    <Skel h={10} w="70%" mb={4}/>
+    <Skel h={10} w="50%"/>
+  </Card>
+);
+
+// ─── Animated Counter ─────────────────────────────────────────
+const AnimCounter = ({target, prefix="", suffix="", duration=1200}) => {
+  const [val,setVal] = useState(0);
+  const ref = useRef(null);
+  useEffect(()=>{
+    const observer = new IntersectionObserver(entries=>{
+      if(entries[0].isIntersecting){
+        const num = parseFloat(String(target).replace(/[^0-9.]/g,""))||0;
+        const start = Date.now();
+        const tick = ()=>{
+          const progress = Math.min((Date.now()-start)/duration,1);
+          const ease = 1-Math.pow(1-progress,3);
+          setVal(Math.round(ease*num));
+          if(progress<1) requestAnimationFrame(tick);
+        };
+        tick();
+        observer.disconnect();
+      }
+    },{threshold:0.3});
+    if(ref.current) observer.observe(ref.current);
+    return ()=>observer.disconnect();
+  },[target]);
+  return <span ref={ref} className="count-anim">{prefix}{val.toLocaleString()}{suffix}</span>;
+};
+
+// ─── Supplier API Layer ────────────────────────────────────────
+const SupplierAPI = {
+  async call(supplier, action, params={}){
+    if(!supplier?.url || !supplier?.key) throw new Error("Supplier not configured");
+    const body = new URLSearchParams({ key: supplier.key, action, ...params });
+    const res = await fetch(supplier.url, { method:"POST", body });
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    try { return JSON.parse(text); } catch{ throw new Error("Invalid supplier response: "+text.slice(0,100)); }
+  },
+  async getServices(supplier){ return this.call(supplier,"services"); },
+  async addOrder(supplier, serviceId, link, quantity){
+    return this.call(supplier,"add",{service:serviceId,link,quantity});
+  },
+  async getStatus(supplier, orderId){
+    return this.call(supplier,"status",{order:orderId});
+  },
+  async getBalance(supplier){
+    return this.call(supplier,"balance");
+  }
+};
+
+// ─── Markup / Pricing System ──────────────────────────────────
+const PriceCalc = {
+  async getSettings(){
+    try{
+      const fs = await getFS(); if(!fs) return {type:"percent",value:40};
+      const snap = await fs.collection("config").doc("markup").get();
+      return snap.exists ? snap.data() : {type:"percent",value:40};
+    }catch{ return {type:"percent",value:40}; }
+  },
+  apply(costPrice, settings){
+    const cost = parseFloat(costPrice)||0;
+    if(!settings) return cost;
+    if(settings.type==="percent") return parseFloat((cost*(1+(settings.value||40)/100)).toFixed(2));
+    return parseFloat((cost+(settings.value||0)).toFixed(2));
+  }
+};
+
+// ─── Duplicate UTR Detection ──────────────────────────────────
+const UTRGuard = {
+  async isUsed(utr){
+    try{
+      const fs = await getFS(); if(!fs) return false;
+      const snap = await fs.collection("deposits").where("utr","==",utr.trim()).get();
+      return !snap.empty;
+    }catch{ return false; }
+  }
+};
+
 // ─── Global CSS ────────────────────────────────────────────────
 const GS = () => (
   <style>{`
@@ -371,6 +519,32 @@ const GS = () => (
       .two-col{grid-template-columns:1fr!important}
     }
     @media(max-width:480px){.stat-grid{grid-template-columns:1fr!important}}
+    /* ── Skeleton loader ── */
+    @keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
+    .skeleton{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.09) 50%,rgba(255,255,255,.04) 75%);background-size:1000px 100%;animation:shimmer 1.8s infinite linear;border-radius:8px;}
+    /* ── Notification badge ── */
+    @keyframes popIn{0%{transform:scale(0)}80%{transform:scale(1.15)}100%{transform:scale(1)}}
+    .notif-badge{animation:popIn .3s ease forwards;}
+    /* ── Smooth card hover ── */
+    .svc-card-hover{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important;}
+    .svc-card-hover:hover{transform:translateY(-4px)!important;box-shadow:0 16px 48px rgba(124,58,237,.22)!important;border-color:rgba(124,58,237,.5)!important;}
+    /* ── Counter animation ── */
+    @keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .count-anim{animation:countUp .6s ease forwards;}
+    /* ── Toast notifications ── */
+    @keyframes toastIn{from{opacity:0;transform:translateX(110%)}to{opacity:1;transform:translateX(0)}}
+    @keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(110%)}}
+    .toast-enter{animation:toastIn .35s ease forwards;}
+    .toast-exit{animation:toastOut .35s ease forwards;}
+    /* ── Tag/badge pill ── */
+    .pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+    /* ── Table row hover ── */
+    tbody tr{transition:background .15s;}
+    tbody tr:hover{background:rgba(124,58,237,.06)!important;}
+    /* ── Input focus ring ── */
+    input:focus,textarea:focus,select:focus{border-color:rgba(124,58,237,.7)!important;box-shadow:0 0 0 3px rgba(124,58,237,.15)!important;}
+    /* ── Smooth page transitions ── */
+    .page-enter{animation:fadeUp .35s ease forwards;}
   `}</style>
 );
 
@@ -678,7 +852,15 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
       {/* STATS */}
       <section style={{padding:"60px 5%",background:"rgba(255,255,255,.015)",borderTop:`1px solid ${C.border}`}}>
         <div style={{maxWidth:1100,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:18}}>
-          {[{i:"◉",v:"100+",l:"Happy Users",g:C.gP},{i:"📦",v:"500+",l:"Orders Delivered",g:C.gG},{i:"⚡",v:"< 2 hrs",l:"Avg Delivery",g:C.gB},{i:"⭐",v:"4.9/5",l:"Customer Rating",g:C.gGr}].map(s=><StatCard key={s.l} icon={s.i} value={s.v} label={s.l} grad={s.g}/>)}
+          {[{i:"◉",v:100,suf:"+",l:"Happy Users",g:C.gP},{i:"📦",v:500,suf:"+",l:"Orders Delivered",g:C.gG},{i:"⚡",v:2,pre:"< ",suf:" hrs",l:"Avg Delivery",g:C.gB},{i:"⭐",v:4.9,suf:"/5",l:"Customer Rating",g:C.gGr}].map(s=>(
+            <Card key={s.l} style={{padding:22,textAlign:"center"}}>
+              <div style={{fontSize:22,marginBottom:8}}>{s.i}</div>
+              <div style={{fontSize:30,fontWeight:900,background:s.g,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:4}}>
+                <AnimCounter target={s.v} prefix={s.pre||""} suffix={s.suf||""}/>
+              </div>
+              <div style={{color:C.muted,fontSize:12}}>{s.l}</div>
+            </Card>
+          ))}
         </div>
       </section>
 
@@ -744,6 +926,103 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
         </Card>
       </section>
 
+      {/* TRUST BADGES + PAYMENT METHODS */}
+      <section style={{padding:"50px 5%",background:"rgba(255,255,255,.012)",borderTop:`1px solid ${C.border}`}}>
+        <div style={{maxWidth:1100,margin:"0 auto"}}>
+          <div style={{display:"flex",justifyContent:"center",gap:12,flexWrap:"wrap",marginBottom:36}}>
+            {[{i:"🔒",t:"SSL Secured",s:"256-bit encryption"},{i:"⚡",t:"Instant Delivery",s:"Orders start in mins"},{i:"🔄",t:"Refund Policy",s:"7-day guarantee"},{i:"🇮🇳",t:"Indian UPI",s:"GPay, PhonePe, Paytm"},{i:"📞",t:"24/7 Support",s:"WhatsApp & Email"}].map(b=>(
+              <div key={b.t} style={{display:"flex",alignItems:"center",gap:10,padding:"12px 20px",
+                background:"rgba(255,255,255,.04)",border:`1px solid ${C.border}`,borderRadius:12,minWidth:180}}>
+                <span style={{fontSize:22}}>{b.i}</span>
+                <div>
+                  <div style={{fontWeight:700,color:"#e8e8f2",fontSize:13}}>{b.t}</div>
+                  <div style={{fontSize:11,color:C.muted}}>{b.s}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{textAlign:"center",marginBottom:12}}>
+            <div style={{fontSize:11,color:C.muted,letterSpacing:".08em",marginBottom:12,fontWeight:700}}>ACCEPTED PAYMENT METHODS</div>
+            <div style={{display:"flex",justifyContent:"center",gap:10,flexWrap:"wrap"}}>
+              {["📱 Google Pay","📱 PhonePe","📱 Paytm","🏦 UPI Transfer","💳 NEFT / IMPS"].map(p=>(
+                <span key={p} style={{background:"rgba(255,255,255,.06)",border:`1px solid ${C.border}`,borderRadius:8,padding:"7px 14px",fontSize:12,fontWeight:600,color:C.muted}}>{p}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section style={{padding:"70px 5%"}}>
+        <div style={{maxWidth:1100,margin:"0 auto"}}>
+          <div style={{textAlign:"center",marginBottom:44}}>
+            <h2 style={{fontFamily:"Syne,sans-serif",fontSize:34,fontWeight:900,
+              background:"linear-gradient(135deg,#f0f0ff,#c4b5fd)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:8}}>
+              What Our Customers Say
+            </h2>
+            <p style={{color:C.muted,fontSize:14}}>Trusted by creators, brands and agencies across India</p>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:20}}>
+            {[
+              {n:"Rahul Sharma",r:"Instagram Creator",t:"Got 5k followers in under 4 hours! Quality is amazing, they look 100% real. Will order again definitely.",stars:5,loc:"Mumbai"},
+              {n:"Priya Patel",r:"YouTube Channel",t:"Used Nexus for YouTube views and my video went viral! Their Indian views are genuine. Best SMM panel in India.",stars:5,loc:"Ahmedabad"},
+              {n:"Arjun Singh",r:"Digital Agency",t:"Managing 15+ client accounts with Nexus. Fast delivery, great prices, and the admin panel is super easy to use.",stars:5,loc:"Delhi"},
+              {n:"Sneha Reddy",r:"TikTok Creator",t:"Ordered TikTok views and likes. My content reached 200k people in 2 days. Incredible ROI for just ₹500!",stars:5,loc:"Hyderabad"},
+              {n:"Vikram Mehta",r:"Brand Manager",t:"Their Instagram package helped us grow from 2k to 20k followers in one month. Support team is very responsive.",stars:5,loc:"Pune"},
+              {n:"Ananya Gupta",r:"Lifestyle Blogger",t:"Cheapest prices I've found anywhere. Payments via UPI are instant and secure. Highly recommend to all creators!",stars:5,loc:"Bangalore"},
+            ].map((t,i)=>(
+              <Card key={i} style={{padding:24}} className="svc-card-hover">
+                <div style={{display:"flex",gap:3,marginBottom:12}}>
+                  {[1,2,3,4,5].map(s=><span key={s} style={{color:s<=t.stars?"#fbbf24":"rgba(255,255,255,.1)",fontSize:16}}>★</span>)}
+                </div>
+                <p style={{color:"#d4d4e8",fontSize:13,lineHeight:1.7,marginBottom:16,fontStyle:"italic"}}>"{t.t}"</p>
+                <div style={{display:"flex",alignItems:"center",gap:10}}>
+                  <div style={{width:38,height:38,borderRadius:"50%",background:C.gP,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,fontSize:14,color:"#fff",flexShrink:0}}>
+                    {t.n[0]}
+                  </div>
+                  <div>
+                    <div style={{fontWeight:700,color:"#e8e8f2",fontSize:13}}>{t.n}</div>
+                    <div style={{fontSize:11,color:C.muted}}>{t.r} · {t.loc}</div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{padding:"70px 5%",background:"rgba(255,255,255,.012)",borderTop:`1px solid ${C.border}`}}>
+        <div style={{maxWidth:760,margin:"0 auto"}}>
+          <div style={{textAlign:"center",marginBottom:44}}>
+            <h2 style={{fontFamily:"Syne,sans-serif",fontSize:34,fontWeight:900,
+              background:"linear-gradient(135deg,#f0f0ff,#c4b5fd)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:8}}>
+              Frequently Asked Questions
+            </h2>
+          </div>
+          {[
+            {q:"Is it safe for my Instagram/YouTube account?",a:"Yes, all our services use safe methods that comply with platform guidelines. We never ask for your password. All delivery is done via public engagement methods."},
+            {q:"How fast is delivery?",a:"Most services start within 0-30 minutes of placing an order. Full delivery depends on quantity but typically completes within 1-24 hours."},
+            {q:"What payment methods do you accept?",a:"We accept all UPI methods including Google Pay, PhonePe, Paytm, BHIM, and direct bank transfer (NEFT/IMPS). No credit card required."},
+            {q:"Will followers/likes drop after delivery?",a:"We offer a no-drop guarantee on most services. If you experience drops within 30 days, contact support and we'll refill for free."},
+            {q:"How do I add balance to my wallet?",a:"Go to Add Funds in your dashboard, select an amount, pay via UPI QR code, and enter your UTR/transaction ID. Admin will credit your wallet within 30 minutes."},
+            {q:"Can I get a refund?",a:"Yes, if an order fails to deliver we will refund the full amount to your wallet immediately. Cash refunds are processed within 3-5 business days on request."},
+            {q:"Do you have an API for resellers?",a:"Yes! We offer reseller accounts with API access. Contact support on WhatsApp to get API credentials and special reseller pricing."},
+          ].map((f,i)=>{
+            const [open,setOpen]=React.useState(false);
+            return (
+              <div key={i} style={{borderBottom:`1px solid ${C.border}`,marginBottom:0}}>
+                <button onClick={()=>setOpen(o=>!o)} style={{width:"100%",background:"none",border:"none",padding:"18px 0",display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer",textAlign:"left",gap:16}}>
+                  <span style={{fontWeight:700,color:"#e8e8f2",fontSize:14,lineHeight:1.4}}>{f.q}</span>
+                  <span style={{fontSize:20,color:C.purpleL,flexShrink:0,transition:"transform .25s",transform:open?"rotate(45deg)":"none",display:"inline-block"}}>+</span>
+                </button>
+                {open&&<div style={{paddingBottom:18,color:C.muted,fontSize:13,lineHeight:1.7,animation:"slideDown .2s ease"}}>{f.a}</div>}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer style={{borderTop:`1px solid ${C.border}`,padding:"24px 5%",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
         <Logo/>
@@ -766,34 +1045,31 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
   );
 };
 
-const SvcCard = ({ svc, onOrder }) => {
-  const [h,setH]=useState(false);
-  return (
-    <Card style={{padding:22,transition:"all .25s",cursor:"pointer",
-      transform:h?"translateY(-3px)":"none",border:`1px solid ${h?"rgba(124,58,237,.4)":C.border}`}}
-      onClick={onOrder}>
-      <div onMouseEnter={()=>setH(true)} onMouseLeave={()=>setH(false)}>
-        <div style={{display:"flex",justifyContent:"space-between",marginBottom:12}}>
-          <div>
-            <div style={{fontSize:10,color:C.purpleL,fontWeight:800,letterSpacing:".08em",marginBottom:4}}>{svc.platform} · {svc.cat}</div>
-            <div style={{fontWeight:700,fontSize:15,color:"#e8e8f2"}}>{svc.name}</div>
-          </div>
-          <span style={{fontSize:26}}>{svc.icon}</span>
-        </div>
-        <p style={{color:C.muted,fontSize:12,lineHeight:1.6,marginBottom:16}}>{svc.desc}</p>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginBottom:16}}>
-          {[{l:"Speed",v:svc.speed},{l:"Min Qty",v:svc.min.toLocaleString()},{l:"Price",v:svc.tiers?"From ₹"+svc.tiers[0].price:`₹${svc.price}/unit`}].map(({l,v})=>(
-            <div key={l} style={{background:"rgba(255,255,255,.03)",borderRadius:8,padding:"7px 8px",textAlign:"center"}}>
-              <div style={{fontSize:9,color:C.muted,letterSpacing:".05em",marginBottom:2}}>{l}</div>
-              <div style={{fontSize:11,fontWeight:800,color:"#c4b5fd"}}>{v}</div>
-            </div>
-          ))}
-        </div>
-        <Btn style={{width:"100%",justifyContent:"center"}} size="sm">Order Now</Btn>
+const SvcCard = ({ svc, onOrder }) => (
+  <div className="svc-card-hover" onClick={onOrder} style={{cursor:"pointer",
+    background:"linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02))",
+    border:`1px solid ${C.border}`,borderRadius:16,padding:22,
+    backdropFilter:"blur(20px)",boxShadow:"0 4px 32px rgba(0,0,0,.4)"}}>
+    <div style={{display:"flex",justifyContent:"space-between",marginBottom:12,alignItems:"flex-start"}}>
+      <div style={{flex:1,paddingRight:10}}>
+        <div style={{fontSize:10,color:C.purpleL,fontWeight:800,letterSpacing:".08em",marginBottom:4}}>{svc.platform} · {svc.cat}</div>
+        <div style={{fontWeight:700,fontSize:15,color:"#e8e8f2",lineHeight:1.3}}>{svc.name}</div>
+        {svc.badge&&<span style={{fontSize:10,color:C.goldL,background:"rgba(212,160,23,.12)",border:"1px solid rgba(212,160,23,.25)",borderRadius:20,padding:"2px 8px",display:"inline-block",marginTop:4,fontWeight:700}}>{svc.badge}</span>}
       </div>
-    </Card>
-  );
-};
+      <span style={{fontSize:28,flexShrink:0}}>{svc.icon}</span>
+    </div>
+    <p style={{color:C.muted,fontSize:12,lineHeight:1.6,marginBottom:16}}>{svc.desc}</p>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginBottom:16}}>
+      {[{l:"Speed",v:svc.speed},{l:"Min Qty",v:(svc.min||0).toLocaleString()},{l:"Price",v:svc.tiers?"From ₹"+svc.tiers[0].price:`₹${svc.price}/unit`}].map(({l,v})=>(
+        <div key={l} style={{background:"rgba(255,255,255,.04)",borderRadius:8,padding:"7px 8px",textAlign:"center"}}>
+          <div style={{fontSize:9,color:C.muted,letterSpacing:".05em",marginBottom:2}}>{l}</div>
+          <div style={{fontSize:11,fontWeight:800,color:"#c4b5fd"}}>{v}</div>
+        </div>
+      ))}
+    </div>
+    <Btn style={{width:"100%",justifyContent:"center"}} size="sm">Order Now →</Btn>
+  </div>
+);
 
 // ═══════════════════════════════════════════════════════════════
 //  AUTH — SIGNUP
@@ -993,18 +1269,60 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
     };
     loadAll();
 
-    // Poll balance so admin-added funds appear quickly
+    // Poll balance + notify on change
+    let prevBal = null;
     const poll = async () => {
       try {
         const bal = await DB.getBalanceFromFirebase(userEmail);
         if(mounted && bal !== null && bal !== undefined) {
+          if(prevBal !== null && bal > prevBal){
+            Toast.success(`💰 ₹${(bal-prevBal).toFixed(2)} added to your wallet!`);
+          }
+          prevBal = bal;
           setBalance(bal);
         }
       } catch(e){ console.error("Poll error:",e); }
     };
-    poll(); // poll immediately on mount too
-    const iv = setInterval(poll, 4000);
+    poll();
+    const iv = setInterval(poll, 5000);
     return () => { mounted=false; clearInterval(iv); };
+  },[userEmail]);
+
+  // Background order status sync every 5 minutes
+  useEffect(()=>{
+    if(!userEmail) return;
+    const checkOrderStatuses = async() => {
+      try{
+        const fs = await getFS(); if(!fs) return;
+        const suppSnap = await fs.collection("config").doc("suppliers").get();
+        const suppliers = suppSnap.exists ? (suppSnap.data().list||[]) : [];
+        const active = suppliers.find(s=>s.active);
+        if(!active) return;
+        const myOrders = await DB.getOrdersFromFirebase();
+        const normEmail = (userEmail||"").toLowerCase().trim();
+        const pending = myOrders.filter(o=>
+          (o.userEmail||"").toLowerCase().trim()===normEmail &&
+          o.supplierOrderId &&
+          ["Processing","Pending"].includes(o.status)
+        );
+        for(const order of pending.slice(0,5)){
+          try{
+            const status = await SupplierAPI.getStatus(active, order.supplierOrderId);
+            let newStatus = order.status;
+            if(status?.status==="Completed") newStatus="Completed";
+            else if(status?.status==="Cancelled") newStatus="Cancelled";
+            else if(status?.status==="In progress") newStatus="Processing";
+            if(newStatus!==order.status){
+              await fs.collection("orders").where("id","==",order.id).get()
+                .then(snap=>snap.forEach(d=>d.ref.update({status:newStatus})));
+              if(newStatus==="Completed") Toast.success(`✅ Order ${order.id} completed!`);
+            }
+          }catch{}
+        }
+      }catch(e){ console.error("Status check failed:",e); }
+    };
+    const statusIv = setInterval(checkOrderStatuses, 5*60*1000);
+    return ()=>clearInterval(statusIv);
   },[userEmail]);
 
   // Sync balance to DB whenever it changes
@@ -1013,16 +1331,33 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
     setBalance(n);
     DB.updateUserBalance(userEmail,n);
   };
-  // Sync orders to DB when placed
+  // Sync orders to DB when placed + auto-submit to supplier
   const addOrderSync=async(newOrder)=>{
-    const withUser={...newOrder,userEmail,userName};
+    const withUser={...newOrder,userEmail,userName,status:"Processing"};
     DB.addOrder(withUser);
-    // Reload from Firebase to get accurate list
+    Toast.success("✦ Order placed! Processing now...");
+    // Try to auto-submit to supplier
+    try{
+      const fs = await getFS();
+      if(fs){
+        const suppSnap = await fs.collection("config").doc("suppliers").get();
+        const suppliers = suppSnap.exists ? (suppSnap.data().list||[]) : [];
+        const activeSupplier = suppliers.find(s=>s.active);
+        if(activeSupplier && newOrder.supplierServiceId){
+          const result = await SupplierAPI.addOrder(activeSupplier, newOrder.supplierServiceId, newOrder.link, newOrder.qty);
+          if(result?.order){
+            // Update order with supplier order ID
+            const fs2 = await getFS();
+            if(fs2) fs2.collection("orders").where("id","==",newOrder.id).get()
+              .then(snap=>snap.forEach(d=>d.ref.update({supplierOrderId:result.order,status:"Processing"})));
+          }
+        }
+      }
+    }catch(e){ console.error("Supplier submit failed:",e); }
+    // Reload from Firebase
     const allOrders = await DB.getOrdersFromFirebase();
-    setOrders(allOrders.filter(o=>(o.userEmail||'').toLowerCase().trim()===(userEmail||'').toLowerCase().trim()));
-    // Update user order count
-    const u=DB.getUser(userEmail);
-    if(u){ DB.addUser({...u,orders:(u.orders||0)+1}); }
+    const normEmail = (userEmail||"").toLowerCase().trim();
+    setOrders(allOrders.filter(o=>(o.userEmail||"").toLowerCase().trim()===normEmail));
   };
   // Sync txns to DB
   const addTxnSync=(txn)=>{
@@ -1112,7 +1447,7 @@ const UserOverview = ({ orders, balance, setPage, userName, announcements, userE
   const active=orders.filter(o=>["Processing","Pending"].includes(o.status)).length;
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       {/* Top action bar */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:26,flexWrap:"wrap",gap:12}}>
         <div>
@@ -1362,7 +1697,7 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
   );
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="New Order" sub="Choose a service and grow your presence"/>
 
       {/* Step pills */}
@@ -1580,7 +1915,7 @@ const UserOrders = ({ orders, setOrders, userEmail="" }) => {
   const colMap={"Pending":"#f59e0b","Processing":"#3b82f6","Completed":"#10b981","Cancelled":"#ef4444","Refunded":"#a855f7"};
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="My Orders" sub={`${orders.length} total`}
         action={
           <div style={{display:"flex",background:"rgba(255,255,255,.04)",borderRadius:9,padding:3,border:`1px solid ${C.border}`}}>
@@ -1648,7 +1983,13 @@ const UserOrders = ({ orders, setOrders, userEmail="" }) => {
               <div style={{display:"flex",gap:7}}>
                 {o.status==="Pending"&&<button onClick={()=>cancel(o.id)} style={{background:"rgba(239,68,68,.12)",border:"1px solid rgba(239,68,68,.3)",borderRadius:7,padding:"5px 11px",color:"#f87171",fontSize:11,fontWeight:700,cursor:"pointer"}}>✕ Cancel</button>}
                 {o.status==="Completed"&&<button onClick={()=>setPage("neworder")} style={{background:"rgba(16,185,129,.08)",border:"1px solid rgba(16,185,129,.25)",borderRadius:7,padding:"5px 11px",color:"#34d399",fontSize:11,fontWeight:700,cursor:"pointer"}}>🔁 Reorder</button>}
-                <button style={{background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.25)",borderRadius:7,padding:"5px 11px",color:"#c4b5fd",fontSize:11,fontWeight:700,cursor:"pointer"}}>💬 Help</button>
+                {o.status==="Completed"&&<button onClick={async()=>{
+                  if(!window.confirm(`Request refill for order ${o.id}?`)) return;
+                  const fs=await getFS(); if(!fs){Toast.error("No connection");return;}
+                  await fs.collection("refills").add({orderId:o.id,service:o.service,userEmail,qty:o.qty,date:today(),status:"pending"});
+                  Toast.success("Refill request sent! Admin will process within 24hrs.");
+                }} style={{background:"rgba(96,165,250,.08)",border:"1px solid rgba(96,165,250,.25)",borderRadius:7,padding:"5px 11px",color:"#60a5fa",fontSize:11,fontWeight:700,cursor:"pointer"}}>🔄 Refill</button>}
+                <button onClick={()=>window.open(`https://wa.me/${WHATSAPP_NUM}?text=Hi, I need help with order ${o.id} - ${o.service}`,"_blank")} style={{background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.25)",borderRadius:7,padding:"5px 11px",color:"#c4b5fd",fontSize:11,fontWeight:700,cursor:"pointer"}}>💬 Help</button>
               </div>
             </div>
           </Card>
@@ -1687,7 +2028,7 @@ const UserWallet = ({ balance, txns=[], userEmail="" }) => {
   const depStatusLabel={pending:"⏳ Pending",approved:"✅ Approved",rejected:"❌ Rejected"};
 
   return (
-  <div style={{animation:"fadeIn .4s ease"}}>
+  <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
     <PgH title="Wallet" sub="Balance & transaction history"/>
     <div className="stat-grid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16,marginBottom:24}}>
       <StatCard icon="◈" label="Current Balance"  value={fmt(balance)} grad={C.gG}/>
@@ -1708,7 +2049,11 @@ const UserWallet = ({ balance, txns=[], userEmail="" }) => {
       </div>
       {walletTab==="deposits"&&(
         <div>
-          {myDeps.length===0?<div style={{textAlign:"center",color:C.muted,padding:30,fontSize:13}}>No deposit requests yet.<br/>Add funds and your requests will appear here.</div>:
+          {myDeps.length===0?<div style={{textAlign:"center",color:C.muted,padding:36,fontSize:13}}>
+            <div style={{fontSize:40,marginBottom:10}}>📭</div>
+            <div style={{fontWeight:700,color:"#e8e8f2",marginBottom:6}}>No deposits yet</div>
+            <div>Add funds and your requests will appear here.</div>
+          </div>:
           myDeps.map(d=>(
             <div key={d.id} style={{background:"rgba(255,255,255,.03)",border:"1px solid "+C.border,borderRadius:10,padding:"12px 14px",marginBottom:10}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
@@ -1832,6 +2177,13 @@ const PaymentUTRScreen = ({ amount, method, qrUrl, userName, userEmail, onBack, 
     if(!u){ setErr("Please enter your UTR / Transaction ID"); return; }
     if(u.length < 6){ setErr("UTR must be at least 6 characters"); return; }
     setSubmitting(true); setErr("");
+    // 🛡️ Duplicate UTR fraud detection
+    const alreadyUsed = await UTRGuard.isUsed(u);
+    if(alreadyUsed){
+      setSubmitting(false);
+      setErr("❌ This UTR has already been submitted. Each transaction can only be used once. Contact support if you believe this is an error.");
+      return;
+    }
     const req = {
       id: "DEP-"+Date.now(),
       email: (userEmail||"").toLowerCase().trim(),
@@ -1855,7 +2207,7 @@ const PaymentUTRScreen = ({ amount, method, qrUrl, userName, userEmail, onBack, 
   };
 
   if(submitted) return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Request Submitted!" sub="Waiting for admin approval"/>
       <Card style={{padding:28,textAlign:"center"}}>
         <div style={{width:72,height:72,borderRadius:"50%",background:"linear-gradient(135deg,#059669,#34d399)",
@@ -1887,7 +2239,7 @@ const PaymentUTRScreen = ({ amount, method, qrUrl, userName, userEmail, onBack, 
   );
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Complete Payment" sub={`Pay ₹${amount} & submit your Transaction ID`}/>
       <Card style={{padding:20}}>
 
@@ -2020,7 +2372,7 @@ const UserAddFunds = ({ balance, setBalance, setPage, setTxns, userName="User", 
   if(showQR){
     if(method==="card"){
       return (
-        <div style={{animation:"fadeIn .4s ease"}}>
+        <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
           <PgH title="Card Payment" sub="Debit / Credit Card"/>
           <Card style={{padding:28,textAlign:"center"}}>
             <div style={{fontSize:48,marginBottom:16}}>💳</div>
@@ -2047,7 +2399,7 @@ const UserAddFunds = ({ balance, setBalance, setPage, setTxns, userName="User", 
   if(done) return <DepositDoneScreen amount={amount} setPage={setPage}/>;
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Add Funds" sub="Top up your Nexus wallet instantly"/>
 
 
@@ -2153,7 +2505,7 @@ const UserServices = ({ setPage }) => {
   const [pf,setPf]=useState("All");
   const filtered=pf==="All"?SERVICES:SERVICES.filter(s=>s.platform===pf);
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Services" sub="All available services" action={<Btn onClick={()=>setPage("neworder")}>Order Now</Btn>}/>
       <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:22}}>
         {PLATFORMS.map(p=><button key={p} onClick={()=>setPf(p)} style={{background:pf===p?C.gP:"rgba(255,255,255,.04)",
@@ -2189,7 +2541,7 @@ const UserSupport = () => {
   useEffect(()=>{ chatEnd.current?.scrollIntoView({behavior:"smooth"}); },[chat]);
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Support Center" sub="We're here 24/7 to help"/>
       <div style={{display:"flex",gap:0,marginBottom:24,background:"rgba(255,255,255,.03)",
         borderRadius:12,padding:5,width:"fit-content",border:`1px solid ${C.border}`}}>
@@ -2310,7 +2662,7 @@ const UserProfile = ({ userName, userEmail, balance, orders, onLogout }) => {
   const spent=orders.reduce((s,o)=>s+o.price,0);
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="My Profile" sub="Account details & settings"/>
 
       {/* Profile header card */}
@@ -2563,6 +2915,8 @@ const AdminDash = ({ onLogout }) => {
     {id:"a-users",     label:"Users",         icon:"👥"},
     {id:"a-coupons",   label:"Coupons",       icon:"🎟"},
     {id:"a-payments",  label:"Payments",      icon:"💰"},
+    {id:"a-suppliers", label:"Suppliers",     icon:"🔌"},
+    {id:"a-markup",    label:"Pricing",       icon:"💹"},
     {id:"a-announce",  label:"Announcements", icon:"📣"},
   ];
 
@@ -2574,8 +2928,10 @@ const AdminDash = ({ onLogout }) => {
       case "a-users":    return <AdminUsers/>;
       case "a-coupons":  return <AdminCoupons/>;
       case "a-payments": return <AdminPayments/>;
-      case "a-announce": return <AdminAnnounce announcements={announcements} setAnnouncements={(list)=>{ setAnnouncements(list); DB.setAnnounce(list); }}/>;
-      default:           return <AdminOverview orders={orders} users={USERS}/>;
+      case "a-announce":  return <AdminAnnounce announcements={announcements} setAnnouncements={(list)=>{ setAnnouncements(list); DB.setAnnounce(list); }}/>;
+      case "a-suppliers": return <AdminSuppliers/>;
+      case "a-markup":    return <AdminMarkup/>;
+      default:            return <AdminOverview orders={orders} users={USERS}/>;
     }
   };
 
@@ -2654,9 +3010,19 @@ const AdminOverview = ({ orders, users=[], refresh, lastRefresh }) => {
   const total=orders.reduce((s,o)=>s+o.price,0);
   const active=orders.filter(o=>["Processing","Pending"].includes(o.status)).length;
   const done=orders.filter(o=>o.status==="Completed").length;
+  const todayStr=today();
+  const weekAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
+  const monthAgo=new Date(Date.now()-30*864e5).toISOString().slice(0,10);
+  const revenueToday=orders.filter(o=>o.date===todayStr).reduce((s,o)=>s+o.price,0);
+  const revenueWeek=orders.filter(o=>o.date>=weekAgo).reduce((s,o)=>s+o.price,0);
+  const revenueMonth=orders.filter(o=>o.date>=monthAgo).reduce((s,o)=>s+o.price,0);
+  const topServices=[...orders.reduce((m,o)=>{
+    const k=o.service||"Unknown"; const e=m.get(k)||{name:k,count:0,revenue:0};
+    m.set(k,{...e,count:e.count+1,revenue:e.revenue+o.price}); return m;
+  },new Map()).values()].sort((a,b)=>b.revenue-a.revenue).slice(0,5);
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:26,flexWrap:"wrap",gap:12}}>
         <div>
           <h1 style={{fontSize:24,fontWeight:900,color:"#f0f0ff",fontFamily:"Syne,sans-serif",marginBottom:3}}>Admin Analytics</h1>
@@ -2694,9 +3060,14 @@ const AdminOverview = ({ orders, users=[], refresh, lastRefresh }) => {
           </div>
         ))}
       </div>
-      <div className="stat-grid" style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:16,marginBottom:24}}>
+      <div className="stat-grid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16,marginBottom:16}}>
+        <StatCard icon="📅" label="Revenue Today"  value={fmt(revenueToday)}  grad={C.gG} sub="Today"/>
+        <StatCard icon="📆" label="Revenue 7 Days" value={fmt(revenueWeek)}   grad={C.gP} sub="7 Days"/>
+        <StatCard icon="🗓" label="Revenue 30 Days" value={fmt(revenueMonth)} grad={C.gB} sub="Month"/>
+        <StatCard icon="💰" label="Total Revenue"  value={fmt(total)}         grad={C.gGr}/>
+      </div>
+      <div className="stat-grid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16,marginBottom:24}}>
         <StatCard icon="👥" label="Total Users"   value={String(USERS?.length||0)} grad={C.gP}/>
-        <StatCard icon="💰" label="Total Revenue" value={fmt(total)} grad={C.gG}/>
         <StatCard icon="📦" label="Total Orders"  value={String(orders.length)} grad={C.gB}/>
         <StatCard icon="⚡" label="Active Orders" value={active} grad="linear-gradient(135deg,#f59e0b,#ef4444)"/>
         <StatCard icon="✅" label="Completed"     value={done} grad={C.gGr}/>
@@ -2752,9 +3123,45 @@ const AdminOverview = ({ orders, users=[], refresh, lastRefresh }) => {
           })()}
         </Card>
       </div>
+      <div className="two-col" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:20,marginBottom:20}}>
+        <Card style={{padding:22}}>
+          <h3 style={{fontWeight:800,fontSize:15,color:"#e8e8f2",marginBottom:16}}>🏆 Top Selling Services</h3>
+          {topServices.length===0?<p style={{color:C.muted,fontSize:12}}>No orders yet</p>:
+          topServices.map((s,i)=>(
+            <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"9px 0",borderBottom:`1px solid ${C.border}`}}>
+              <div style={{display:"flex",alignItems:"center",gap:10}}>
+                <span style={{fontSize:14,fontWeight:900,color:C.purpleL,width:20}}>{i+1}</span>
+                <div>
+                  <div style={{fontWeight:700,color:"#c4b5fd",fontSize:12,maxWidth:180,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</div>
+                  <div style={{fontSize:10,color:C.muted}}>{s.count} orders</div>
+                </div>
+              </div>
+              <span style={{color:C.goldL,fontWeight:800,fontSize:13}}>{fmt(s.revenue)}</span>
+            </div>
+          ))}
+        </Card>
+        <Card style={{padding:22}}>
+          <h3 style={{fontWeight:800,fontSize:15,color:"#e8e8f2",marginBottom:16}}>📊 Order Status Breakdown</h3>
+          {[["Pending","#fbbf24"],["Processing","#60a5fa"],["Completed","#34d399"],["Cancelled","#f87171"]].map(([s,col])=>{
+            const count=orders.filter(o=>o.status===s).length;
+            const pct=orders.length?Math.round(count/orders.length*100):0;
+            return (
+              <div key={s} style={{marginBottom:13}}>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:5}}>
+                  <span style={{color:"#c4b5fd",fontWeight:600}}>{s}</span>
+                  <span style={{color:col,fontWeight:700}}>{count} ({pct}%)</span>
+                </div>
+                <div style={{height:7,background:"rgba(255,255,255,.05)",borderRadius:4,overflow:"hidden"}}>
+                  <div style={{height:"100%",width:`${pct}%`,background:col,borderRadius:4,transition:"width .8s ease"}}/>
+                </div>
+              </div>
+            );
+          })}
+        </Card>
+      </div>
       <Card style={{padding:22}}>
         <h3 style={{fontWeight:800,fontSize:15,color:"#e8e8f2",marginBottom:16}}>Recent Orders</h3>
-        <OTable orders={orders}/>
+        <OTable orders={orders.slice(0,10)}/>
       </Card>
     </div>
   );
@@ -2766,13 +3173,39 @@ const AdminOrders = ({ orders, setOrders }) => {
   const filtered=filter==="All"?orders:orders.filter(o=>o.status===filter);
   const upd=async(id,status)=>{
     DB.updateOrder(id,status);
-    const fresh = await DB.getOrdersFromFirebase();
-    setOrders(fresh);
+    Toast.info(`Order ${id} → ${status}`);
+    setTimeout(async()=>{
+      const fresh = await DB.getOrdersFromFirebase();
+      setOrders(fresh);
+    },1500);
+  };
+
+  const refill=async(order)=>{
+    if(!window.confirm(`Refill order ${order.id}?
+Service: ${order.service}
+Qty: ${order.qty}`)) return;
+    try{
+      const fs=await getFS(); if(!fs) return;
+      const suppSnap = await fs.collection("config").doc("suppliers").get();
+      const suppliers = suppSnap.exists ? (suppSnap.data().list||[]) : [];
+      const active = suppliers.find(s=>s.active);
+      if(!active){ Toast.error("No active supplier. Go to Suppliers tab."); return; }
+      if(!order.supplierServiceId){ Toast.error("No supplier service ID on this order"); return; }
+      const res = await SupplierAPI.addOrder(active, order.supplierServiceId, order.link, order.qty);
+      if(res?.order){
+        await fs.collection("orders").where("id","==",order.id).get()
+          .then(snap=>snap.forEach(d=>d.ref.update({refillOrderId:res.order,status:"Processing",refillDate:today()})));
+        Toast.success(`✅ Refill sent! Supplier order: ${res.order}`);
+      }
+    }catch(e){ Toast.error("Refill failed: "+e.message); }
   };
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
-      <PgH title="All Orders" sub={`${orders.length} total`}/>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
+      <PgH title="All Orders" sub={`${orders.length} total · ${filtered.length} shown`}
+        action={<div style={{display:"flex",gap:8}}>
+          <button onClick={()=>upd("bulk","Completed")} style={{display:"none"}}/>
+        </div>}/>
       <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:20}}>
         {["All","Pending","Processing","Completed","Cancelled"].map(s=>(
           <button key={s} onClick={()=>setFilter(s)} style={{background:filter===s?C.gP:"rgba(255,255,255,.04)",
@@ -2879,7 +3312,7 @@ const AdminServices = () => {
   };
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Manage Services" sub={`${svcs.length} active services`}
         action={
           <div style={{display:"flex",gap:9}}>
@@ -3032,7 +3465,7 @@ const AdminUsers = () => {
   ) : USERS;
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Users" sub={`${filteredUsers.length}${search?" found":""} of ${USERS.length} registered users`}
         action={<button onClick={refresh} style={{padding:"8px 16px",background:"rgba(124,58,237,.1)",border:`1px solid rgba(124,58,237,.3)`,borderRadius:9,color:"#c4b5fd",fontSize:12,fontWeight:700,cursor:"pointer"}}>🔄 Refresh</button>}/>
 
@@ -3170,7 +3603,7 @@ const AdminCoupons = () => {
   };
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Coupon System" sub="Manage discount codes (codes are hidden from users)"/>
       <div className="two-col" style={{display:"grid",gridTemplateColumns:"1fr 340px",gap:22}}>
         <Card style={{padding:22}}>
@@ -3210,6 +3643,204 @@ const AdminCoupons = () => {
   );
 };
 
+
+
+// ─── Admin: Supplier Management ──────────────────────────────
+const AdminSuppliers = () => {
+  const [suppliers,setSuppliers]=useState([]);
+  const [form,setForm]=useState({name:"",url:"",key:""});
+  const [loading,setLoading]=useState(true);
+  const [testing,setTesting]=useState(null);
+  const [syncing,setSyncing]=useState(null);
+  const F=(k,v)=>setForm(f=>({...f,[k]:v}));
+
+  useEffect(()=>{
+    getFS().then(fs=>{
+      if(!fs){setLoading(false);return;}
+      fs.collection("config").doc("suppliers").get().then(snap=>{
+        setSuppliers(snap.exists?(snap.data().list||[]):[]);
+        setLoading(false);
+      }).catch(()=>setLoading(false));
+    });
+  },[]);
+
+  const save=async(list)=>{
+    const fs=await getFS(); if(!fs) return;
+    await fs.collection("config").doc("suppliers").set({list});
+    setSuppliers(list);
+  };
+
+  const add=async()=>{
+    if(!form.name||!form.url||!form.key){Toast.error("Fill in all supplier fields");return;}
+    const entry={id:"SUP-"+Date.now(),name:form.name,url:form.url,key:form.key,active:suppliers.length===0,addedOn:today()};
+    await save([...suppliers,entry]);
+    setForm({name:"",url:"",key:""});
+    Toast.success("Supplier added!");
+  };
+
+  const del=async(id)=>{
+    if(!window.confirm("Remove this supplier?")) return;
+    await save(suppliers.filter(s=>s.id!==id));
+  };
+
+  const setActive=async(id)=>{
+    await save(suppliers.map(s=>({...s,active:s.id===id})));
+    Toast.success("Active supplier updated");
+  };
+
+  const testSupplier=async(sup)=>{
+    setTesting(sup.id);
+    try{
+      const bal = await SupplierAPI.getBalance(sup);
+      Toast.success(`✅ ${sup.name} connected! Balance: ${JSON.stringify(bal)}`);
+    }catch(e){
+      Toast.error(`❌ ${sup.name} failed: ${e.message}`);
+    }
+    setTesting(null);
+  };
+
+  const syncServices=async(sup)=>{
+    setSyncing(sup.id);
+    try{
+      const result = await SupplierAPI.getServices(sup);
+      const svcs = Array.isArray(result)?result:[];
+      const fs=await getFS(); if(!fs) throw new Error("No Firebase");
+      await fs.collection("config").doc("supplierServices_"+sup.id).set({services:svcs,syncedAt:Date.now()});
+      Toast.success(`✅ Synced ${svcs.length} services from ${sup.name}`);
+    }catch(e){
+      Toast.error(`❌ Sync failed: ${e.message}`);
+    }
+    setSyncing(null);
+  };
+
+  return (
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
+      <PgH title="Supplier Management" sub="Connect your SMM supplier APIs for automated order fulfillment"/>
+
+      {/* Add Supplier Form */}
+      <Card glow style={{padding:26,marginBottom:22}}>
+        <h3 style={{fontWeight:800,color:"#e8e8f2",fontSize:15,marginBottom:18}}>➕ Add New Supplier</h3>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14,marginBottom:14}}>
+          <Inp label="Supplier Name" value={form.name} onChange={e=>F("name",e.target.value)} placeholder="e.g. SMM King" icon="🏪"/>
+          <Inp label="API URL" value={form.url} onChange={e=>F("url",e.target.value)} placeholder="https://supplier.com/api/v2" icon="🔗"/>
+          <Inp label="API Key" value={form.key} onChange={e=>F("key",e.target.value)} placeholder="Your API key" icon="🔑"/>
+        </div>
+        <Btn onClick={add}>🔌 Add Supplier</Btn>
+        <p style={{fontSize:11,color:C.muted,marginTop:10}}>Supports standard SMM panel APIs (services, add, status, balance actions)</p>
+      </Card>
+
+      {/* Supplier List */}
+      {loading?<CardSkel/>:suppliers.length===0?(
+        <Card style={{padding:40,textAlign:"center"}}>
+          <div style={{fontSize:44,marginBottom:12}}>🔌</div>
+          <p style={{color:"#e8e8f2",fontWeight:700,marginBottom:6}}>No suppliers added yet</p>
+          <p style={{color:C.muted,fontSize:13}}>Add a supplier above to enable automated order processing</p>
+        </Card>
+      ):(
+        <div style={{display:"flex",flexDirection:"column",gap:14}}>
+          {suppliers.map(sup=>(
+            <Card key={sup.id} style={{padding:22,border:`1px solid ${sup.active?"rgba(52,211,153,.3)":C.border}`}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
+                <div>
+                  <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
+                    <span style={{fontWeight:800,color:"#e8e8f2",fontSize:15}}>🏪 {sup.name}</span>
+                    {sup.active&&<span style={{background:"rgba(52,211,153,.15)",color:"#34d399",border:"1px solid rgba(52,211,153,.3)",borderRadius:20,padding:"2px 10px",fontSize:10,fontWeight:700}}>● ACTIVE</span>}
+                  </div>
+                  <div style={{fontSize:12,color:C.muted,fontFamily:"monospace"}}>{sup.url}</div>
+                  <div style={{fontSize:11,color:C.muted,marginTop:3}}>Added: {sup.addedOn}</div>
+                </div>
+                <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                  {!sup.active&&<button onClick={()=>setActive(sup.id)} style={{background:"rgba(52,211,153,.1)",border:"1px solid rgba(52,211,153,.3)",borderRadius:7,padding:"7px 14px",color:"#34d399",fontSize:11,fontWeight:700,cursor:"pointer"}}>Set Active</button>}
+                  <button onClick={()=>testSupplier(sup)} disabled={testing===sup.id} style={{background:"rgba(96,165,250,.1)",border:"1px solid rgba(96,165,250,.3)",borderRadius:7,padding:"7px 14px",color:"#60a5fa",fontSize:11,fontWeight:700,cursor:"pointer"}}>{testing===sup.id?"Testing...":"🔧 Test"}</button>
+                  <button onClick={()=>syncServices(sup)} disabled={syncing===sup.id} style={{background:"rgba(124,58,237,.1)",border:"1px solid rgba(124,58,237,.3)",borderRadius:7,padding:"7px 14px",color:"#c4b5fd",fontSize:11,fontWeight:700,cursor:"pointer"}}>{syncing===sup.id?"Syncing...":"🔄 Sync Services"}</button>
+                  <button onClick={()=>del(sup.id)} style={{background:"rgba(239,68,68,.1)",border:"1px solid rgba(239,68,68,.3)",borderRadius:7,padding:"7px 14px",color:"#f87171",fontSize:11,fontWeight:700,cursor:"pointer"}}>🗑 Remove</button>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── Admin: Markup / Pricing ──────────────────────────────────
+const AdminMarkup = () => {
+  const [settings,setSettings]=useState({type:"percent",value:40,minPrice:10});
+  const [saved,setSaved]=useState(false);
+  const [loading,setLoading]=useState(true);
+
+  useEffect(()=>{
+    PriceCalc.getSettings().then(s=>{ setSettings(s); setLoading(false); });
+  },[]);
+
+  const save=async()=>{
+    const fs=await getFS();
+    if(fs) await fs.collection("config").doc("markup").set(settings);
+    setSaved(true); setTimeout(()=>setSaved(false),3000);
+    Toast.success("Pricing settings saved!");
+  };
+
+  const eg = PriceCalc.apply(80,settings);
+
+  return (
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
+      <PgH title="Pricing & Markup Settings" sub="Control profit margins on all services"/>
+      <div style={{maxWidth:560}}>
+        {saved&&<div style={{background:"rgba(16,185,129,.1)",border:"1px solid rgba(16,185,129,.3)",borderRadius:11,padding:"13px 16px",marginBottom:18,color:"#34d399",fontWeight:700}}>✅ Settings saved!</div>}
+        <Card gold style={{padding:28,marginBottom:20}}>
+          <h3 style={{fontWeight:800,color:C.goldL,fontSize:15,marginBottom:20}}>💹 Markup Configuration</h3>
+          <div style={{marginBottom:18}}>
+            <label style={{display:"block",fontSize:11,fontWeight:700,color:C.muted,letterSpacing:".07em",marginBottom:8,textTransform:"uppercase"}}>Markup Type</label>
+            <div style={{display:"flex",gap:10}}>
+              {[{v:"percent",l:"Percentage %"},{v:"fixed",l:"Fixed Amount ₹"}].map(opt=>(
+                <div key={opt.v} onClick={()=>setSettings(s=>({...s,type:opt.v}))}
+                  style={{flex:1,padding:"12px 16px",borderRadius:10,cursor:"pointer",textAlign:"center",
+                    border:`2px solid ${settings.type===opt.v?"#d4a017":"rgba(212,160,23,.2)"}`,
+                    background:settings.type===opt.v?"rgba(212,160,23,.12)":"rgba(255,255,255,.02)"}}>
+                  <div style={{fontWeight:700,color:settings.type===opt.v?C.goldL:"#888",fontSize:13}}>{opt.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <Inp label={settings.type==="percent"?"Markup Percentage (%)":"Fixed Markup Amount (₹)"}
+            type="number" value={String(settings.value)}
+            onChange={e=>setSettings(s=>({...s,value:parseFloat(e.target.value)||0}))}
+            placeholder={settings.type==="percent"?"e.g. 40":"e.g. 50"} icon={settings.type==="percent"?"%":"₹"}/>
+          <Inp label="Minimum Selling Price (₹)" type="number" value={String(settings.minPrice||0)}
+            onChange={e=>setSettings(s=>({...s,minPrice:parseFloat(e.target.value)||0}))}
+            placeholder="e.g. 10" icon="₹"/>
+          <div style={{background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.2)",borderRadius:11,padding:"14px 18px",marginBottom:20}}>
+            <div style={{fontSize:12,color:C.muted,marginBottom:6}}>💡 Pricing Example:</div>
+            <div style={{display:"flex",gap:20,flexWrap:"wrap"}}>
+              {[{l:"Supplier Cost",v:"₹80.00"},{l:"Your Markup",v:settings.type==="percent"?`+${settings.value}%`:`+₹${settings.value}`},{l:"Selling Price",v:`₹${eg}`,highlight:true}].map(x=>(
+                <div key={x.l}>
+                  <div style={{fontSize:10,color:C.muted,marginBottom:2}}>{x.l}</div>
+                  <div style={{fontSize:18,fontWeight:900,color:x.highlight?C.goldL:"#c4b5fd"}}>{x.v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <Btn v="gold" onClick={save} style={{width:"100%",justifyContent:"center"}} size="lg">💾 Save Pricing Settings</Btn>
+        </Card>
+        <Card style={{padding:22}}>
+          <h3 style={{fontWeight:800,color:"#e8e8f2",fontSize:14,marginBottom:14}}>📊 How Markup Works</h3>
+          {[
+            ["Supplier gives you price","₹80 per 1000 followers"],
+            ["You apply markup","40% → adds ₹32 profit"],
+            ["Customer pays","₹112 per 1000 followers"],
+            ["Your profit","₹32 per order (40%)"],
+          ].map(([k,v])=>(
+            <div key={k} style={{display:"flex",justifyContent:"space-between",padding:"9px 0",borderBottom:`1px solid ${C.border}`}}>
+              <span style={{color:C.muted,fontSize:12}}>{k}</span>
+              <span style={{color:"#c4b5fd",fontWeight:700,fontSize:12}}>{v}</span>
+            </div>
+          ))}
+        </Card>
+      </div>
+    </div>
+  );
+};
 
 // ─── Admin: Payments ─────────────────────────────────────────
 const AdminPayments = () => {
@@ -3275,7 +3906,7 @@ const AdminPayments = () => {
   const statCol={pending:"#fbbf24",approved:"#34d399",rejected:"#f87171"};
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Payment Approvals" sub="Verify UTR and approve wallet deposits"/>
       <div style={{marginBottom:16,display:"flex",gap:10,flexWrap:"wrap"}}>
         <button onClick={async()=>{
@@ -3331,7 +3962,7 @@ const AdminPayments = () => {
         ))}
       </div>
 
-      {loading?<Card style={{padding:30,textAlign:"center",color:C.muted}}>Loading deposits...</Card>:
+      {loading?<div style={{display:"flex",flexDirection:"column",gap:12}}>{[1,2,3].map(i=><CardSkel key={i}/>)}</div>:
        shown.length===0?<Card style={{padding:30,textAlign:"center",color:C.muted}}>No {tab} deposits</Card>:
        shown.map(dep=>(
         <Card key={dep.id} style={{padding:18,marginBottom:12}}>
@@ -3392,7 +4023,7 @@ const AdminAnnounce = ({ announcements, setAnnouncements }) => {
   const typeIcon={Offer:"🎁",Notice:"📢",Update:"🆕"};
 
   return (
-    <div style={{animation:"fadeIn .4s ease"}}>
+    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Announcements" sub="Publish messages that appear on every user's dashboard"
         action={
           <Btn onClick={()=>setShowForm(s=>!s)}>
@@ -3535,6 +4166,7 @@ function App() {
   return (
     <>
       <GS/>
+      <ToastContainer/>
       {screen==="landing"    && <Landing goLogin={()=>setScreen("login")} goSignup={()=>setScreen("signup")} goAdmin={()=>setScreen("adminlogin")}/>}
       {screen==="signup"     && <Signup goLogin={()=>setScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
       {screen==="login"      && <Login goSignup={()=>setScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>setScreen("adminlogin")}/>}
