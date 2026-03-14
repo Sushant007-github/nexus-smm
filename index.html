@@ -753,7 +753,7 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
           ))}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:12}}>
-          <span style={{color:C.muted,fontSize:11}}>© 2025 Nexus SMM India</span>
+          <span style={{color:C.muted,fontSize:11}}>© 2026 Nexus SMM India</span>
           <span onClick={goAdmin} style={{color:"rgba(212,160,23,.4)",fontSize:10,cursor:"pointer",fontWeight:600,letterSpacing:".04em",
             border:"1px solid rgba(212,160,23,.15)",borderRadius:20,padding:"2px 10px"}}
             onMouseEnter={e=>e.target.style.color="rgba(212,160,23,.8)"}
@@ -782,7 +782,7 @@ const SvcCard = ({ svc, onOrder }) => {
         </div>
         <p style={{color:C.muted,fontSize:12,lineHeight:1.6,marginBottom:16}}>{svc.desc}</p>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginBottom:16}}>
-          {[{l:"Speed",v:svc.speed},{l:"Min Qty",v:svc.min.toLocaleString()},{l:"Per Unit",v:`₹${svc.price}`}].map(({l,v})=>(
+          {[{l:"Speed",v:svc.speed},{l:"Min Qty",v:svc.min.toLocaleString()},{l:"Price",v:svc.tiers?"From ₹"+svc.tiers[0].price:`₹${svc.price}/unit`}].map(({l,v})=>(
             <div key={l} style={{background:"rgba(255,255,255,.03)",borderRadius:8,padding:"7px 8px",textAlign:"center"}}>
               <div style={{fontSize:9,color:C.muted,letterSpacing:".05em",marginBottom:2}}>{l}</div>
               <div style={{fontSize:11,fontWeight:800,color:"#c4b5fd"}}>{v}</div>
@@ -1564,9 +1564,14 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
 
 // ─── User: My Orders ──────────────────────────────────────────
 const UserOrders = ({ orders, setOrders, userEmail="" }) => {
-  const cancel=(id)=>{
+  const cancel=async(id)=>{
     DB.updateOrder(id,"Cancelled");
-    setOrders(DB.getOrders().filter(o=>o.userEmail===userEmail));
+    // Reload from Firebase to get accurate state
+    setTimeout(async()=>{
+      const all = await DB.getOrdersFromFirebase();
+      const norm = (userEmail||"").toLowerCase().trim();
+      setOrders(all.filter(o=>(o.userEmail||"").toLowerCase().trim()===norm));
+    }, 1500);
   };
   const [view,setView]=useState("cards");
   const [filter,setFilter]=useState("All");
@@ -2299,7 +2304,7 @@ const UserProfile = ({ userName, userEmail, balance, orders, onLogout }) => {
   const [affiliate,setAffiliate]=useState(true);
   const [saved,setSaved]=useState(false);
   const [copied,setCopied]=useState(false);
-  const refCode=`NEXUS-${(name.slice(0,4)||"USER").toUpperCase()}${Math.floor(Math.random()*8999+1000)}`;
+  const refCode=React.useMemo(()=>`NEXUS-${((userName||"USER").slice(0,4)).toUpperCase()}${(userEmail.charCodeAt(0)*37+userEmail.length*13+1000)%9000+1000}`,[userEmail,userName]);
 
   const comp=orders.filter(o=>o.status==="Completed").length;
   const spent=orders.reduce((s,o)=>s+o.price,0);
@@ -2527,7 +2532,7 @@ const AdminDash = ({ onLogout }) => {
   const [orders,setOrders]=useState([]);
   const [USERS,setUSERS_admin]=useState([]);
   const [announcements,setAnnouncements]=useState(()=>{
-    const saved=DB.getAnnounce(); return saved.length>0?saved:INIT_ANNOUNCEMENTS;
+    const saved=DB.getAnnounce(); return saved.length>0?saved:[];
   });
   const [lastRefresh,setLastRefresh]=useState(Date.now());
   const [loadingOrders,setLoadingOrders]=useState(true);
@@ -2536,6 +2541,7 @@ const AdminDash = ({ onLogout }) => {
     setLoadingOrders(true);
     const [o, u] = await Promise.all([DB.getOrdersFromFirebase(), DB.getUsersFromFirebase()]);
     setOrders(o);
+    window._adminOrders = o; // make available to AdminUsers
     setUSERS_admin(u);
     setLastRefresh(Date.now());
     setLoadingOrders(false);
@@ -2820,6 +2826,14 @@ const AdminOrders = ({ orders, setOrders }) => {
 // ─── Admin: Services ──────────────────────────────────────────
 const AdminServices = () => {
   const [svcs,setSvcs]=useState(SERVICES);
+  useEffect(()=>{
+    getFS().then(fs=>{
+      if(!fs) return;
+      fs.collection("services").doc("list").get().then(snap=>{
+        if(snap.exists && snap.data().services?.length>0) setSvcs(snap.data().services);
+      }).catch(()=>{});
+    });
+  },[]);
   const [mode,setMode]=useState(null); // null | "add" | "edit"
   const [editIdx,setEditIdx]=useState(null);
   const blank={name:"",platform:"Instagram",cat:"Followers",price:"",min:"1000",max:"100000",desc:"",speed:"0-12 hrs"};
@@ -2846,12 +2860,19 @@ const AdminServices = () => {
       min:parseInt(form.min)||100, max:parseInt(form.max)||100000,
       desc:form.desc, speed:form.speed
     };
+    let updated;
     if(mode==="add"){
-      setSvcs(s=>[...s,entry]);
+      updated = [...svcs, entry];
     } else {
-      setSvcs(s=>s.map((x,i)=>i===editIdx?{...x,...entry,id:x.id,icon:x.icon,tiers:x.tiers}:x));
+      updated = svcs.map((x,i)=>i===editIdx?{...x,...entry,id:x.id,icon:x.icon,tiers:x.tiers}:x);
     }
+    setSvcs(updated);
+    // Save to Firebase so it persists
+    getFS().then(fs=>{
+      if(fs) fs.collection("services").doc("list").set({services:updated}).catch(console.error);
+    });
     setMode(null); setEditIdx(null); setForm(blank);
+    alert(`✅ Service ${mode==="add"?"added":"updated"}! Changes saved.`);
   };
   const del=(i)=>{
     if(window.confirm("Delete this service? Cannot be undone.")) setSvcs(x=>x.filter((_,j)=>j!==i));
@@ -2978,13 +2999,13 @@ const AdminUsers = () => {
   const ban=async(id)=>{
     const user=USERS.find(u=>u.id===id);
     if(user) DB.updateUserBalance(user.email, user.balance||0); // triggers Firebase user doc update
-    getFS().then(_bfs=>{ if(_bfs&&user) _bfs.collection("users").doc(user.email.replace(/[@.]/g,"_")).update({status:"Suspended"}).catch(console.error); });
+    getFS().then(_bfs=>{ if(_bfs&&user) _bfs.collection("users").doc(user.email.toLowerCase().trim().replace(/[@.]/g,"_")).update({status:"Suspended"}).catch(console.error); });
     const fresh = await DB.getUsersFromFirebase();
     setUSERS(fresh);
   };
   const unban=async(id)=>{
     const user=USERS.find(u=>u.id===id);
-    getFS().then(_ufs=>{ if(_ufs&&user) _ufs.collection("users").doc(user.email.replace(/[@.]/g,"_")).update({status:"Active"}).catch(console.error); });
+    getFS().then(_ufs=>{ if(_ufs&&user) _ufs.collection("users").doc(user.email.toLowerCase().trim().replace(/[@.]/g,"_")).update({status:"Active"}).catch(console.error); });
     const fresh = await DB.getUsersFromFirebase();
     setUSERS(fresh);
   };
@@ -2992,21 +3013,18 @@ const AdminUsers = () => {
     const amt=parseFloat(refundAmt);
     if(!amt||amt<=0){ alert("Enter a valid amount"); return; }
     try {
-      const users = await DB.getUsersFromFirebase();
-      const latest = users.find(u=>u.email===refundUser.email);
-      const newBal = parseFloat(((latest?.balance||refundUser.balance||0)+amt).toFixed(2));
+      const currentBal = await DB.getBalanceFromFirebase(refundUser.email);
+      const newBal = parseFloat((currentBal + amt).toFixed(2));
       await DB.updateUserBalanceAsync(refundUser.email, newBal);
       DB.addTxn({id:"TXN-"+Date.now(),type:"Deposit",amount:amt,email:refundUser.email,date:today(),userName:refundUser.name,ref:"Manual-Admin"});
       setRefundUser(null); setRefundAmt("");
-      alert(`✅ ₹${amt} added to ${refundUser.name}'s wallet!\nNew balance: ₹${newBal}`);
-      const fresh = await DB.getUsersFromFirebase();
-      setUSERS(fresh);
+      alert(`✅ ₹${amt} added to ${refundUser.name}!\nPrev: ₹${currentBal} → New: ₹${newBal}`);
     } catch(e) {
-      alert("❌ Error adding balance: " + e.message);
+      alert("❌ Error: " + e.message);
     }
   };
 
-  const userOrders=(email)=>DB.getOrders().filter(o=>o.userEmail===email);
+  const userOrders=(email)=>{ const e=(email||'').toLowerCase().trim(); return (window._adminOrders||[]).filter(o=>(o.userEmail||'').toLowerCase().trim()===e); };
 
   const filteredUsers = search ? USERS.filter(u=>
     u.email?.toLowerCase().includes(search.toLowerCase()) ||
@@ -3139,9 +3157,9 @@ const AdminUsers = () => {
 // ─── Admin: Coupons ───────────────────────────────────────────
 const AdminCoupons = () => {
   const [coupons,setCoupons]=useState([
-    {code:"NEXUS20",disc:20,limit:100,used:34,expires:"2025-07-01"},
-    {code:"SAVE10", disc:10,limit:500,used:123,expires:"2025-08-31"},
-    {code:"FIRST50",disc:50,limit:50, used:12, expires:"2025-06-30"},
+    {code:"NEXUS20",disc:20,limit:100,used:0,expires:"2026-12-31"},
+    {code:"SAVE10", disc:10,limit:500,used:0,expires:"2026-12-31"},
+    {code:"FIRST50",disc:50,limit:50, used:0,expires:"2026-12-31"},
   ]);
   const [form,setForm]=useState({code:"",disc:"",limit:"",expires:""});
   const F=(k,v)=>setForm(f=>({...f,[k]:v}));
