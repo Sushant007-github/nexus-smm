@@ -1262,14 +1262,38 @@ const AuthWrap = ({ children }) => (
 // ═══════════════════════════════════════════════════════════════
 const UserDash = ({ userName, userEmail, onLogout }) => {
   const [page,setPage]=useState("overview");
-  // Start with empty — load fresh from Firebase
   const [orders,setOrders]=useState([]);
   const [balance,setBalance]=useState(0);
   const [txns,setTxns]=useState([]);
-  // txns loaded from Firebase on mount
   const [announcements]=useState([]);
   const [showProfile,setShowProfile]=useState(false);
   const [dashLoading,setDashLoading]=useState(false);
+
+  // ── Back button: push history on page change ─────────────
+  const goPage = React.useCallback((p) => {
+    window.history.pushState({screen:"user", page:p},"",window.location.pathname);
+    setPage(p);
+  }, []);
+
+  // ── Listen to popstate inside dashboard ──────────────────
+  useEffect(()=>{
+    // Set initial state for current page
+    window.history.replaceState({screen:"user", page:"overview"},"",window.location.pathname);
+
+    const handlePop=(e)=>{
+      const state = e.state||{};
+      if(state.screen==="user"){
+        // Go to the previous dashboard page
+        setPage(state.page||"overview");
+      } else if(state.screen==="landing"||!state.screen){
+        // Back pressed from first page of dashboard — go to overview, don't leave site
+        window.history.pushState({screen:"user",page:"overview"},"",window.location.pathname);
+        setPage("overview");
+      }
+    };
+    window.addEventListener("popstate", handlePop);
+    return()=>window.removeEventListener("popstate", handlePop);
+  },[]);
 
   // Load everything fresh from Firebase on login
   useEffect(()=>{
@@ -1410,15 +1434,15 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
 
   const renderPage=()=>{
     switch(page){
-      case "overview":  return <UserOverview orders={orders} balance={balance} setPage={setPage} userName={userName} announcements={announcements} userEmail={userEmail}/>;
-      case "neworder":  return <UserNewOrder orders={orders} addOrderSync={addOrderSync} balance={balance} setBalance={setBalanceSync} setPage={setPage}/>;
+      case "overview":  return <UserOverview orders={orders} balance={balance} setPage={goPage} userName={userName} announcements={announcements} userEmail={userEmail}/>;
+      case "neworder":  return <UserNewOrder orders={orders} addOrderSync={addOrderSync} balance={balance} setBalance={setBalanceSync} setPage={goPage}/>;
       case "orders":    return <UserOrders orders={orders} setOrders={setOrders} userEmail={userEmail}/>;
       case "wallet":    return <UserWallet balance={balance} txns={txns} userEmail={userEmail}/>;
-      case "addfunds":  return <UserAddFunds balance={balance} setBalance={setBalanceSync} setPage={setPage} setTxns={addTxnSync} userName={userName} userEmail={userEmail}/>;
-      case "services":  return <UserServices setPage={setPage}/>;
+      case "addfunds":  return <UserAddFunds balance={balance} setBalance={setBalanceSync} setPage={goPage} setTxns={addTxnSync} userName={userName} userEmail={userEmail}/>;
+      case "services":  return <UserServices setPage={goPage}/>;
       case "support":   return <UserSupport userEmail={userEmail} userName={userName}/>;
       case "settings":  return <UserProfile userName={userName} userEmail={userEmail} balance={balance} orders={orders} onLogout={onLogout}/>;
-      default:          return <UserOverview orders={orders} balance={balance} setPage={setPage} userName={userName} announcements={announcements} userEmail={userEmail}/>;
+      default:          return <UserOverview orders={orders} balance={balance} setPage={goPage} userName={userName} announcements={announcements} userEmail={userEmail}/>;
     }
   };
 
@@ -1449,7 +1473,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
         </div>
 
         <nav style={{flex:1}}>
-          {NAV.map(item=><NavItem key={item.id} item={item} active={page===item.id} onClick={()=>setPage(item.id)}/>)}
+          {NAV.map(item=><NavItem key={item.id} item={item} active={page===item.id} onClick={()=>goPage(item.id)}/>)}
         </nav>
 
         <Divider/>
@@ -1467,7 +1491,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
         {renderPage()}
       </main>
 
-      <MobileBar page={page} setPage={setPage} isAdmin={false} onLogout={onLogout}/>
+      <MobileBar page={page} setPage={goPage} isAdmin={false} onLogout={onLogout}/>
     </div>
   );
 };
@@ -4618,6 +4642,39 @@ function App() {
   const [userName,setUserName]=useState(savedName);
   const [userEmail,setUserEmail]=useState(savedEmail);
 
+  // ── History API: push state on screen change ──────────────
+  const goScreen=(s, replace=false)=>{
+    const state={screen:s};
+    if(replace) window.history.replaceState(state,"",window.location.pathname);
+    else window.history.pushState(state,"",window.location.pathname);
+    setScreen(s);
+  };
+
+  // ── Listen to browser back/forward button ─────────────────
+  useEffect(()=>{
+    // Set initial history state so back button has something to go to
+    window.history.replaceState({screen:savedScreen},"",window.location.pathname);
+
+    const handlePop=(e)=>{
+      const s = e.state?.screen||"landing";
+      // If going back to landing while logged in → just go to overview, not logout
+      if(s==="landing" && sessionStorage.getItem("nx_screen")==="user"){
+        setScreen("user");
+        // Push a new state so they can't keep going back
+        window.history.pushState({screen:"user"},"",window.location.pathname);
+        return;
+      }
+      if(s==="landing" && sessionStorage.getItem("nx_screen")==="admin"){
+        setScreen("admin");
+        window.history.pushState({screen:"admin"},"",window.location.pathname);
+        return;
+      }
+      setScreen(s);
+    };
+    window.addEventListener("popstate", handlePop);
+    return()=>window.removeEventListener("popstate", handlePop);
+  },[]);
+
   const loginUser=(name,email="")=>{
     const normEmail = (email||"").toLowerCase().trim();
     setUserName(name);
@@ -4625,32 +4682,30 @@ function App() {
     sessionStorage.setItem("nx_screen","user");
     sessionStorage.setItem("nx_name",name);
     sessionStorage.setItem("nx_email",normEmail);
-    // Create user record in Firebase if first time (never overwrites balance)
     DB.addUser({
       id:"USR-"+Date.now(),
       name: name||(normEmail.split("@")[0]),
       email: normEmail,
-      balance:0,
-      orders:0,
-      joined:today(),
-      status:"Active",
+      balance:0, orders:0,
+      joined:today(), status:"Active",
     });
-    setScreen("user");
+    goScreen("user");
   };
-  const loginAdmin=()=>{ sessionStorage.setItem("nx_screen","admin"); setScreen("admin"); };
+  const loginAdmin=()=>{ sessionStorage.setItem("nx_screen","admin"); goScreen("admin"); };
   const logout=()=>{
     sessionStorage.clear();
-    setScreen("landing"); setUserName(""); setUserEmail("");
+    goScreen("landing", true);
+    setUserName(""); setUserEmail("");
   };
 
   return (
     <>
       <GS/>
       <ToastContainer/>
-      {screen==="landing"    && <Landing goLogin={()=>setScreen("login")} goSignup={()=>setScreen("signup")} goAdmin={()=>setScreen("adminlogin")}/>}
-      {screen==="signup"     && <Signup goLogin={()=>setScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
-      {screen==="login"      && <Login goSignup={()=>setScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>setScreen("adminlogin")}/>}
-      {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>setScreen("landing")}/>}
+      {screen==="landing"    && <Landing goLogin={()=>goScreen("login")} goSignup={()=>goScreen("signup")} goAdmin={()=>goScreen("adminlogin")}/>}
+      {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
+      {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
+      {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing")}/>}
       {screen==="user"       && <UserDash userName={userName||"User"} userEmail={userEmail} onLogout={logout}/>}
       {screen==="admin"      && <AdminDash onLogout={logout}/>}
     </>
