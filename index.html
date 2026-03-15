@@ -5043,35 +5043,40 @@ const AdminPayments = () => {
       const wSnap = await fs.collection("wallets").doc(key).get();
       if(wSnap.exists) currentBal = wSnap.data().balance || 0;
 
-      const newBal = parseFloat((currentBal + dep.amount).toFixed(2));
+      let newBal = parseFloat((currentBal + dep.amount).toFixed(2));
 
       // Check if this is first deposit (give bonus)
       let bonusAdded = 0;
-      const prevDeps = await fs.collection("deposits")
-        .where("email","==",dep.email.toLowerCase().trim())
-        .where("status","==","approved").get();
-      if(prevDeps.empty){ // This IS the first deposit
-        bonusAdded = parseFloat((dep.amount * FIRST_DEPOSIT_BONUS_PCT / 100).toFixed(2));
-        newBal = parseFloat((newBal + bonusAdded).toFixed(2));
-      }
+      try{
+        const prevDeps = await fs.collection("deposits")
+          .where("email","==",dep.email.toLowerCase().trim())
+          .where("status","==","approved").get();
+        if(prevDeps.empty){
+          bonusAdded = parseFloat((dep.amount * FIRST_DEPOSIT_BONUS_PCT / 100).toFixed(2));
+          newBal = parseFloat((newBal + bonusAdded).toFixed(2));
+        }
+      }catch{}
 
       // Write wallet
       await fs.collection("wallets").doc(key).set({balance:newBal, email:dep.email.toLowerCase().trim(), ts:Date.now()});
 
-      // Verify
+      // Verify write succeeded
       const wSnap2 = await fs.collection("wallets").doc(key).get();
       const confirmedBal = wSnap2.exists ? wSnap2.data().balance : "ERROR";
-      if(confirmedBal === "ERROR") throw new Error("Wallet write failed - doc not found");
+      if(confirmedBal === "ERROR") throw new Error("Wallet write failed");
 
-      // Mark deposit approved - use dep.id (which is now always set)
+      // Mark deposit approved
       const depositDocId = dep.id || dep._docId;
-      if(!depositDocId) throw new Error("Deposit ID missing - cannot update status");
+      if(!depositDocId) throw new Error("Deposit ID missing");
       await fs.collection("deposits").doc(depositDocId).set({status:"approved"},{merge:true});
 
+      // Push notification to customer
+      await DB.pushNotification(dep.email,"deposit_approved","💰 Deposit Approved!",`₹${dep.amount} added to your wallet${bonusAdded>0?` + ₹${bonusAdded} first deposit bonus!`:""}. New balance: ₹${confirmedBal}`,"wallet");
+
       setDeps(d=>d.map(x=>x.id===dep.id?{...x,status:"approved"}:x));
-      alert(`✅ DONE!\nCustomer: ${dep.userName}\nAdded: ₹${dep.amount}\nNew balance: ₹${confirmedBal}\nKey: ${key}`);
+      Toast.success(`✅ Approved ₹${dep.amount} for ${dep.userName}! Balance: ₹${confirmedBal}${bonusAdded>0?` (+₹${bonusAdded} bonus)`:""}`);
     } catch(e) {
-      alert("❌ APPROVE FAILED!\nError: " + e.message + "\n\nPlease screenshot this and share.");
+      Toast.error("❌ Approve failed: " + e.message);
     }
   };
 
