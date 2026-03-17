@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nexus SMM – Best Social Media Marketing Panel India</title>
-  <meta name="description" content="Buy Instagram followers, YouTube views, TikTok likes and social media growth services with Nexus SMM. Fast delivery, secure UPI payments, 24/7 support."/>
-  <meta name="keywords" content="SMM panel India, buy Instagram followers, YouTube views, TikTok likes, social media marketing, cheap SMM panel"/>
+  <title>OpulentSMM – Premium Social Media Growth Platform India</title>
+  <meta name="description" content="Buy Instagram followers, YouTube views, TikTok likes and social media growth services with OpulentSMM. Fast delivery, secure UPI payments, 24/7 support."/>
+  <meta name="keywords" content="OpulentSMM, SMM panel India, buy Instagram followers, YouTube views, TikTok likes, social media marketing, premium SMM panel"/>
   <meta name="robots" content="index, follow"/>
-  <meta property="og:title" content="Nexus SMM – Best Social Media Marketing Panel"/>
+  <meta property="og:title" content="OpulentSMM – Premium Social Media Growth Platform"/>
   <meta property="og:description" content="Buy Instagram followers, YouTube views, TikTok likes and more. Fast delivery. Starting from ₹0.09."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://nexus-smm.vercel.app"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Nexus SMM – Best SMM Panel India"/>
+  <meta name="twitter:title" content="OpulentSMM – Premium SMM Panel India"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"Nexus SMM","url":"https://nexus-smm.vercel.app","description":"India's best SMM panel for Instagram, YouTube, TikTok growth","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"English, Hindi"}}
+  {"@context":"https://schema.org","@type":"Organization","name":"OpulentSMM","url":"https://nexus-smm.vercel.app","description":"India's premium SMM panel for Instagram, YouTube, TikTok growth","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"English, Hindi"}}
   </script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -34,7 +34,7 @@
 const { useState, useEffect, useRef, useCallback } = React;
 
 /* ═══════════════════════════════════════════════════════════════
-   NEXUS SMM PLATFORM — FINAL SECURE BUILD
+   OPULENTSMM PLATFORM — FINAL SECURE BUILD
    Admin password is stored ONLY in Firebase Auth — never in code.
    To change admin password: Firebase Console → Authentication → Users
 ═══════════════════════════════════════════════════════════════ */
@@ -46,9 +46,9 @@ const ADMIN_EMAIL = "admin@opluentedge.com";
 // ── CONTACT CONFIG — update these with your real details ──────
 const WHATSAPP_NUM   = "918767282776";   // Your WhatsApp number (with country code, no +)
 const UPI_ID         = "sushantyetekar45-3@okicici";
-const UPI_NAME       = "Nexus SMM";
-const SUPPORT_EMAIL  = "support@nexus-smm.in"; // Your support email
-const BUSINESS_NAME  = "Nexus SMM";
+const UPI_NAME       = "OpulentSMM";
+const SUPPORT_EMAIL  = "support@opulentsmm.in";
+const BUSINESS_NAME  = "OpulentSMM";
 
 // Price per unit at base qty (1k). Tiered pricing shown in order form.
 // IG Followers: 1k=₹349, 5k=₹1339, 10k=₹2699, 20k=₹6999
@@ -182,7 +182,7 @@ const QUALITY_TAGS = ["High Quality","Non Drop","Refill Available"];
 const SPEED_TAGS   = ["Instant","Fast","Normal"];
 
 // Internal coupons – never shown to user, only validated on entry
-const VALID_COUPONS = { "NEXUS20":20, "SAVE10":10, "FIRST50":50 };
+const VALID_COUPONS = { "OPULENT20":20, "SAVE10":10, "FIRST50":50 };
 
 const fmt = (n) => "₹" + parseFloat(n).toFixed(2);
 
@@ -364,6 +364,7 @@ const DB = {
       userName: req.userName || req.email.split("@")[0],
       amount: Number(req.amount),
       utr: req.utr.trim(),
+      screenshot: req.screenshot || null,
       method: req.method || "UPI",
       status: "pending",
       date: req.date,
@@ -578,7 +579,8 @@ const GS = () => (
     body{background:#06060a;color:#e8e8f2;font-family:'DM Sans',sans-serif}
     ::-webkit-scrollbar{width:5px;height:5px}
     ::-webkit-scrollbar-track{background:rgba(255,255,255,.02)}
-    ::-webkit-scrollbar-thumb{background:rgba(124,58,237,.5);border-radius:4px}
+    ::-webkit-scrollbar-thumb{background:rgba(212,160,23,.4);border-radius:4px}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(212,160,23,.7)}
     input,textarea,select,button{font-family:'DM Sans',sans-serif}
     input:focus,textarea:focus{outline:none;border-color:rgba(124,58,237,.6)!important;box-shadow:0 0 0 3px rgba(124,58,237,.12)}
     @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -706,10 +708,10 @@ const StatCard = ({ icon, label, value, grad, sub }) => (
 
 const Logo = () => (
   <div style={{display:"flex",alignItems:"center",gap:9}}>
-    <div style={{width:34,height:34,borderRadius:10,background:C.gP,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,boxShadow:"0 0 18px rgba(124,58,237,.5)"}}>✦</div>
+    <div style={{width:34,height:34,borderRadius:10,background:C.gG,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,boxShadow:"0 0 18px rgba(212,160,23,.5)"}}>✦</div>
     <div>
-      <div style={{fontWeight:900,fontSize:16,fontFamily:"Syne,sans-serif",color:"#f0f0ff",letterSpacing:".01em"}}>NEXUS</div>
-      <div style={{fontSize:9,color:C.muted,letterSpacing:".1em",marginTop:-2}}>SMM PLATFORM</div>
+      <div style={{fontWeight:900,fontSize:16,fontFamily:"Syne,sans-serif",color:"#f0f0ff",letterSpacing:".01em"}}>OPULENT</div>
+      <div style={{fontSize:9,color:C.goldL,letterSpacing:".1em",marginTop:-2}}>SMM PLATFORM</div>
     </div>
   </div>
 );
@@ -749,13 +751,17 @@ const MobileBar = ({ page, setPage, isAdmin, onLogout }) => {
 
   // Admin ALL tabs shown in drawer
   const aAllItems = [
-    {id:"a-overview",  i:"📊", l:"Analytics"},
-    {id:"a-orders",    i:"📦", l:"All Orders"},
-    {id:"a-services",  i:"◇",  l:"Services"},
-    {id:"a-users",     i:"👥", l:"Users"},
-    {id:"a-coupons",   i:"🎟", l:"Coupons"},
-    {id:"a-payments",  i:"💰", l:"Payments"},
-    {id:"a-announce",  i:"📣", l:"Announcements"},
+    {id:"a-overview",   i:"📊", l:"Analytics"},
+    {id:"a-orders",     i:"📦", l:"All Orders"},
+    {id:"a-services",   i:"◇",  l:"Services"},
+    {id:"a-users",      i:"👥", l:"Users"},
+    {id:"a-coupons",    i:"🎟", l:"Coupons"},
+    {id:"a-payments",   i:"💰", l:"Payments"},
+    {id:"a-tickets",    i:"🎫", l:"Tickets"},
+    {id:"a-influencer", i:"🌟", l:"Influencers"},
+    {id:"a-announce",   i:"📣", l:"Announcements"},
+    {id:"a-suppliers",  i:"🔌", l:"Suppliers"},
+    {id:"a-markup",     i:"💹", l:"Pricing"},
   ];
 
   // Admin bottom bar: 4 quick tabs + Menu button
@@ -944,9 +950,12 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
     <div style={{background:C.bg,minHeight:"100vh"}}>
       {/* NAV */}
       <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:300,
-        background:"rgba(6,6,10,.88)",backdropFilter:"blur(24px)",borderBottom:`1px solid ${C.border}`,
+        background:"rgba(6,6,10,.88)",backdropFilter:"blur(24px)",borderBottom:`1px solid rgba(212,160,23,.15)`,
         padding:"0 5%",height:64,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-        <Logo/>
+        <div style={{display:"flex",flexDirection:"column",gap:1}}>
+          <Logo/>
+          <div style={{fontSize:8,color:C.goldL,letterSpacing:".12em",fontWeight:700,paddingLeft:43,marginTop:-2,opacity:.7}}>PREMIUM SOCIAL MEDIA GROWTH PLATFORM</div>
+        </div>
         <div style={{display:"flex",gap:8}}>
           <Btn v="ghost" onClick={goLogin} size="sm">Log In</Btn>
           <Btn onClick={goSignup} size="sm">Get Started →</Btn>
@@ -1068,7 +1077,7 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
               <span style={{fontSize:12,fontWeight:700,color:"#34d399"}}>LIVE ORDER ACTIVITY</span>
             </div>
             <h2 style={{fontFamily:"Syne,sans-serif",fontSize:30,fontWeight:900,color:"#f0f0ff",marginBottom:6}}>Orders Happening Right Now</h2>
-            <p style={{color:C.muted,fontSize:13}}>Join thousands of creators already growing with Nexus SMM</p>
+            <p style={{color:C.muted,fontSize:13}}>Join thousands of creators already growing with OpulentSMM</p>
           </div>
           <LiveActivity/>
         </div>
@@ -1090,31 +1099,36 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
         </div>
       </section>
 
-      {/* DAILY DEALS */}
+      {/* NEW USER REWARDS */}
       <section style={{padding:"60px 5%",borderTop:`1px solid ${C.border}`}}>
         <div style={{maxWidth:1100,margin:"0 auto"}}>
           <div style={{textAlign:"center",marginBottom:36}}>
-            <h2 style={{fontFamily:"Syne,sans-serif",fontSize:30,fontWeight:900,background:C.gP,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:6}}>⚡ Today's Special Deals</h2>
-            <p style={{color:C.muted,fontSize:13}}>Limited time offers — grab before they expire!</p>
+            <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(212,160,23,.12)",border:"1px solid rgba(212,160,23,.3)",borderRadius:20,padding:"6px 18px",marginBottom:14}}>
+              <span style={{fontSize:14}}>🎁</span>
+              <span style={{fontSize:11,fontWeight:800,color:C.goldL,letterSpacing:".1em"}}>NEW USER REWARDS</span>
+            </div>
+            <h2 style={{fontFamily:"Syne,sans-serif",fontSize:30,fontWeight:900,background:C.gG,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:6}}>Rewards After Your First Order</h2>
+            <p style={{color:C.muted,fontSize:13}}>Real free bonuses automatically granted when you complete your first order</p>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:16}}>
             {[
-              {icon:"📸",title:"Instagram Starter Pack",desc:"1K Followers + 5K Likes + 10K Views",price:"₹249",original:"₹499",discount:"50%",badge:"🔥 HOT"},
-              {icon:"▶️",title:"YouTube Growth Bundle",desc:"5K Views + 500 Likes + 100 Subscribers",price:"₹399",original:"₹699",discount:"43%",badge:"⚡ Fast"},
-              {icon:"✈️",title:"Telegram Boost Pack",desc:"2K Members + 10K Post Views",price:"₹349",original:"₹599",discount:"42%",badge:"💎 Value"},
+              {icon:"❤️",spend:"₹1,000",reward:"100 Free Likes or 100 Saves",type:"Post only",badge:"🟢 Starter",color:"#34d399"},
+              {icon:"🎬",spend:"₹2,000",reward:"1,000 Free Views or 1,000 Likes",type:"Reels only",badge:"🔵 Growth",color:"#60a5fa"},
+              {icon:"👥",spend:"₹3,000",reward:"1,000 Free Followers",type:"Indian followers only",badge:"💎 Premium",color:C.goldL},
             ].map((d,i)=>(
-              <Card key={i} gold style={{padding:22,position:"relative",overflow:"hidden"}}>
-                <div style={{position:"absolute",top:12,right:12,background:"#ef4444",color:"#fff",borderRadius:20,padding:"3px 10px",fontSize:10,fontWeight:800}}>{d.discount} OFF</div>
-                <div style={{fontSize:32,marginBottom:12}}>{d.icon}</div>
-                <div style={{fontWeight:800,color:"#f0f0ff",fontSize:15,marginBottom:6}}>{d.title} <span style={{fontSize:10,background:"rgba(245,200,66,.15)",color:C.goldL,borderRadius:20,padding:"2px 8px",fontWeight:700}}>{d.badge}</span></div>
-                <div style={{color:C.muted,fontSize:12,marginBottom:14,lineHeight:1.5}}>{d.desc}</div>
-                <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-                  <span style={{fontSize:22,fontWeight:900,color:C.goldL}}>{d.price}</span>
-                  <span style={{fontSize:14,color:C.muted,textDecoration:"line-through"}}>{d.original}</span>
-                </div>
-                <Btn v="gold" onClick={goSignup} style={{width:"100%",justifyContent:"center"}} size="sm">Grab Deal →</Btn>
+              <Card key={i} gold style={{padding:26,position:"relative",overflow:"hidden"}}>
+                <div style={{position:"absolute",top:0,right:0,background:"rgba(212,160,23,.15)",borderRadius:"0 16px 0 10px",padding:"4px 12px",fontSize:10,fontWeight:800,color:d.color}}>{d.badge}</div>
+                <div style={{fontSize:36,marginBottom:14}}>{d.icon}</div>
+                <div style={{fontSize:12,color:C.muted,marginBottom:6}}>Spend {d.spend} &amp; get free:</div>
+                <div style={{fontWeight:900,color:"#f0f0ff",fontSize:17,marginBottom:6,fontFamily:"Syne,sans-serif"}}>{d.reward}</div>
+                <div style={{fontSize:11,color:d.color,fontWeight:700,background:`${d.color}15`,border:`1px solid ${d.color}30`,borderRadius:20,display:"inline-block",padding:"3px 10px",marginBottom:16}}>{d.type}</div>
+                <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>Reward added automatically to your account after order completion.</div>
               </Card>
             ))}
+          </div>
+          <div style={{textAlign:"center",marginTop:24}}>
+            <Btn onClick={goSignup} size="lg">Claim Your Reward →</Btn>
+            <p style={{fontSize:11,color:C.muted,marginTop:8}}>*Rewards granted automatically after first qualifying order is completed</p>
           </div>
         </div>
       </section>
@@ -1149,7 +1163,7 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
           <div style={{fontSize:42,marginBottom:14}}>🚀</div>
           <h2 style={{fontFamily:"Syne,sans-serif",fontSize:36,fontWeight:900,marginBottom:12,
             background:C.gG,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Ready to Go Viral?</h2>
-          <p style={{color:C.muted,fontSize:15,marginBottom:32,maxWidth:400,margin:"0 auto 32px"}}>Join 1,000+ creators growing with Nexus SMM today.</p>
+          <p style={{color:C.muted,fontSize:15,marginBottom:32,maxWidth:400,margin:"0 auto 32px"}}>Join 1,000+ creators growing with OpulentSMM today.</p>
           <Btn onClick={goSignup} size="lg" style={{animation:"glow 2.5s ease infinite"}}>Create Free Account →</Btn>
         </Card>
       </section>
@@ -1193,8 +1207,8 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:20}}>
             {[
               {n:"Rahul Sharma",r:"Instagram Creator",t:"Got 5k followers in under 4 hours! Quality is amazing, they look 100% real. Will order again definitely.",stars:5,loc:"Mumbai"},
-              {n:"Priya Patel",r:"YouTube Channel",t:"Used Nexus for YouTube views and my video went viral! Their Indian views are genuine. Best SMM panel in India.",stars:5,loc:"Ahmedabad"},
-              {n:"Arjun Singh",r:"Digital Agency",t:"Managing 15+ client accounts with Nexus. Fast delivery, great prices, and the admin panel is super easy to use.",stars:5,loc:"Delhi"},
+              {n:"Priya Patel",r:"YouTube Channel",t:"Used OpulentSMM for YouTube views and my video went viral! Their Indian views are genuine. Best SMM panel in India.",stars:5,loc:"Ahmedabad"},
+              {n:"Arjun Singh",r:"Digital Agency",t:"Managing 15+ client accounts with OpulentSMM. Fast delivery, great prices, and the admin panel is super easy to use.",stars:5,loc:"Delhi"},
               {n:"Sneha Reddy",r:"TikTok Creator",t:"Ordered TikTok views and likes. My content reached 200k people in 2 days. Incredible ROI for just ₹500!",stars:5,loc:"Hyderabad"},
               {n:"Vikram Mehta",r:"Brand Manager",t:"Their Instagram package helped us grow from 2k to 20k followers in one month. Support team is very responsive.",stars:5,loc:"Pune"},
               {n:"Ananya Gupta",r:"Lifestyle Blogger",t:"Cheapest prices I've found anywhere. Payments via UPI are instant and secure. Highly recommend to all creators!",stars:5,loc:"Bangalore"},
@@ -1260,7 +1274,7 @@ const Landing = ({ goLogin, goSignup, goAdmin }) => {
           ))}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:12}}>
-          <span style={{color:C.muted,fontSize:11}}>© 2026 Nexus SMM India</span>
+          <span style={{color:C.muted,fontSize:11}}>© 2026 OpulentSMM India</span>
           <span onClick={goAdmin} style={{color:"rgba(212,160,23,.4)",fontSize:10,cursor:"pointer",fontWeight:600,letterSpacing:".04em",
             border:"1px solid rgba(212,160,23,.15)",borderRadius:20,padding:"2px 10px"}}
             onMouseEnter={e=>e.target.style.color="rgba(212,160,23,.8)"}
@@ -1468,7 +1482,7 @@ const Login = ({ goSignup, onUserLogin, onAdminLogin }) => {
       <Logo/>
       <div style={{margin:"28px 0 24px"}}>
         <h2 style={{fontFamily:"Syne,sans-serif",fontSize:26,fontWeight:900,color:"#f0f0ff",marginBottom:5}}>Welcome Back</h2>
-        <p style={{color:C.muted,fontSize:13}}>Log in to your Nexus account</p>
+        <p style={{color:C.muted,fontSize:13}}>Log in to your OpulentSMM account</p>
       </div>
       {err&&<div style={{background:"rgba(239,68,68,.1)",border:"1px solid rgba(239,68,68,.3)",borderRadius:11,padding:"12px 16px",marginBottom:18,color:"#f87171",fontSize:13}}>⚠ {err}</div>}
       {resetSent&&<div style={{background:"rgba(52,211,153,.1)",border:"1px solid rgba(52,211,153,.3)",borderRadius:11,padding:"12px 16px",marginBottom:18,color:"#34d399",fontSize:13}}>✅ Password reset email sent! Check your inbox.</div>}
@@ -2568,7 +2582,7 @@ const openRazorpay = ({ amount, userName, userEmail, onSuccess, onFail }) => {
   const load = () => {
     const options = {
       key: RAZORPAY_KEY, amount: amount*100, currency:"INR",
-      name:"Nexus SMM", description:"Wallet Top-up",
+      name:"OpulentSMM", description:"Wallet Top-up",
       handler: onSuccess,
       prefill:{ name:userName, email:userEmail },
       theme:{ color:"#7c3aed" },
@@ -2594,7 +2608,7 @@ const QRDisplay = ({ upiId, upiName, amount }) => {
   React.useEffect(()=>{
     if(!ref.current) return;
     ref.current.innerHTML = "";
-    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(upiName)}&am=${amount}&cu=INR&tn=NexusSMM`;
+    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(upiName)}&am=${amount}&cu=INR&tn=OpulentSMM`;
     try {
       new QRCode(ref.current, {
         text: upiLink,
@@ -2923,7 +2937,7 @@ const UserAddFunds = ({ balance, setBalance, setPage, setTxns, userName="User", 
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
-      <PgH title="Add Funds" sub="Top up your Nexus wallet instantly"/>
+      <PgH title="Add Funds" sub="Top up your OpulentSMM wallet instantly"/>
 
 
 
@@ -3529,7 +3543,7 @@ const UserSupport = ({ userEmail="", userName="" }) => {
             </div>
             <div style={{display:"flex",gap:10}}>
               <Btn onClick={submit} loading={submitting} style={{flex:1,justifyContent:"center"}} size="lg">Submit Ticket 🎫</Btn>
-              <Btn v="ghost" onClick={()=>window.open(`https://wa.me/${WHATSAPP_NUM}?text=Hi+Nexus+SMM+I+need+help`,"_blank")}>WhatsApp</Btn>
+              <Btn v="ghost" onClick={()=>window.open(`https://wa.me/${WHATSAPP_NUM}?text=Hi+OpulentSMM+I+need+help`,"_blank")}>WhatsApp</Btn>
             </div>
           </Card>
         </div>
@@ -3539,8 +3553,8 @@ const UserSupport = ({ userEmail="", userName="" }) => {
       {tab==="contact"&&(
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:16,maxWidth:700}}>
           {[
-            {i:"📱",t:"WhatsApp Support",s:"Fastest response — usually under 5 mins",btn:"Open WhatsApp →",action:()=>window.open(`https://wa.me/${WHATSAPP_NUM}?text=Hi Nexus SMM, I need help!`,"_blank"),grad:C.gGr},
-            {i:"📧",t:"Email Support",s:SUPPORT_EMAIL,btn:"Send Email →",action:()=>window.open(`mailto:${SUPPORT_EMAIL}?subject=Support - Nexus SMM`,"_blank"),grad:C.gB},
+            {i:"📱",t:"WhatsApp Support",s:"Fastest response — usually under 5 mins",btn:"Open WhatsApp →",action:()=>window.open(`https://wa.me/${WHATSAPP_NUM}?text=Hi OpulentSMM, I need help!`,"_blank"),grad:C.gGr},
+            {i:"📧",t:"Email Support",s:SUPPORT_EMAIL,btn:"Send Email →",action:()=>window.open(`mailto:${SUPPORT_EMAIL}?subject=Support - OpulentSMM`,"_blank"),grad:C.gB},
             {i:"🎫",t:"Open Ticket",s:"For detailed issues — reply within 1 hour",btn:"Create Ticket →",action:()=>setTab("new"),grad:C.gP},
           ].map(c=>(
             <Card key={c.t} style={{padding:26,cursor:"pointer"}} onClick={c.action}>
@@ -3651,7 +3665,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
-      <PgH title="Influencer Program" sub="Promote Nexus SMM and earn free services!"/>
+      <PgH title="Influencer Program" sub="Promote OpulentSMM and earn free services!"/>
 
       {/* Level showcase */}
       <Card gold style={{padding:22,marginBottom:24}}>
@@ -3809,8 +3823,8 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
           <Card style={{padding:20,marginTop:16}}>
             <h4 style={{fontWeight:800,color:"#e8e8f2",marginBottom:12}}>📋 How to Qualify</h4>
             {[
-              "Create content mentioning Nexus SMM (story, reel, video or post)",
-              "Include our website link nexus-smm.vercel.app in your bio or post",
+              "Create content mentioning OpulentSMM (story, reel, video or post)",
+              "Include our website link in your bio or post",
               "Submit the proof link and your follower count above",
               "Admin reviews within 24 hours and sends your reward",
               "Rewards are added to your wallet as free service credits",
@@ -3837,7 +3851,7 @@ const UserProfile = ({ userName, userEmail, balance, orders, onLogout }) => {
   const [affiliate,setAffiliate]=useState(true);
   const [saved,setSaved]=useState(false);
   const [copied,setCopied]=useState(false);
-  const refCode=React.useMemo(()=>`NEXUS-${((userName||"USER").slice(0,4)).toUpperCase()}${(userEmail.charCodeAt(0)*37+userEmail.length*13+1000)%9000+1000}`,[userEmail,userName]);
+  const refCode=React.useMemo(()=>`OPULENT-${((userName||"USER").slice(0,4)).toUpperCase()}${(userEmail.charCodeAt(0)*37+userEmail.length*13+1000)%9000+1000}`,[userEmail,userName]);
 
   const comp=orders.filter(o=>o.status==="Completed").length;
   const spent=orders.reduce((s,o)=>s+o.price,0);
@@ -4018,7 +4032,7 @@ const AdminLogin = ({ onAdminLogin, goBack }) => {
             <h2 style={{fontFamily:"Syne,sans-serif",fontSize:26,fontWeight:900,color:"#f0f0ff",marginBottom:5}}>
               Admin Panel
             </h2>
-            <p style={{color:C.muted,fontSize:13}}>Nexus SMM — Control Center</p>
+            <p style={{color:C.muted,fontSize:13}}>OpulentSMM — Control Center</p>
           </div>
 
           <div style={{background:"rgba(212,160,23,.07)",border:"1px solid rgba(212,160,23,.2)",
@@ -4114,6 +4128,8 @@ const AdminDash = ({ onLogout }) => {
       case "a-announce":  return <AdminAnnounce announcements={announcements} setAnnouncements={(list)=>{ setAnnouncements(list); DB.setAnnounce(list); }}/>;
       case "a-suppliers": return <AdminSuppliers/>;
       case "a-markup":    return <AdminMarkup/>;
+      case "a-tickets":   return <AdminTickets/>;
+      case "a-influencer":return <AdminInfluencer/>;
       default:            return <AdminOverview orders={orders} users={USERS}/>;
     }
   };
@@ -4161,7 +4177,7 @@ const AdminDash = ({ onLogout }) => {
           marginBottom:24,paddingBottom:18,borderBottom:`1px solid ${C.border}`}}>
           <div>
             <div style={{fontSize:10,color:C.muted,letterSpacing:".08em"}}>ADMIN CONTROL CENTER</div>
-            <div style={{fontFamily:"Syne,sans-serif",fontSize:16,fontWeight:800,color:C.goldL,marginTop:2}}>Nexus SMM Platform</div>
+            <div style={{fontFamily:"Syne,sans-serif",fontSize:16,fontWeight:800,color:C.goldL,marginTop:2}}>OpulentSMM Platform</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:10}}>
             <div style={{padding:"6px 14px",background:"rgba(16,185,129,.1)",border:"1px solid rgba(16,185,129,.25)",
@@ -4190,6 +4206,25 @@ const AdminDash = ({ onLogout }) => {
 // ─── Admin: Overview ──────────────────────────────────────────
 const AdminOverview = ({ orders, users=[], refresh, lastRefresh }) => {
   const USERS=users;
+  const [pendingDeps,setPendingDeps]=useState(0);
+  const [pendingTickets,setPendingTickets]=useState(0);
+  const [pendingInfluencers,setPendingInfluencers]=useState(0);
+
+  useEffect(()=>{
+    // Load pending counts for overview badges
+    DB.getDepositRequestsFromFirebase().then(deps=>{
+      setPendingDeps(deps.filter(d=>d.status==="pending").length);
+    }).catch(()=>{});
+    getFS().then(async fs=>{
+      if(!fs) return;
+      try{
+        const tSnap=await fs.collection("tickets").where("status","==","Open").get();
+        setPendingTickets(tSnap.size);
+        const iSnap=await fs.collection("influencers").where("status","==","Pending").get();
+        setPendingInfluencers(iSnap.size);
+      }catch{}
+    });
+  },[]);
   const total=orders.reduce((s,o)=>s+o.price,0);
   const active=orders.filter(o=>["Processing","Pending"].includes(o.status)).length;
   const done=orders.filter(o=>o.status==="Completed").length;
@@ -4229,9 +4264,11 @@ const AdminOverview = ({ orders, users=[], refresh, lastRefresh }) => {
         {[
           {i:"🟢",l:"Platform Status",v:"All Systems Live",c:"#34d399"},
           {i:"👥",l:"Registered Users",v:String(USERS?.length||0),c:"#c4b5fd"},
-          {i:"⚡",l:"Orders Today",v:`${orders.length}`,c:"#60a5fa"},
-          {i:"💰",l:"Revenue Today",v:fmt(total),c:C.goldL},
-          {i:"📦",l:"Pending",v:`${active}`,c:"#fbbf24"},
+          {i:"📦",l:"Orders Today",v:`${orders.length}`,c:"#60a5fa"},
+          {i:"💰",l:"Revenue Total",v:fmt(total),c:C.goldL},
+          {i:"⏳",l:"Pending Deposits",v:`${pendingDeps}`,c:pendingDeps>0?"#fbbf24":"#34d399"},
+          {i:"🎫",l:"Open Tickets",v:`${pendingTickets}`,c:pendingTickets>0?"#f87171":"#34d399"},
+          {i:"🌟",l:"Influencer Reviews",v:`${pendingInfluencers}`,c:pendingInfluencers>0?"#a855f7":"#34d399"},
         ].map(s=>(
           <div key={s.l} style={{flexShrink:0,padding:"10px 16px",background:"rgba(255,255,255,.03)",
             border:`1px solid ${C.border}`,borderRadius:11,display:"flex",alignItems:"center",gap:10}}>
@@ -4862,22 +4899,60 @@ const AdminUsers = () => {
 
 // ─── Admin: Coupons ───────────────────────────────────────────
 const AdminCoupons = () => {
-  const [coupons,setCoupons]=useState([
-    {code:"NEXUS20",disc:20,limit:100,used:0,expires:"2026-12-31"},
-    {code:"SAVE10", disc:10,limit:500,used:0,expires:"2026-12-31"},
-    {code:"FIRST50",disc:50,limit:50, used:0,expires:"2026-12-31"},
-  ]);
+  const [coupons,setCoupons]=useState([]);
+  const [loading,setLoading]=useState(true);
   const [form,setForm]=useState({code:"",disc:"",limit:"",expires:""});
   const F=(k,v)=>setForm(f=>({...f,[k]:v}));
-  const add=()=>{
-    if(!form.code||!form.disc) return;
-    setCoupons(c=>[...c,{...form,disc:parseInt(form.disc),limit:parseInt(form.limit)||100,used:0}]);
+
+  // Load from Firebase on mount
+  useEffect(()=>{
+    getFS().then(fs=>{
+      if(!fs){
+        setCoupons([
+          {code:"OPULENT20",disc:20,limit:100,used:0,expires:"2026-12-31"},
+          {code:"SAVE10",disc:10,limit:500,used:0,expires:"2026-12-31"},
+          {code:"FIRST50",disc:50,limit:50,used:0,expires:"2026-12-31"},
+        ]);
+        setLoading(false); return;
+      }
+      fs.collection("config").doc("coupons").get().then(snap=>{
+        if(snap.exists && snap.data().list?.length>0){
+          setCoupons(snap.data().list);
+        } else {
+          const defaults=[
+            {code:"OPULENT20",disc:20,limit:100,used:0,expires:"2026-12-31"},
+            {code:"SAVE10",disc:10,limit:500,used:0,expires:"2026-12-31"},
+            {code:"FIRST50",disc:50,limit:50,used:0,expires:"2026-12-31"},
+          ];
+          setCoupons(defaults);
+          fs.collection("config").doc("coupons").set({list:defaults}).catch(console.error);
+        }
+        setLoading(false);
+      }).catch(()=>setLoading(false));
+    });
+  },[]);
+
+  const saveCoupons=async(list)=>{
+    setCoupons(list);
+    try{
+      const fs=await getFS(); if(!fs) return;
+      await fs.collection("config").doc("coupons").set({list});
+    }catch(e){ console.error("Save coupons failed:",e); }
+  };
+
+  const add=async()=>{
+    if(!form.code||!form.disc){ Toast.error("Code and discount % are required"); return; }
+    if(coupons.find(c=>c.code.toUpperCase()===form.code.toUpperCase())){ Toast.error("Coupon code already exists"); return; }
+    const newList=[...coupons,{code:form.code.toUpperCase(),disc:parseInt(form.disc),limit:parseInt(form.limit)||100,used:0,expires:form.expires||"2026-12-31"}];
+    await saveCoupons(newList);
     setForm({code:"",disc:"",limit:"",expires:""});
+    Toast.success("✅ Coupon created and saved!");
   };
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Coupon System" sub="Manage discount codes (codes are hidden from users)"/>
+      {loading?<CardSkel/>:(
       <div className="two-col" style={{display:"grid",gridTemplateColumns:"1fr 340px",gap:22}}>
         <Card style={{padding:22}}>
           <div style={{overflowX:"auto"}}>
@@ -4896,22 +4971,24 @@ const AdminCoupons = () => {
                     <td style={{padding:"11px 12px"}}><span style={{background:"rgba(16,185,129,.1)",color:"#34d399",border:"1px solid rgba(16,185,129,.3)",borderRadius:6,padding:"3px 9px",fontWeight:800,fontSize:11}}>{c.disc}% OFF</span></td>
                     <td style={{padding:"11px 12px",color:C.muted}}>{c.used} / {c.limit}</td>
                     <td style={{padding:"11px 12px",color:C.muted,fontSize:11}}>{c.expires}</td>
-                    <td style={{padding:"11px 12px"}}><button onClick={()=>setCoupons(x=>x.filter((_,j)=>j!==i))} style={{background:"rgba(239,68,68,.12)",border:"1px solid rgba(239,68,68,.3)",borderRadius:6,padding:"4px 10px",color:"#f87171",fontSize:10,fontWeight:700,cursor:"pointer"}}>Delete</button></td>
+                    <td style={{padding:"11px 12px"}}><button onClick={()=>saveCoupons(coupons.filter((_,j)=>j!==i))} style={{background:"rgba(239,68,68,.12)",border:"1px solid rgba(239,68,68,.3)",borderRadius:6,padding:"4px 10px",color:"#f87171",fontSize:10,fontWeight:700,cursor:"pointer"}}>Delete</button></td>
                   </tr>
                 ))}
+                {coupons.length===0&&<tr><td colSpan={5} style={{padding:24,textAlign:"center",color:C.muted,fontSize:12}}>No coupons yet — create one →</td></tr>}
               </tbody>
             </table>
           </div>
         </Card>
         <Card gold style={{padding:26}}>
           <h3 style={{fontWeight:800,color:"#e8e8f2",marginBottom:20,fontSize:15}}>Create Coupon</h3>
-          {[{l:"Coupon Code",k:"code",ph:"PROMO25"},{l:"Discount %",k:"disc",ph:"25"},{l:"Usage Limit",k:"limit",ph:"100"},{l:"Expiry Date",k:"expires",ph:"2025-12-31"}].map(({l,k,ph})=>(
+          {[{l:"Coupon Code",k:"code",ph:"PROMO25"},{l:"Discount %",k:"disc",ph:"25"},{l:"Usage Limit",k:"limit",ph:"100"},{l:"Expiry Date",k:"expires",ph:"2026-12-31"}].map(({l,k,ph})=>(
             <Inp key={k} label={l} value={form[k]} onChange={e=>F(k,e.target.value)} placeholder={ph}/>
           ))}
           <Btn v="gold" onClick={add} style={{width:"100%",justifyContent:"center"}}>🎟 Create Coupon</Btn>
           <p style={{fontSize:11,color:C.muted,marginTop:12,textAlign:"center"}}>Codes are only visible here — never shown to users</p>
         </Card>
       </div>
+      )}
     </div>
   );
 };
@@ -5252,7 +5329,7 @@ const AdminTickets = () => {
 
 // ─── SEO Tools (sitemap + robots) ────────────────────────────
 const SEOTools = () => {
-  const siteUrl = "https://nexus-smm.vercel.app";
+  const siteUrl = "https://opulentsmm.vercel.app";
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${siteUrl}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
