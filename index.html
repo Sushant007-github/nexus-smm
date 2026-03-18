@@ -34,29 +34,35 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
+  <!-- Loading screen shown while Babel compiles JSX (prevents white screen) -->
+  <div id="app-loader" style="position:fixed;inset:0;background:#06060a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;font-family:sans-serif;">
+    <div style="width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#d4a017);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px;box-shadow:0 0 32px rgba(212,160,23,.4);">✦</div>
+    <div style="font-size:18px;font-weight:800;color:#f0f0ff;letter-spacing:.05em;margin-bottom:8px;">OpulentSMM</div>
+    <div style="font-size:12px;color:#6b7280;margin-bottom:24px;">Premium Social Media Growth</div>
+    <div style="width:40px;height:40px;border:3px solid rgba(212,160,23,.2);border-top-color:#d4a017;border-radius:50%;animation:spin .8s linear infinite;"></div>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+  </div>
   <div id="root"></div>
+  <script>
+    // Hide loader once React has mounted
+    const _hideLoader = () => {
+      const l = document.getElementById('app-loader');
+      if(l) { l.style.opacity='0'; l.style.transition='opacity .4s'; setTimeout(()=>l.remove(),400); }
+    };
+    // Fallback: hide after 12 seconds no matter what
+    setTimeout(_hideLoader, 12000);
+  </script>
   <script type="text/babel" data-presets="react">
 const { useState, useEffect, useRef, useCallback } = React;
 
-/* ═══════════════════════════════════════════════════════════════
-   OPULENTSMM PLATFORM — FINAL SECURE BUILD
-   Admin password is stored ONLY in Firebase Auth — never in code.
-   To change admin password: Firebase Console → Authentication → Users
-═══════════════════════════════════════════════════════════════ */
-
-// Admin email — only this email gets admin access after Firebase login
 const ADMIN_EMAIL = "admin@opluentedge.com";
-// NO password stored here — Firebase Auth handles it securely
 
-// ── CONTACT CONFIG — update these with your real details ──────
-const WHATSAPP_NUM   = "918767282776";   // Your WhatsApp number (with country code, no +)
+const WHATSAPP_NUM   = "918767282776";
 const UPI_ID         = "sushantyetekar45-3@okicici";
 const UPI_NAME       = "OpulentSMM";
 const SUPPORT_EMAIL  = "support@opulentsmm.in";
 const BUSINESS_NAME  = "OpulentSMM";
 
-// ─── Referral / Influencer Tracking ──────────────────────────
-// Captures ?ref= param from URL and stores in localStorage
 const captureReferral = () => {
   try {
     const params = new URLSearchParams(window.location.search);
@@ -68,14 +74,10 @@ const captureReferral = () => {
 };
 const getReferral = () => { try { return localStorage.getItem("opulent_ref")||""; } catch{ return ""; } };
 const clearReferral = () => { try { localStorage.removeItem("opulent_ref"); } catch{} };
-captureReferral(); // Run immediately on page load
+captureReferral();
 
-// Price per unit at base qty (1k). Tiered pricing shown in order form.
-// IG Followers: 1k=₹349, 5k=₹1339, 10k=₹2699, 20k=₹6999
-// IG Views:     1k=₹100, 5k=₹479,  10k=₹799,  20k=₹1998
-// IG Likes:     1k=₹100, 5k=₹250,  10k=₹500,  20k=₹1800
 const SERVICES = [
-  // ── INSTAGRAM ────────────────────────────────────────────────────
+
   { id:1, platform:"Instagram", icon:"📸", name:"Instagram Followers – Indian Stable",
     desc:"100% Indian stable followers. Gradual natural delivery. No-drop guarantee for 30 days. Safe for all account types.",
     speed:"0–12 hrs", min:1000, max:100000, cat:"Followers", badge:"🔥 Best Seller",
@@ -116,7 +118,7 @@ const SERVICES = [
     speed:"0–3 hrs", min:500, max:20000, price:0.15, cat:"Engagement",
     quality:["High Quality"], speedTag:"Normal" },
 
-  // ── YOUTUBE ──────────────────────────────────────────────────────
+
   { id:8, platform:"YouTube", icon:"▶️", name:"YouTube Views – Indian HQ",
     desc:"High-retention Indian views with watch time boost. Helps reach monetization thresholds faster.",
     speed:"1–24 hrs", min:1000, max:500000, cat:"Views", badge:"🏆 Top Rated",
@@ -133,7 +135,7 @@ const SERVICES = [
     speed:"1–12 hrs", min:100, max:50000, price:1.20, cat:"Likes",
     quality:["High Quality"], speedTag:"Fast" },
 
-  // ── TELEGRAM ─────────────────────────────────────────────────────
+
   { id:11, platform:"Telegram", icon:"✈️", name:"Telegram Members – Indian",
     desc:"Real Indian members for your Telegram channel or group. Boosts credibility and trust.",
     speed:"0–12 hrs", min:100, max:200000, cat:"Members", badge:"🇮🇳 Indian",
@@ -145,7 +147,7 @@ const SERVICES = [
     speed:"0–30 min", min:500, max:500000, price:0.05, cat:"Views",
     quality:["High Quality"], speedTag:"Instant" },
 
-  // ── TIKTOK ───────────────────────────────────────────────────────
+
   { id:13, platform:"TikTok", icon:"🎵", name:"TikTok Views – Worldwide",
     desc:"Push content to For You pages worldwide. Fast delivery, no password needed.",
     speed:"0–6 hrs", min:1000, max:1000000, price:0.09, cat:"Views",
@@ -161,7 +163,7 @@ const SERVICES = [
     speed:"0–2 hrs", min:100, max:100000, price:0.50, cat:"Likes",
     quality:["High Quality"], speedTag:"Instant" },
 
-  // ── FACEBOOK ─────────────────────────────────────────────────────
+
   { id:16, platform:"Facebook", icon:"👍", name:"Facebook Page Likes – Indian",
     desc:"Indian page likes for your Facebook business page. Looks 100% natural and organic.",
     speed:"1–48 hrs", min:100, max:50000, price:1.10, cat:"Likes",
@@ -172,7 +174,7 @@ const SERVICES = [
     speed:"0–6 hrs", min:100, max:20000, price:0.80, cat:"Likes",
     quality:["High Quality"], speedTag:"Fast" },
 
-  // ── TWITTER ──────────────────────────────────────────────────────
+
   { id:18, platform:"Twitter", icon:"🐦", name:"Twitter / X Followers",
     desc:"Boost your credibility with a higher follower count. Gradual natural delivery.",
     speed:"1–24 hrs", min:100, max:50000, price:1.80, cat:"Followers",
@@ -186,7 +188,6 @@ const SERVICES = [
 
 const PLATFORMS = ["All","Instagram","YouTube","TikTok","Telegram","Facebook","Twitter"];
 
-// ─── Service Badge Config ─────────────────────────────────────
 const BADGE_CONFIG = {
   "🔥 Best Seller":   { bg:"rgba(239,68,68,.15)",   color:"#f87171",  border:"rgba(239,68,68,.3)",   icon:"🔥" },
   "⚡ Instant":       { bg:"rgba(52,211,153,.15)",  color:"#34d399",  border:"rgba(52,211,153,.3)",  icon:"⚡" },
@@ -201,20 +202,16 @@ const SERVICE_CATS = ["All","Followers","Likes","Views","Comments","Members","En
 const QUALITY_TAGS = ["High Quality","Non Drop","Refill Available"];
 const SPEED_TAGS   = ["Instant","Fast","Normal"];
 
-// Internal coupons – never shown to user, only validated on entry
 const VALID_COUPONS = { "OPULENT20":20, "SAVE10":10, "FIRST50":50 };
 
 const fmt = (n) => "₹" + parseFloat(n).toFixed(2);
 
-// ─── Marketing Config ─────────────────────────────────────────
-const FIRST_DEPOSIT_BONUS_PCT = 20; // 20% bonus on first deposit
-const REFERRAL_COMMISSION_PCT = 5;  // 5% commission on referrals
-const FREE_TRIAL_AMOUNT = 10;       // ₹10 free trial credit for new signups
+const FIRST_DEPOSIT_BONUS_PCT = 20;
+const REFERRAL_COMMISSION_PCT = 5;
+const FREE_TRIAL_AMOUNT = 10;
 
-// ─── Influencer Level System (Performance-Based) ─────────────
-// ACTIVE USER = totalDeposit >= 100 OR totalOrders >= 1
-const ACTIVE_USER_MIN_DEPOSIT = 100; // ₹100 minimum deposit to count as active
-const ACTIVE_USER_MIN_ORDERS  = 1;   // OR at least 1 order
+const ACTIVE_USER_MIN_DEPOSIT = 100;
+const ACTIVE_USER_MIN_ORDERS  = 1;
 
 const INFLUENCER_LEVELS = [
   { level:"Bronze",  icon:"🥉", minFollowers:1000,   minActiveUsers:5,    reward:"50 Free Followers",   rewardQty:50,   rewardType:"followers", color:"#cd7f32", bg:"rgba(205,127,50,.15)",  border:"rgba(205,127,50,.3)"  },
@@ -225,7 +222,6 @@ const INFLUENCER_LEVELS = [
   { level:"VVIP",    icon:"💫", minFollowers:500000, minActiveUsers:1000, reward:"3000 Free Followers", rewardQty:3000, rewardType:"followers", color:"#f5c842", bg:"rgba(245,200,66,.15)",   border:"rgba(245,200,66,.3)"  },
 ];
 
-// Helper: get active level for given followers + activeUsers count
 const getInfluencerLevel = (followers, activeUsers) => {
   const f = parseInt(followers)||0;
   const a = parseInt(activeUsers)||0;
@@ -233,7 +229,6 @@ const getInfluencerLevel = (followers, activeUsers) => {
   return eligible.length > 0 ? eligible[eligible.length-1] : null;
 };
 
-// Helper: get next level target
 const getNextInfluencerLevel = (followers, activeUsers) => {
   const f = parseInt(followers)||0;
   const a = parseInt(activeUsers)||0;
@@ -243,8 +238,7 @@ const getNextInfluencerLevel = (followers, activeUsers) => {
   return idx < INFLUENCER_LEVELS.length-1 ? INFLUENCER_LEVELS[idx+1] : null;
 };
 
-// ── Wipe any old localStorage data once ──────────────────────
-(()=>{ try{ Object.keys(localStorage).filter(k=>k.startsWith("nx_")).forEach(k=>localStorage.removeItem(k)); }catch{} })();
+(()=>{ try{ Object.keys(localStorage).filter(k=>k.startsWith("nx_") && k !== "opulent_ref").forEach(k=>localStorage.removeItem(k)); }catch{} })();
 const uid = () => "ORD-" + String(Math.floor(Math.random()*9000)+1000);
 const today = () => new Date().toISOString().slice(0,10);
 const sanitize = (str) => String(str||"").replace(/<[^>]*>/g,"").replace(/[<>"'&]/g,"").trim().slice(0,500);
@@ -526,7 +520,6 @@ const DB = {
     getFS().then(fs=>{ if(fs) fs.collection("config").doc("announcements").set({list}).catch(console.error); });
   },
 };
-
 
 // ─── Toast / Notification System ─────────────────────────────
 let _toastCb = null;
@@ -1014,7 +1007,6 @@ const PgH = ({ title, sub, action }) => (
     {action&&<div>{action}</div>}
   </div>
 );
-
 
 // ─── Live Activity Feed ────────────────────────────────────────
 const LIVE_ACTIVITIES = [
@@ -1528,7 +1520,7 @@ const Landing = ({ goLogin, goSignup }) => {
         </div>
       </section>
 
-      {/* ── TRUST BADGES ─────────────────────────────────────── */}
+      {}
       <section style={{padding:"48px 6%",background:"rgba(255,255,255,.012)",borderTop:`1px solid ${C.border}`}}>
         <div style={{maxWidth:1100,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"center",gap:10,flexWrap:"wrap",marginBottom:28}}>
@@ -1554,7 +1546,7 @@ const Landing = ({ goLogin, goSignup }) => {
         </div>
       </section>
 
-      {/* ── FAQ ──────────────────────────────────────────────── */}
+      {}
       <section style={{padding:"80px 6%",borderTop:`1px solid ${C.border}`}}>
         <div style={{maxWidth:700,margin:"0 auto"}}>
           <h2 style={{fontFamily:"Syne,sans-serif",fontSize:30,fontWeight:900,color:"#f0f0ff",marginBottom:36,textAlign:"center",letterSpacing:"-.02em"}}>
@@ -1586,7 +1578,7 @@ const Landing = ({ goLogin, goSignup }) => {
         </div>
       </section>
 
-      {/* ── FOOTER ───────────────────────────────────────────── */}
+      {}
       <footer style={{borderTop:"1px solid rgba(124,58,237,.1)",padding:"28px 6%",
         display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:14}}>
         <Logo/>
@@ -1621,7 +1613,7 @@ const SvcCard = ({ svc, onOrder }) => {
       background:"linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02))",
       border:`1px solid ${svc.badge?"rgba(124,58,237,.25)":C.border}`,borderRadius:16,padding:22,
       backdropFilter:"blur(20px)",boxShadow:"0 4px 32px rgba(0,0,0,.4)",position:"relative",overflow:"hidden"}}>
-      {/* Badge ribbon top-right */}
+      {}
       {badgeStyle&&(
         <div style={{position:"absolute",top:0,right:0,background:badgeStyle.bg,
           border:`1px solid ${badgeStyle.border}`,borderRadius:"0 16px 0 10px",
@@ -1633,7 +1625,7 @@ const SvcCard = ({ svc, onOrder }) => {
         <div style={{flex:1,paddingRight:badgeStyle?40:10}}>
           <div style={{fontSize:10,color:C.purpleL,fontWeight:800,letterSpacing:".08em",marginBottom:4}}>{svc.platform} · {svc.cat}</div>
           <div style={{fontWeight:700,fontSize:15,color:"#e8e8f2",lineHeight:1.3,marginBottom:6}}>{svc.name}</div>
-          {/* Speed tag inline */}
+          {}
           <span style={{fontSize:9,padding:"2px 8px",borderRadius:20,fontWeight:700,background:speedBg,color:speedC,border:`1px solid ${speedC}25`}}>
             {svc.speedTag==="Instant"?"⚡ Instant Start":svc.speedTag==="Fast"?"🚀 Fast Delivery":"🔄 Normal Delivery"}
           </span>
@@ -1659,9 +1651,6 @@ const SvcCard = ({ svc, onOrder }) => {
   );
 };
 
-// ═══════════════════════════════════════════════════════════════
-//  AUTH — SIGNUP
-// ═══════════════════════════════════════════════════════════════
 const Signup = ({ goLogin, onSuccess }) => {
   const [form,setForm]=useState({name:"",email:"",password:"",confirm:""});
   const [errs,setErrs]=useState({});
@@ -1689,7 +1678,7 @@ const Signup = ({ goLogin, onSuccess }) => {
         const cred = await auth.createUserWithEmailAndPassword(form.email, form.password);
         await cred.user.sendEmailVerification();
         const referralCode = getReferral();
-        // Save user to DB with referral
+
         DB.addUser({
           id:"USR-"+Date.now(),
           name:form.name,
@@ -1701,7 +1690,7 @@ const Signup = ({ goLogin, onSuccess }) => {
           referral: referralCode,
           referredBy: referralCode,
         });
-        if(referralCode) clearReferral(); // clear after successful use
+        if(referralCode) clearReferral();
         setLoading(false);
         setDone(true);
       }
@@ -1754,10 +1743,6 @@ const Signup = ({ goLogin, onSuccess }) => {
   );
 };
 
-// ─── Firebase Auth Helper ─────────────────────────────────────
-
-
-// ─── Auth — LOGIN ─────────────────────────────────────────────
 const Login = ({ goSignup, onUserLogin, onAdminLogin }) => {
   const [form,setForm]=useState({email:"",password:""});
   const [err,setErr]=useState("");
@@ -1774,7 +1759,7 @@ const Login = ({ goSignup, onUserLogin, onAdminLogin }) => {
       if(!auth){ setLoading(false); setErr("Login service unavailable. Please try again."); return; }
       const cred = await auth.signInWithEmailAndPassword(form.email, form.password);
       setLoading(false);
-      // Check if this is the admin account — password verified by Firebase, never in code
+
       if(cred.user.email.toLowerCase().trim() === ADMIN_EMAIL.toLowerCase()) {
         onAdminLogin();
       } else {
@@ -1830,9 +1815,6 @@ const AuthWrap = ({ children }) => (
   </div>
 );
 
-// ═══════════════════════════════════════════════════════════════
-//  USER DASHBOARD
-// ═══════════════════════════════════════════════════════════════
 const UserDash = ({ userName, userEmail, onLogout }) => {
   const [page,setPage]=useState("overview");
   const [orders,setOrders]=useState([]);
@@ -1842,24 +1824,24 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
   const [showProfile,setShowProfile]=useState(false);
   const [dashLoading,setDashLoading]=useState(false);
 
-  // ── Back button: push history on page change ─────────────
+
   const goPage = React.useCallback((p) => {
     window.history.pushState({screen:"user", page:p},"",window.location.pathname);
     setPage(p);
   }, []);
 
-  // ── Listen to popstate inside dashboard ──────────────────
+
   useEffect(()=>{
-    // Set initial state for current page
+
     window.history.replaceState({screen:"user", page:"overview"},"",window.location.pathname);
 
     const handlePop=(e)=>{
       const state = e.state||{};
       if(state.screen==="user"){
-        // Go to the previous dashboard page
+
         setPage(state.page||"overview");
       } else if(state.screen==="landing"||!state.screen){
-        // Back pressed from first page of dashboard — go to overview, don't leave site
+
         window.history.pushState({screen:"user",page:"overview"},"",window.location.pathname);
         setPage("overview");
       }
@@ -1868,15 +1850,15 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
     return()=>window.removeEventListener("popstate", handlePop);
   },[]);
 
-  // Load everything fresh from Firebase on login
+
   useEffect(()=>{
     let mounted = true;
     const loadAll = async () => {
       try {
-        // Load balance
+
         const bal = await DB.getBalanceFromFirebase(userEmail);
         if(mounted && bal !== null && bal !== undefined) setBalance(bal);
-        // Load orders (only this user's)
+
         const allOrders = await DB.getOrdersFromFirebase();
         const normEmail = (userEmail||"").toLowerCase().trim();
         if(mounted) setOrders(allOrders.filter(o=>(o.userEmail||"").toLowerCase().trim()===normEmail));
@@ -1885,7 +1867,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
     };
     loadAll();
 
-    // Poll balance + notify on change
+
     let prevBal = null;
     const poll = async () => {
       try {
@@ -1904,7 +1886,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
     return () => { mounted=false; clearInterval(iv); };
   },[userEmail]);
 
-  // Background order status sync every 5 minutes
+
   useEffect(()=>{
     if(!userEmail) return;
     const checkOrderStatuses = async() => {
@@ -1933,7 +1915,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
                 .then(snap=>snap.forEach(d=>d.ref.update({status:newStatus})));
               if(newStatus==="Completed"){
                 Toast.success(`✅ Order ${order.id} completed!`);
-                // Push notification
+
                 try{
                   const nid="NOTIF-"+Date.now();
                   await (await getFS())?.collection("notifications").doc(nid).set({
@@ -1953,18 +1935,18 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
     return ()=>clearInterval(statusIv);
   },[userEmail]);
 
-  // Sync balance to DB whenever it changes
+
   const setBalanceSync=(val)=>{
     const n=typeof val==="function"?val(balance):val;
     setBalance(n);
     DB.updateUserBalance(userEmail,n);
   };
-  // Sync orders to DB when placed + auto-submit to supplier
+
   const addOrderSync=async(newOrder)=>{
     const withUser={...newOrder,userEmail,userName,status:"Processing"};
     DB.addOrder(withUser);
     Toast.success("✦ Order placed! Processing now...");
-    // Try to auto-submit to supplier
+
     try{
       const fs = await getFS();
       if(fs){
@@ -1974,7 +1956,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
         if(activeSupplier && newOrder.supplierServiceId){
           const result = await SupplierAPI.addOrder(activeSupplier, newOrder.supplierServiceId, newOrder.link, newOrder.qty);
           if(result?.order){
-            // Update order with supplier order ID
+
             const fs2 = await getFS();
             if(fs2) fs2.collection("orders").where("id","==",newOrder.id).get()
               .then(snap=>snap.forEach(d=>d.ref.update({supplierOrderId:result.order,status:"Processing"})));
@@ -1982,12 +1964,12 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
         }
       }
     }catch(e){ console.error("Supplier submit failed:",e); }
-    // Reload from Firebase
+
     const allOrders = await DB.getOrdersFromFirebase();
     const normEmail = (userEmail||"").toLowerCase().trim();
     setOrders(allOrders.filter(o=>(o.userEmail||"").toLowerCase().trim()===normEmail));
   };
-  // Sync txns to DB
+
   const addTxnSync=(txn)=>{
     const withUser={...txn,email:userEmail,userName};
     DB.addTxn(withUser);
@@ -2023,14 +2005,14 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
 
   return (
     <div style={{display:"flex",minHeight:"100vh",background:C.bg}}>
-      {/* SIDEBAR */}
+      {}
       <aside className="sidebar" style={{width:224,minHeight:"100vh",
         background:"linear-gradient(180deg,#09090f 0%,#06060a 100%)",
         borderRight:`1px solid ${C.border}`,padding:"22px 13px",
         display:"flex",flexDirection:"column",position:"fixed",left:0,top:0,bottom:0,zIndex:100}}>
         <div style={{marginBottom:22,padding:"0 4px"}}><Logo/></div>
 
-        {/* User info card */}
+        {}
         <div style={{marginBottom:20,padding:"12px 14px",background:"rgba(255,255,255,.03)",
           borderRadius:13,border:`1px solid ${C.border}`,cursor:"pointer"}}
           onClick={()=>setPage("settings")}>
@@ -2061,7 +2043,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
         </button>
       </aside>
 
-      {/* MAIN */}
+      {}
       <main className="dash-main" style={{flex:1,marginLeft:224,padding:"28px 32px",minHeight:"100vh",maxWidth:"calc(100vw - 224px)"}}>
         {renderPage()}
       </main>
@@ -2071,8 +2053,6 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
   );
 };
 
-
-// ─── Notification Bell ────────────────────────────────────────
 const NotifBell = ({ userEmail, setPage }) => {
   const [notifs,setNotifs]=useState([]);
   const [open,setOpen]=useState(false);
@@ -2162,14 +2142,13 @@ const NotifBell = ({ userEmail, setPage }) => {
   );
 };
 
-// ─── User: Overview ───────────────────────────────────────────
 const UserOverview = ({ orders, balance, setPage, userName, announcements, userEmail="" }) => {
   const comp=orders.filter(o=>o.status==="Completed").length;
   const active=orders.filter(o=>["Processing","Pending"].includes(o.status)).length;
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
-      {/* Top action bar */}
+      {}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:26,flexWrap:"wrap",gap:12}}>
         <div>
           <h1 style={{fontSize:24,fontWeight:900,letterSpacing:"-.02em",color:"#f0f0ff",fontFamily:"Syne,sans-serif",marginBottom:3}}>Hey, {userName} 👋</h1>
@@ -2890,7 +2869,7 @@ const UserWallet = ({ balance, txns=[], userEmail="" }) => {
 };
 
 // ─── Payment config (internal — not shown to users) ──────────
-const RAZORPAY_KEY  = "rzp_live_SQGxB35luuFH4H";
+const RAZORPAY_KEY  = "rzp_live_SQGxB35luuFH4H"; // ⚠ Move to env variable in production
 const RAZORPAY_LIVE = true;
 
 // Loads Razorpay only when live key is set, otherwise uses built-in flow
@@ -2920,8 +2899,6 @@ const openRazorpay = ({ amount, userName, userEmail, onSuccess, onFail }) => {
   s.onerror=()=>onFail("Payment gateway unavailable. Please try UPI manually.");
   document.head.appendChild(s);
 };
-
-
 
 // ─── QR Code Display (client-side, no external image API) ────
 const QRDisplay = ({ upiId, upiName, amount }) => {
@@ -3184,7 +3161,6 @@ const PaymentUTRScreen = ({ amount, method, qrUrl, userName, userEmail, onBack, 
   );
 };
 
-
 // ─── Deposit Done Screen ──────────────────────────────────────
 const DepositDoneScreen = ({ amount, setPage }) => {
   useEffect(()=>{
@@ -3259,8 +3235,6 @@ const UserAddFunds = ({ balance, setBalance, setPage, setTxns, userName="User", 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="Add Funds" sub="Top up your OpulentSMM wallet instantly"/>
-
-
 
       <div style={{maxWidth:560}}>
         <Card gold style={{padding:30}}>
@@ -3351,7 +3325,6 @@ const UserAddFunds = ({ balance, setBalance, setPage, setTxns, userName="User", 
             ))}
           </div>
         </Card>
-
 
       </div>
     </div>
@@ -3919,7 +3892,6 @@ const FaqItem = ({ q, a }) => {
   );
 };
 
-
 // ─── User: Influencer Page ────────────────────────────────────
 const UserInfluencer = ({ userEmail="", userName="" }) => {
   const [tab,setTab]=useState("dashboard");
@@ -4134,7 +4106,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
         </div>
       </div>
 
-      {/* ── REFERRAL LINK CARD ── */}
+      {}
       <Card style={{padding:20,marginBottom:20}}>
         <div style={{fontSize:12,color:C.goldL,fontWeight:800,marginBottom:12}}>🔗 Your Referral Link</div>
         <div style={{display:"flex",gap:10,marginBottom:10,flexWrap:"wrap"}}>
@@ -4149,7 +4121,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
         <div style={{fontSize:11,color:C.muted}}>Share this link on Instagram, YouTube, WhatsApp. When someone signs up + deposits ₹{ACTIVE_USER_MIN_DEPOSIT}+ or orders, they count as active.</div>
       </Card>
 
-      {/* ── TABS ── */}
+      {}
       <div style={{display:"flex",gap:0,marginBottom:22,background:"rgba(255,255,255,.03)",
         borderRadius:11,padding:4,width:"fit-content",border:`1px solid ${C.border}`}}>
         {[
@@ -4166,12 +4138,12 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
         ))}
       </div>
 
-      {/* ── DASHBOARD TAB ── */}
+      {}
       {tab==="dashboard"&&(
         <div>
           {loading?<CardSkel/>:(
             <div style={{display:"flex",flexDirection:"column",gap:16}}>
-              {/* Level progression map */}
+              {}
               <Card style={{padding:22}}>
                 <div style={{fontSize:13,fontWeight:800,color:"#e8e8f2",marginBottom:18}}>🏆 Level Progression</div>
                 <div style={{display:"flex",flexDirection:"column",gap:12}}>
@@ -4215,7 +4187,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
                 </div>
               </Card>
 
-              {/* How to qualify */}
+              {}
               <Card style={{padding:20}}>
                 <div style={{fontSize:13,fontWeight:800,color:"#e8e8f2",marginBottom:14}}>📋 How to Qualify</div>
                 {[
@@ -4240,7 +4212,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
         </div>
       )}
 
-      {/* ── SUBMIT TAB ── */}
+      {}
       {tab==="submit"&&(
         <div style={{maxWidth:560}}>
           <Card glow style={{padding:26}}>
@@ -4265,7 +4237,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
               onChange={e=>F("link",e.target.value)} placeholder="https://instagram.com/stories/..." icon="🔗"/>
             <Inp label="Your Follower Count" type="number" value={form.followers}
               onChange={e=>F("followers",e.target.value)} placeholder="e.g. 15000" icon="👥"/>
-            {/* Live level preview */}
+            {}
             {form.followers&&!isNaN(form.followers)&&(()=>{
               const lvl=getInfluencerLevel(parseInt(form.followers), referralStats.active);
               const nextLvl=getNextInfluencerLevel(parseInt(form.followers), referralStats.active);
@@ -4293,7 +4265,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
                 style={{width:"100%",background:"rgba(255,255,255,.04)",border:`1px solid ${C.border}`,borderRadius:11,
                   padding:"11px 14px",color:C.text,fontSize:13,resize:"vertical",fontFamily:"inherit",boxSizing:"border-box"}}/>
             </div>
-            {/* Screenshot upload */}
+            {}
             <div style={{marginBottom:20}}>
               <label style={{display:"block",fontSize:11,fontWeight:700,color:C.muted,letterSpacing:".07em",marginBottom:8,textTransform:"uppercase"}}>
                 📸 Proof Screenshot <span style={{color:"#f87171"}}>*Required</span>
@@ -4329,7 +4301,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
         </div>
       )}
 
-      {/* ── HISTORY TAB ── */}
+      {}
       {tab==="history"&&(
         loading?<CardSkel/>:
         submissions.length===0?(
@@ -4375,7 +4347,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
         )
       )}
 
-      {/* ── LEVELS TAB ── */}
+      {}
       {tab==="levels"&&(
         <div>
           <div style={{background:"rgba(124,58,237,.06)",border:"1px solid rgba(124,58,237,.2)",borderRadius:12,padding:"14px 18px",marginBottom:20}}>
@@ -4423,238 +4395,6 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
     </div>
   );
 };
-
-  const handleProofImg=(e)=>{
-    const file=e.target.files[0]; if(!file) return;
-    if(file.size > 1.5*1024*1024){ Toast.error("Screenshot must be under 1.5 MB"); return; }
-    if(!file.type.startsWith("image/")){ Toast.error("Only image files allowed"); return; }
-    const reader=new FileReader();
-    reader.onload=(ev)=>{ setProofImg(ev.target.result); setProofName(file.name); };
-    reader.readAsDataURL(file);
-  };
-
-  const load=async()=>{
-    setLoading(true);
-    try{
-      const fs=await getFS(); if(!fs){setLoading(false);return;}
-      const snap=await fs.collection("influencers")
-        .where("userEmail","==",userEmail.toLowerCase().trim()).get();
-      setSubmissions(snap.docs.map(d=>({id:d.id,...d.data()}))
-        .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)));
-    }catch(e){console.error(e);}
-    setLoading(false);
-  };
-
-  useEffect(()=>{ if(userEmail) load(); },[userEmail]);
-
-  const submit=async()=>{
-    if(!form.link.trim()){Toast.error("Please enter your proof link");return;}
-    if(!form.followers||isNaN(form.followers)){Toast.error("Enter your follower count");return;}
-    setSubmitting(true);
-    try{
-      const fs=await getFS(); if(!fs) throw new Error("No connection");
-      const id="INF-"+Date.now();
-      const followers=parseInt(form.followers)||0;
-      const levelInfo=INFLUENCER_LEVELS.slice().reverse().find(l=>followers>=l.minFollowers)||INFLUENCER_LEVELS[0];
-      await fs.collection("influencers").doc(id).set({
-        id, userEmail:userEmail.toLowerCase().trim(), userName,
-        type:form.type, link:sanitize(form.link),
-        followers, notes:sanitize(form.notes),
-        proofScreenshot: proofImg||null,
-        level:levelInfo.level, reward:levelInfo.reward, rewardQty:levelInfo.rewardQty,
-        status:"Pending", createdAt:Date.now(), date:today()
-      });
-      setForm({type:"Instagram Story",link:"",followers:"",notes:""});
-      setProofImg(null); setProofName("");
-      Toast.success("✅ Promotion proof submitted! Admin will review within 24 hours.");
-      load(); setTab("history");
-    }catch(e){Toast.error("Failed: "+e.message);}
-    setSubmitting(false);
-  };
-
-  const myLevel=submissions.find(s=>s.status==="Approved");
-  const levelInfo=myLevel?INFLUENCER_LEVELS.find(l=>l.level===myLevel.level)||INFLUENCER_LEVELS[0]:null;
-  const statCol={Pending:"#fbbf24",Approved:"#34d399",Rejected:"#f87171"};
-
-  return (
-    <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
-      <PgH title="Influencer Program" sub="Promote OpulentSMM and earn free services!"/>
-
-      {/* Level showcase */}
-      <Card gold style={{padding:22,marginBottom:24}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:14}}>
-          <div>
-            <div style={{fontSize:13,color:C.muted,marginBottom:6}}>Your Current Level</div>
-            {levelInfo?(
-              <div style={{display:"flex",alignItems:"center",gap:10}}>
-                <span style={{fontSize:28}}>{levelInfo.icon}</span>
-                <div>
-                  <div style={{fontWeight:900,color:levelInfo.color,fontSize:18}}>{levelInfo.level}</div>
-                  <div style={{fontSize:12,color:C.muted}}>{levelInfo.reward}</div>
-                </div>
-              </div>
-            ):<div style={{fontWeight:700,color:C.muted,fontSize:14}}>Not verified yet — submit proof below!</div>}
-          </div>
-          <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-            {INFLUENCER_LEVELS.map(l=>(
-              <div key={l.level} style={{textAlign:"center",opacity:levelInfo?.level===l.level?1:0.4}}>
-                <div style={{fontSize:22}}>{l.icon}</div>
-                <div style={{fontSize:9,fontWeight:700,color:l.color,marginTop:2}}>{l.level}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Card>
-
-      {/* Tabs */}
-      <div style={{display:"flex",gap:0,marginBottom:22,background:"rgba(255,255,255,.03)",borderRadius:11,padding:5,width:"fit-content",border:`1px solid ${C.border}`}}>
-        {[{id:"submit",l:"Submit Proof"},{ id:"history",l:"My Submissions"},{id:"levels",l:"Level Guide"}].map(t=>(
-          <button key={t.id} onClick={()=>setTab(t.id)} style={{padding:"8px 18px",borderRadius:8,border:"none",
-            background:tab===t.id?"rgba(124,58,237,.2)":"transparent",
-            color:tab===t.id?"#c4b5fd":C.muted,fontWeight:tab===t.id?700:500,fontSize:13,cursor:"pointer"}}>{t.l}</button>
-        ))}
-      </div>
-
-      {/* SUBMIT */}
-      {tab==="submit"&&(
-        <div style={{maxWidth:560}}>
-          <Card glow style={{padding:26}}>
-            <h3 style={{fontWeight:800,color:"#e8e8f2",fontSize:15,marginBottom:18}}>📤 Submit Promotion Proof</h3>
-            <div style={{marginBottom:16}}>
-              <label style={{display:"block",fontSize:11,fontWeight:700,color:C.muted,letterSpacing:".07em",marginBottom:8,textTransform:"uppercase"}}>Promotion Type</label>
-              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-                {["Instagram Story","Instagram Reel","YouTube Video","Telegram Post","Twitter Post"].map(t=>(
-                  <button key={t} onClick={()=>F("type",t)} style={{padding:"6px 12px",borderRadius:20,border:`1px solid ${form.type===t?"rgba(124,58,237,.5)":C.border}`,background:form.type===t?"rgba(124,58,237,.15)":"transparent",color:form.type===t?"#c4b5fd":C.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>{t}</button>
-                ))}
-              </div>
-            </div>
-            <Inp label="Proof Link (story/reel/video/post URL)" value={form.link}
-              onChange={e=>F("link",e.target.value)} placeholder="https://instagram.com/stories/..." icon="🔗"/>
-            <Inp label="Your Follower Count" type="number" value={form.followers}
-              onChange={e=>F("followers",e.target.value)} placeholder="e.g. 15000" icon="👥"/>
-            <div style={{marginBottom:16}}>
-              <label style={{display:"block",fontSize:11,fontWeight:700,color:C.muted,letterSpacing:".07em",marginBottom:7,textTransform:"uppercase"}}>Additional Notes (optional)</label>
-              <textarea value={form.notes} onChange={e=>F("notes",e.target.value)} rows={3}
-                placeholder="Mention reach, impressions or any relevant info..."
-                style={{width:"100%",background:"rgba(255,255,255,.04)",border:`1px solid ${C.border}`,borderRadius:11,padding:"11px 14px",color:C.text,fontSize:13,resize:"vertical",fontFamily:"inherit",boxSizing:"border-box"}}/>
-            </div>
-            {form.followers&&!isNaN(form.followers)&&(()=>{
-              const lvl=INFLUENCER_LEVELS.slice().reverse().find(l=>parseInt(form.followers)>=l.minFollowers)||INFLUENCER_LEVELS[0];
-              return <div style={{background:lvl.bg,border:`1px solid ${lvl.color}40`,borderRadius:10,padding:"12px 16px",marginBottom:16}}>
-                <div style={{fontSize:11,color:lvl.color,fontWeight:700,marginBottom:3}}>You qualify for:</div>
-                <div style={{fontWeight:800,fontSize:15,color:lvl.color}}>{lvl.icon} {lvl.level} — {lvl.reward}</div>
-              </div>;
-            })()}
-            {/* Screenshot upload */}
-            <div style={{marginBottom:16}}>
-              <label style={{display:"block",fontSize:11,fontWeight:700,color:C.muted,letterSpacing:".07em",marginBottom:8,textTransform:"uppercase"}}>
-                📸 Upload Proof Screenshot <span style={{color:"#f87171"}}>*Required</span>
-              </label>
-              <input ref={fileRef} type="file" accept="image/*" onChange={handleProofImg} style={{display:"none"}}/>
-              {!proofImg?(
-                <div onClick={()=>fileRef.current?.click()}
-                  style={{border:`2px dashed ${C.border}`,borderRadius:12,padding:"20px 16px",textAlign:"center",cursor:"pointer",background:"rgba(255,255,255,.02)",transition:"border-color .2s"}}
-                  onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(124,58,237,.5)"}
-                  onMouseLeave={e=>e.currentTarget.style.borderColor=C.border}>
-                  <div style={{fontSize:28,marginBottom:6}}>📸</div>
-                  <div style={{fontWeight:700,color:"#e8e8f2",fontSize:12,marginBottom:3}}>Tap to upload your proof screenshot</div>
-                  <div style={{fontSize:11,color:C.muted}}>Instagram story, reel, YouTube video screenshot, etc.</div>
-                  <div style={{fontSize:10,color:C.muted,marginTop:3}}>JPG / PNG — max 1.5 MB</div>
-                </div>
-              ):(
-                <div style={{position:"relative"}}>
-                  <img src={proofImg} alt="Proof"
-                    style={{width:"100%",maxHeight:200,objectFit:"contain",borderRadius:12,border:"1px solid rgba(52,211,153,.4)",background:"rgba(0,0,0,.3)",display:"block"}}/>
-                  <div style={{position:"absolute",top:8,right:8,display:"flex",gap:6}}>
-                    <span style={{background:"rgba(52,211,153,.9)",color:"#fff",borderRadius:20,padding:"3px 10px",fontSize:10,fontWeight:700}}>✓ Ready</span>
-                    <button onClick={()=>{setProofImg(null);setProofName("");}}
-                      style={{background:"rgba(239,68,68,.85)",border:"none",borderRadius:20,padding:"3px 10px",color:"#fff",fontSize:10,fontWeight:700,cursor:"pointer"}}>✕</button>
-                  </div>
-                  <div style={{fontSize:11,color:C.muted,marginTop:6}}>📎 {proofName}</div>
-                </div>
-              )}
-              <p style={{fontSize:11,color:C.muted,marginTop:6}}>Admin will review your screenshot before approving the reward.</p>
-            </div>
-            <Btn v="purple" onClick={submit} loading={submitting} disabled={!proofImg} style={{width:"100%",justifyContent:"center"}} size="lg">Submit Proof 📤</Btn>
-          </Card>
-        </div>
-      )}
-
-      {/* HISTORY */}
-      {tab==="history"&&(
-        loading?<CardSkel/>:
-        submissions.length===0?(
-          <Card style={{padding:40,textAlign:"center"}}>
-            <div style={{fontSize:44,marginBottom:10}}>📤</div>
-            <p style={{color:"#e8e8f2",fontWeight:700,marginBottom:6}}>No submissions yet</p>
-            <p style={{color:C.muted,fontSize:13,marginBottom:16}}>Submit your promotion proof to start earning rewards!</p>
-            <Btn onClick={()=>setTab("submit")}>Submit Proof →</Btn>
-          </Card>
-        ):(
-          <div style={{display:"flex",flexDirection:"column",gap:12}}>
-            {submissions.map(s=>(
-              <Card key={s.id} style={{padding:18}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:10}}>
-                  <div>
-                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:5}}>
-                      <span style={{fontWeight:800,color:"#e8e8f2",fontSize:14}}>{s.type}</span>
-                      <span style={{fontSize:10,padding:"2px 8px",borderRadius:20,background:`${statCol[s.status]||"#888"}20`,color:statCol[s.status]||"#888",fontWeight:700}}>{s.status}</span>
-                      {s.level&&<span style={{fontSize:10,padding:"2px 8px",borderRadius:20,background:"rgba(124,58,237,.1)",color:"#c4b5fd",fontWeight:700}}>{INFLUENCER_LEVELS.find(l=>l.level===s.level)?.icon} {s.level}</span>}
-                    </div>
-                    <div style={{fontSize:11,color:"#60a5fa",marginBottom:4,fontFamily:"monospace"}}>{s.link}</div>
-                    <div style={{fontSize:11,color:C.muted}}>{(s.followers||0).toLocaleString()} followers · {s.date}</div>
-                    {s.reward&&<div style={{fontSize:12,color:"#34d399",fontWeight:700,marginTop:4}}>🎁 Reward: {s.reward}</div>}
-                    {s.adminNote&&<div style={{fontSize:11,color:C.muted,marginTop:4,fontStyle:"italic"}}>Admin: {s.adminNote}</div>}
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )
-      )}
-
-      {/* LEVELS */}
-      {tab==="levels"&&(
-        <div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
-            {INFLUENCER_LEVELS.map(l=>(
-              <Card key={l.level} style={{padding:22,border:`1px solid ${l.color}30`,background:`${l.bg}`}}>
-                <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:14}}>
-                  <span style={{fontSize:32}}>{l.icon}</span>
-                  <div>
-                    <div style={{fontWeight:900,color:l.color,fontSize:18}}>{l.level}</div>
-                    <div style={{fontSize:11,color:C.muted}}>{l.minFollowers.toLocaleString()}+ followers required</div>
-                  </div>
-                </div>
-                <div style={{background:"rgba(255,255,255,.06)",borderRadius:10,padding:"12px 14px"}}>
-                  <div style={{fontSize:11,color:C.muted,marginBottom:4}}>🎁 Reward on Approval:</div>
-                  <div style={{fontWeight:800,color:l.color,fontSize:14}}>{l.reward}</div>
-                </div>
-              </Card>
-            ))}
-          </div>
-          <Card style={{padding:20,marginTop:16}}>
-            <h4 style={{fontWeight:800,color:"#e8e8f2",marginBottom:12}}>📋 How to Qualify</h4>
-            {[
-              "Create content mentioning OpulentSMM (story, reel, video or post)",
-              "Include our website link in your bio or post",
-              "Submit the proof link and your follower count above",
-              "Admin reviews within 24 hours and sends your reward",
-              "Rewards are added to your wallet as free service credits",
-            ].map((s,i)=>(
-              <div key={i} style={{display:"flex",gap:10,padding:"8px 0",borderBottom:`1px solid ${C.border}`}}>
-                <span style={{color:"#7c3aed",fontWeight:900,fontSize:14,flexShrink:0}}>{i+1}.</span>
-                <span style={{color:C.muted,fontSize:13}}>{s}</span>
-              </div>
-            ))}
-          </Card>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// ─── User: Profile ────────────────────────────────────────────
 const UserProfile = ({ userName, userEmail, balance, orders, onLogout }) => {
   const [name,setName]=useState(userName||"");
   const [email,setEmail]=useState(userEmail||"user@email.com");
@@ -4673,7 +4413,7 @@ const UserProfile = ({ userName, userEmail, balance, orders, onLogout }) => {
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="My Profile" sub="Account details & settings"/>
 
-      {/* Profile header card */}
+      {}
       <Card glow style={{padding:28,marginBottom:24}}>
         <div style={{display:"flex",alignItems:"center",gap:20,flexWrap:"wrap"}}>
           <div style={{width:68,height:68,borderRadius:"50%",background:C.gP,
@@ -4701,7 +4441,7 @@ const UserProfile = ({ userName, userEmail, balance, orders, onLogout }) => {
         </div>
       </Card>
 
-      {/* Tabs */}
+      {}
       <div style={{display:"flex",gap:0,marginBottom:22,background:"rgba(255,255,255,.03)",
         borderRadius:11,padding:5,width:"fit-content",border:`1px solid ${C.border}`}}>
         {[{id:"profile",l:"Edit Profile"},{id:"security",l:"Security"},{id:"referral",l:"Referral"}].map(t=>(
@@ -5820,8 +5560,6 @@ const AdminCoupons = () => {
   );
 };
 
-
-
 // ─── Admin: Supplier Management ──────────────────────────────
 const AdminSuppliers = () => {
   const [suppliers,setSuppliers]=useState([]);
@@ -6019,7 +5757,6 @@ const AdminMarkup = () => {
   );
 };
 
-
 // ─── Admin: Support Tickets ───────────────────────────────────
 const AdminTickets = () => {
   const [tickets,setTickets]=useState([]);
@@ -6153,7 +5890,6 @@ const AdminTickets = () => {
   );
 };
 
-
 // ─── SEO Tools (sitemap + robots) ────────────────────────────
 const SEOTools = () => {
   const siteUrl = "https://opulentsmm.vercel.app";
@@ -6186,7 +5922,6 @@ Sitemap: ${siteUrl}/sitemap.xml`;
     </Card>
   );
 };
-
 
 // ─── Admin: Influencer Management ────────────────────────────
 const AdminInfluencer = () => {
@@ -6646,11 +6381,11 @@ const AdminPayments = () => {
         const newTotalDep = parseFloat((prevTotalDep + dep.amount).toFixed(2));
         await fs.collection("users").doc(userKey).set({totalDeposit: newTotalDep},{merge:true});
 
-        // ── Mark referral as ACTIVE if threshold met ──
+
         const isNowActive = newTotalDep >= ACTIVE_USER_MIN_DEPOSIT;
         if(isNowActive && uSnap.exists && uSnap.data().referredBy) {
           const refCode = uSnap.data().referredBy;
-          // Update all referral docs for this user
+
           const refSnap = await fs.collection("referrals")
             .where("newUserEmail","==",dep.email.toLowerCase().trim()).get();
           for(const d of refSnap.docs){
@@ -6659,7 +6394,7 @@ const AdminPayments = () => {
         }
       } catch(e){ console.error("totalDeposit update failed:",e); }
 
-      // Push notification to customer
+
       await DB.pushNotification(dep.email,"deposit_approved","💰 Deposit Approved!",`₹${dep.amount} added to your wallet${bonusAdded>0?` + ₹${bonusAdded} first deposit bonus!`:""}. New balance: ₹${confirmedBal}`,"wallet");
 
       setDeps(d=>d.map(x=>x.id===dep.id?{...x,status:"approved"}:x));
@@ -6775,7 +6510,7 @@ const AdminPayments = () => {
                   </div>
                 ))}
               </div>
-              {/* Payment Screenshot — responsive with modal */}
+              {}
               {dep.screenshot?(
                 <div style={{marginTop:8}}>
                   <div style={{fontSize:10,color:C.muted,marginBottom:6,fontWeight:700,letterSpacing:".05em"}}>📸 PAYMENT SCREENSHOT — <span style={{color:"#34d399"}}>Click to enlarge</span></div>
@@ -6817,8 +6552,6 @@ const AdminPayments = () => {
   );
 };
 
-
-// ─── Admin: Referrals ─────────────────────────────────────────
 const AdminReferrals = () => {
   const [refs,setRefs]=useState([]);
   const [users,setUsers]=useState([]);
@@ -6840,7 +6573,7 @@ const AdminReferrals = () => {
   };
   useEffect(()=>{ load(); },[]);
 
-  // Aggregate by referral code — total, active, deposits
+
   const grouped = refs.reduce((m,r)=>{
     const k=(r.referralCode||"unknown").toLowerCase();
     const e=m[k]||{code:k, total:0, active:0, totalDeposit:0, emails:[], lastConversion:0};
@@ -6864,7 +6597,7 @@ const AdminReferrals = () => {
       <PgH title="Referral Tracking" sub={`${totalRefs} signups · ${totalActive} active · ${rows.length} unique codes`}
         action={<button onClick={load} style={{padding:"8px 16px",background:"rgba(124,58,237,.1)",border:"1px solid rgba(124,58,237,.3)",borderRadius:9,color:"#c4b5fd",fontSize:12,fontWeight:700,cursor:"pointer"}}>🔄 Refresh</button>}/>
 
-      {/* Anti-fake summary */}
+      {}
       <div style={{background:"rgba(52,211,153,.05)",border:"1px solid rgba(52,211,153,.18)",borderRadius:12,padding:"14px 18px",marginBottom:18}}>
         <div style={{fontWeight:700,color:"#34d399",fontSize:13,marginBottom:6}}>🛡️ Anti-Fake Filter Active</div>
         <div style={{display:"flex",gap:24,flexWrap:"wrap"}}>
@@ -6874,7 +6607,7 @@ const AdminReferrals = () => {
         </div>
       </div>
 
-      {/* Stats */}
+      {}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:14,marginBottom:20}}>
         {[
           ["👥","Total Signups",totalRefs,"#c4b5fd"],
@@ -6890,7 +6623,7 @@ const AdminReferrals = () => {
         ))}
       </div>
 
-      {/* Definition box */}
+      {}
       <Card style={{padding:16,marginBottom:18}}>
         <div style={{fontSize:12,color:C.muted,lineHeight:1.7}}>
           <strong style={{color:"#e8e8f2"}}>Active User Definition:</strong> A referred user counts as active only if they deposited
@@ -6947,7 +6680,7 @@ const AdminReferrals = () => {
                   </div>
                 </div>
               </div>
-              {/* Progress bar active vs total */}
+              {}
               {r.total>0&&(
                 <div style={{marginBottom:12}}>
                   <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:C.muted,marginBottom:4}}>
@@ -6960,7 +6693,7 @@ const AdminReferrals = () => {
                   </div>
                 </div>
               )}
-              {/* User list */}
+              {}
               {r.emails.length>0&&(
                 <div>
                   <div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:".06em",marginBottom:8}}>REFERRED USERS</div>
@@ -6986,7 +6719,6 @@ const AdminReferrals = () => {
   );
 };
 
-
   useEffect(()=>{
     const load=async()=>{
       setLoading(true);
@@ -7004,7 +6736,7 @@ const AdminReferrals = () => {
     load();
   },[]);
 
-  // Aggregate: group by referralCode
+
   const grouped = refs.reduce((m,r)=>{
     const k=r.referralCode||"unknown";
     const e=m[k]||{code:k,conversions:0,users:[],lastConversion:null};
@@ -7022,7 +6754,7 @@ const AdminReferrals = () => {
         action={<button onClick={()=>{setLoading(true);setRefs([]);setUsers([]);setTimeout(()=>window.location.reload(),100);}}
           style={{padding:"8px 16px",background:"rgba(124,58,237,.1)",border:"1px solid rgba(124,58,237,.3)",borderRadius:9,color:"#c4b5fd",fontSize:12,fontWeight:700,cursor:"pointer"}}>🔄 Refresh</button>}/>
 
-      {/* Stats */}
+      {}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:14,marginBottom:20}}>
         {[
           ["🔗","Total Conversions",refs.length,"#c4b5fd"],
@@ -7036,7 +6768,7 @@ const AdminReferrals = () => {
         ))}
       </div>
 
-      {/* How to share */}
+      {}
       <Card gold style={{padding:20,marginBottom:20}}>
         <div style={{fontSize:12,color:C.goldL,fontWeight:800,marginBottom:8}}>🔗 How Referral URLs Work</div>
         <div style={{fontSize:12,color:C.muted,lineHeight:1.7}}>
@@ -7246,6 +6978,38 @@ const AdminAnnounce = ({ announcements, setAnnouncements }) => {
 // ═══════════════════════════════════════════════════════════════
 //  ROOT
 // ═══════════════════════════════════════════════════════════════
+// ─── Error Boundary — catches runtime errors, shows friendly message ──────────
+class ErrorBoundary extends React.Component {
+  constructor(props){ super(props); this.state={hasError:false,error:null}; }
+  static getDerivedStateFromError(error){ return {hasError:true,error}; }
+  componentDidCatch(error,info){ console.error("OpulentSMM Error:",error,info); }
+  render(){
+    if(this.state.hasError){
+      return React.createElement('div',{style:{
+        minHeight:"100vh",background:"#06060a",display:"flex",alignItems:"center",
+        justifyContent:"center",flexDirection:"column",padding:24,fontFamily:"sans-serif"
+      }},
+        React.createElement('div',{style:{fontSize:48,marginBottom:16}},"⚠️"),
+        React.createElement('h2',{style:{color:"#f0f0ff",marginBottom:8,fontWeight:800}},"Something went wrong"),
+        React.createElement('p',{style:{color:"#6b7280",marginBottom:20,textAlign:"center",maxWidth:400}},
+          "The app encountered an error. Please refresh the page or clear your browser cache."),
+        React.createElement('button',{
+          onClick:()=>window.location.reload(),
+          style:{background:"linear-gradient(135deg,#7c3aed,#a855f7)",border:"none",borderRadius:10,
+            padding:"12px 28px",color:"#fff",fontSize:14,fontWeight:700,cursor:"pointer"}
+        },"🔄 Refresh Page"),
+        React.createElement('details',{style:{marginTop:16,color:"#6b7280",fontSize:11}},
+          React.createElement('summary',{style:{cursor:"pointer"}},"Error details"),
+          React.createElement('pre',{style:{fontSize:10,marginTop:8,maxWidth:500,overflow:"auto",whiteSpace:"pre-wrap"}},
+            String(this.state.error))
+        )
+      );
+    }
+    return this.props.children;
+  }
+}
+
+
 function App() {
   // ── SPA routing: detect hidden admin route via URL hash ──────
   const getInitialScreen = () => {
@@ -7337,7 +7101,9 @@ function App() {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(React.createElement(App));
-  </script>
+root.render(React.createElement(ErrorBoundary, null, React.createElement(App)));
+// Hide the loading screen after React mounts
+if(typeof _hideLoader === 'function') setTimeout(_hideLoader, 100);
+</script>
 </body>
 </html>
