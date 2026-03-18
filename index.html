@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -9,11 +9,11 @@
   <meta name="robots" content="index, follow"/>
   <meta name="theme-color" content="#d4a017"/>
   <meta name="author" content="OpulentSMM"/>
-  <link rel="canonical" href="https://nexus-smm.vercel.app"/>
+  <link rel="canonical" href="https://opulent-smm.vercel.app"/>
   <meta property="og:title" content="OpulentSMM – Premium Social Media Growth Platform India"/>
   <meta property="og:description" content="Buy real Instagram followers, YouTube views, TikTok likes and more. Fast delivery. Starting from ₹0.09. Trusted by 8,500+ users."/>
   <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://nexus-smm.vercel.app"/>
+  <meta property="og:url" content="https://opulent-smm.vercel.app"/>
   <meta property="og:site_name" content="OpulentSMM"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="OpulentSMM – Best Premium SMM Panel India"/>
@@ -22,7 +22,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Organization","name":"OpulentSMM","url":"https://nexus-smm.vercel.app","description":"India's premium SMM panel for Instagram, YouTube, TikTok growth","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"English, Hindi"}}
+  {"@context":"https://schema.org","@type":"Organization","name":"OpulentSMM","url":"https://opulent-smm.vercel.app","description":"India's premium SMM panel for Instagram, YouTube, TikTok growth","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"English, Hindi"}}
   </script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -3928,7 +3928,7 @@ const UserInfluencer = ({ userEmail="", userName="" }) => {
 
   // Referral code for this user
   const refCode=React.useMemo(()=>`OPULENT-${((userName||"USER").slice(0,4)).toUpperCase()}${(userEmail.charCodeAt(0)*37+userEmail.length*13+1000)%9000+1000}`,[userEmail,userName]);
-  const refURL=`https://nexus-smm.vercel.app?ref=${refCode.toLowerCase()}`;
+  const refURL=`https://opulent-smm.vercel.app?ref=${refCode.toLowerCase()}`;
 
   const handleProofImg=(e)=>{
     const file=e.target.files[0]; if(!file) return;
@@ -4396,11 +4396,11 @@ const UserProfile = ({ userName, userEmail, balance, orders, onLogout }) => {
             </div>
             <label style={{display:"block",fontSize:11,fontWeight:700,color:C.muted,letterSpacing:".07em",marginBottom:7,textTransform:"uppercase"}}>Your Shareable Referral URL</label>
             <div style={{display:"flex",gap:10,marginBottom:20}}>
-              <input readOnly value={`https://nexus-smm.vercel.app?ref=${refCode.toLowerCase()}`}
+              <input readOnly value={`https://opulent-smm.vercel.app?ref=${refCode.toLowerCase()}`}
                 style={{flex:1,background:"rgba(255,255,255,.04)",border:"1px solid rgba(212,160,23,.3)",
                   borderRadius:10,padding:"11px 14px",color:"#c4b5fd",fontWeight:600,fontSize:12,fontFamily:"monospace",
                   overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}/>
-              <Btn v="gold" size="sm" onClick={()=>{ navigator.clipboard?.writeText(`https://nexus-smm.vercel.app?ref=${refCode.toLowerCase()}`); Toast.success("URL copied!"); }}>Copy URL</Btn>
+              <Btn v="gold" size="sm" onClick={()=>{ navigator.clipboard?.writeText(`https://opulent-smm.vercel.app?ref=${refCode.toLowerCase()}`); Toast.success("URL copied!"); }}>Copy URL</Btn>
             </div>
             <div style={{background:"rgba(212,160,23,.06)",border:"1px solid rgba(212,160,23,.15)",borderRadius:12,padding:"14px 16px",marginBottom:16}}>
               <div style={{fontSize:11,color:C.goldL,fontWeight:700,marginBottom:6}}>💡 How it works</div>
