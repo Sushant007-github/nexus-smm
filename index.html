@@ -6978,7 +6978,7 @@ root.render(React.createElement(App));
 </style>
 
 <!-- Chatbot button - plain HTML, always visible -->
-<button id="smm-btn" onclick="smmToggle()">
+<button id="smm-btn" type="button" onclick="event.preventDefault();event.stopPropagation();smmToggle();return false;">
   <div id="smm-dot">1</div>
   <svg width="25" height="25" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
 </button>
@@ -6993,14 +6993,14 @@ root.render(React.createElement(App));
         <span style="width:6px;height:6px;background:#34d399;border-radius:50%;display:inline-block"></span>Online now
       </div>
     </div>
-    <button onclick="smmClose()" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;width:27px;height:27px;cursor:pointer;color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;font-family:Arial">&#x2715;</button>
+    <button type="button" onclick="event.preventDefault();event.stopPropagation();smmClose();return false;" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;width:27px;height:27px;cursor:pointer;color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;font-family:Arial">&#x2715;</button>
   </div>
   <div id="smm-msgs" style="flex:1;overflow-y:auto;padding:11px;display:flex;flex-direction:column;gap:7px"></div>
   <div style="padding:9px 11px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:7px;flex-shrink:0;background:#080814">
     <input id="smm-inp" type="text" placeholder="Ask anything..." autocomplete="off"
       style="flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(124,58,237,.35);border-radius:9px;padding:8px 11px;color:#f0f0ff;font-size:13px;outline:none;font-family:Arial,sans-serif"
       onkeydown="if(event.key==='Enter'){event.preventDefault();smmSend()}"/>
-    <button onclick="smmSend()" style="width:34px;height:34px;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <button type="button" onclick="event.preventDefault();event.stopPropagation();smmSend();return false;" style="width:34px;height:34px;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
   </div>
@@ -7010,5 +7010,4 @@ root.render(React.createElement(App));
 var smmOpen=false,smmH=[],smmT=null,smmU=0;
 var smmSid="CB"+Date.now()+Math.random().toString(36).slice(2,6);
 var smmKB=[
-  {k:["hi","hello","hey","hii","namaste","start","help","helo","sup"],a:"Hey! Welcome to <b>OpulentSMM!</b><br><br>India's best SMM panel for creators. <b>Rs.10 FREE</b> just for signing up!<br><br>Which platform do you want to grow?",q:["Instagram","YouTube","TikTok","Other"]},
-  {k:["instagram","insta","ig","followers","follow","reel","story","likes"],a:"Instagram is our #1 service!<br><br>&#x2714; Indian &amp; Premium Followers<
+  {k:["hi","hello","hey","hii","namaste","start","help","helo","sup"],a:"Hey! Welcome to <b>OpulentSMM!</b><br><br>India's best SMM panel for creators. <b>Rs.10 FREE</b> just for signing up!<br><br>Which platfo
