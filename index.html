@@ -113,145 +113,117 @@ captureReferral(); // Run immediately on page load
 // IG Views:     1k=₹100, 5k=₹479,  10k=₹799,  20k=₹1998
 // IG Likes:     1k=₹100, 5k=₹250,  10k=₹500,  20k=₹1800
 const SERVICES = [
-  // ── INSTAGRAM ─────────────────────────────────────────────────
-  { id:1, platform:"Instagram", icon:"📸", name:"Instagram Followers – Stable",
-    desc:"High quality stable followers. Gradual natural delivery. No-drop guarantee 30 days. Safe for all accounts.",
-    speed:"0–12 hrs", min:1000, max:100000, cat:"Followers", badge:"🔥 Best Seller",
+  { id:1,  platform:"Instagram", icon:"📸", name:"Instagram Followers - Stable",
+    desc:"High quality stable followers. 30-day no-drop guarantee.",
+    speed:"0-12 hrs", min:1000, max:100000, cat:"Followers", badge:"🔥 Best Seller",
     quality:["Non Drop","Refill Available","High Quality"], speedTag:"Normal",
     tiers:[{qty:1000,price:179},{qty:5000,price:849},{qty:10000,price:1599},{qty:20000,price:2999}] },
 
-  { id:2, platform:"Instagram", icon:"📸", name:"Instagram Followers – Premium",
-    desc:"Premium quality followers with high retention. Best for personal brands and verified accounts.",
-    speed:"0–6 hrs", min:500, max:50000, cat:"Followers", badge:"💎 Premium",
+  { id:2,  platform:"Instagram", icon:"📸", name:"Instagram Followers - Premium",
+    desc:"Premium quality followers with high retention.",
+    speed:"0-6 hrs", min:500, max:50000, cat:"Followers", badge:"💎 Premium",
     quality:["High Quality","Non Drop","Refill Available"], speedTag:"Fast",
     tiers:[{qty:500,price:149},{qty:1000,price:299},{qty:5000,price:1399},{qty:10000,price:2699}] },
 
-  { id:3, platform:"Instagram", icon:"📸", name:"Instagram Likes – HQ",
-    desc:"High quality likes. Instant start. Pushes post to Explore page for organic reach boost.",
-    speed:"0–30 min", min:100, max:50000, cat:"Likes", badge:"⚡ Instant",
+  { id:3,  platform:"Instagram", icon:"📸", name:"Instagram Likes - HQ",
+    desc:"High quality likes. Instant start. Pushes post to Explore page.",
+    speed:"0-30 min", min:100, max:50000, cat:"Likes", badge:"⚡ Instant",
     quality:["High Quality","Non Drop"], speedTag:"Instant",
     tiers:[{qty:1000,price:59},{qty:5000,price:249},{qty:10000,price:449},{qty:50000,price:1999}] },
 
-  { id:4, platform:"Instagram", icon:"📸", name:"Instagram Reel Views – HQ",
-    desc:"High quality reel views. Boosts your reel to Explore and For You pages. Best for viral growth.",
-    speed:"0–2 hrs", min:1000, max:500000, cat:"Views", badge:"📈 Trending",
+  { id:4,  platform:"Instagram", icon:"📸", name:"Instagram Reel Views - HQ",
+    desc:"High quality reel views. Boosts reel to Explore and For You pages.",
+    speed:"0-2 hrs", min:1000, max:500000, cat:"Views", badge:"📈 Trending",
     quality:["High Quality","Non Drop"], speedTag:"Fast",
     tiers:[{qty:1000,price:21},{qty:5000,price:81},{qty:10000,price:179},{qty:50000,price:599},{qty:100000,price:1099}] },
 
-  { id:5, platform:"Instagram", icon:"📸", name:"Instagram Story Views – Instant",
-    desc:"Boost story views from real accounts. Improves reach and profile visibility significantly.",
-    speed:"0–1 hr", min:1000, max:200000, cat:"Views",
+  { id:5,  platform:"Instagram", icon:"📸", name:"Instagram Story Views - Instant",
+    desc:"Boost story views. Improves reach and profile visibility.",
+    speed:"0-1 hr", min:1000, max:200000, cat:"Views",
     quality:["High Quality"], speedTag:"Instant",
     tiers:[{qty:1000,price:19},{qty:5000,price:69},{qty:10000,price:119},{qty:50000,price:499}] },
 
-  { id:6, platform:"Instagram", icon:"📸", name:"Instagram Comments – Custom",
-    desc:"Custom comments from real-looking profiles. You provide the comment text.",
-    speed:"0–6 hrs", min:10, max:1000, price:5, cat:"Comments", hidden:true,
+  { id:6,  platform:"Instagram", icon:"📸", name:"Instagram Comments - Custom",
+    desc:"Custom comments from real-looking profiles.",
+    speed:"0-6 hrs", min:10, max:1000, price:5, cat:"Comments", hidden:true,
     quality:["High Quality"], speedTag:"Normal" },
 
-  { id:7, platform:"Instagram", icon:"📸", name:"Instagram Saves – High Retention",
-    desc:"Post saves from real accounts. Saves are a top ranking signal on Instagram algorithm.",
-    speed:"0–3 hrs", min:500, max:20000, price:0.15, cat:"Engagement", hidden:true,
+  { id:7,  platform:"Instagram", icon:"📸", name:"Instagram Saves - High Retention",
+    desc:"Post saves from real accounts.",
+    speed:"0-3 hrs", min:500, max:20000, price:0.15, cat:"Engagement", hidden:true,
     quality:["High Quality"], speedTag:"Normal" },
 
-  // ── YOUTUBE ───────────────────────────────────────────────────
-  { id:8, platform:"YouTube", icon:"▶️", name:"YouTube Views – Stable",
-    desc:"High-retention views with watch time boost. Helps reach monetization thresholds faster.",
-    speed:"1–24 hrs", min:1000, max:500000, cat:"Views", badge:"🏆 Top Rated",
+  { id:8,  platform:"YouTube", icon:"▶️", name:"YouTube Views - Stable",
+    desc:"High-retention views with watch time boost. Safe for monetization.",
+    speed:"1-24 hrs", min:1000, max:500000, cat:"Views", badge:"🏆 Top Rated",
     quality:["High Quality","Non Drop"], speedTag:"Normal",
     tiers:[{qty:1000,price:149},{qty:5000,price:599},{qty:10000,price:1099}] },
 
-  { id:9, platform:"YouTube", icon:"▶️", name:"YouTube Subscribers – Stable",
-    desc:"Real subscribers. Grows channel credibility and helps monetize faster.",
-    speed:"1–48 hrs", min:100, max:50000, price:3.50, cat:"Followers",
+  { id:9,  platform:"YouTube", icon:"▶️", name:"YouTube Subscribers - Stable",
+    desc:"Real subscribers. Grows channel credibility.",
+    speed:"1-48 hrs", min:100, max:50000, price:3.50, cat:"Followers",
     quality:["High Quality","Refill Available"], speedTag:"Normal" },
 
-  { id:10, platform:"YouTube", icon:"▶️", name:"YouTube Likes – Fast",
-    desc:"Boost your video with high quality likes. Increases trust and ranking in search results.",
-    speed:"1–12 hrs", min:100, max:50000, price:1.20, cat:"Likes",
+  { id:10, platform:"YouTube", icon:"▶️", name:"YouTube Likes - Fast",
+    desc:"Boost your video with high quality likes.",
+    speed:"1-12 hrs", min:100, max:50000, price:1.20, cat:"Likes",
     quality:["High Quality"], speedTag:"Fast" },
 
-  // ── TELEGRAM ──────────────────────────────────────────────────
-  { id:11, platform:"Telegram", icon:"✈️", name:"Telegram Members – Targeted",
-    desc:"Real members for your Telegram channel or group. Boosts credibility and trust.",
-    speed:"0–12 hrs", min:100, max:200000, cat:"Members", hidden:true,
-    quality:["High Quality","Non Drop"], speedTag:"Normal",
+  { id:11, platform:"Telegram", icon:"✈️", name:"Telegram Members - Targeted",
+    desc:"Real members for your Telegram channel.", speed:"0-12 hrs", min:100, max:200000,
+    cat:"Members", hidden:true, quality:["High Quality","Non Drop"], speedTag:"Normal",
     tiers:[{qty:1000,price:149},{qty:5000,price:599},{qty:10000,price:1099}] },
 
-  { id:12, platform:"Telegram", icon:"✈️", name:"Telegram Post Views – Instant",
-    desc:"Increase view count on your Telegram posts and channels. Instant delivery.",
-    speed:"0–30 min", min:500, max:500000, price:0.05, cat:"Views", hidden:true,
-    quality:["High Quality"], speedTag:"Instant" },
+  { id:12, platform:"Telegram", icon:"✈️", name:"Telegram Post Views - Instant",
+    desc:"Increase view count on Telegram posts.", speed:"0-30 min", min:500, max:500000,
+    price:0.05, cat:"Views", hidden:true, quality:["High Quality"], speedTag:"Instant" },
 
-  // ── TIKTOK ────────────────────────────────────────────────────
-  { id:13, platform:"TikTok", icon:"🎵", name:"TikTok Views – Fast",
-    desc:"Push content to For You pages worldwide. Fast delivery, no password needed.",
-    speed:"0–6 hrs", min:1000, max:1000000, price:0.09, cat:"Views",
+  { id:13, platform:"TikTok", icon:"🎵", name:"TikTok Views - Fast",
+    desc:"Push content to For You pages worldwide.",
+    speed:"0-6 hrs", min:1000, max:1000000, price:0.09, cat:"Views",
     quality:["High Quality"], speedTag:"Fast" },
 
-  { id:14, platform:"TikTok", icon:"🎵", name:"TikTok Followers – Stable",
-    desc:"Grow your TikTok presence fast with real-looking followers worldwide.",
-    speed:"0–12 hrs", min:100, max:100000, price:1.50, cat:"Followers",
+  { id:14, platform:"TikTok", icon:"🎵", name:"TikTok Followers - Stable",
+    desc:"Grow your TikTok presence fast.",
+    speed:"0-12 hrs", min:100, max:100000, price:1.50, cat:"Followers",
     quality:["High Quality","Non Drop"], speedTag:"Normal" },
 
-  { id:15, platform:"TikTok", icon:"🎵", name:"TikTok Likes – Instant",
-    desc:"Instant likes for your TikTok videos. Safe and fast delivery guaranteed.",
-    speed:"0–2 hrs", min:100, max:100000, price:0.50, cat:"Likes",
+  { id:15, platform:"TikTok", icon:"🎵", name:"TikTok Likes - Instant",
+    desc:"Instant likes for your TikTok videos.",
+    speed:"0-2 hrs", min:100, max:100000, price:0.50, cat:"Likes",
     quality:["High Quality"], speedTag:"Instant" },
 
-  // ── FACEBOOK ──────────────────────────────────────────────────
-  { id:16, platform:"Facebook", icon:"👍", name:"Facebook Page Likes – Stable",
-    desc:"Real page likes for your Facebook business page. Looks 100% natural and organic.",
-    speed:"1–48 hrs", min:100, max:50000, price:1.10, cat:"Likes",
+  { id:16, platform:"Facebook", icon:"👍", name:"Facebook Page Likes - Stable",
+    desc:"Real page likes for your Facebook business page.",
+    speed:"1-48 hrs", min:100, max:50000, price:1.10, cat:"Likes",
     quality:["High Quality","Non Drop"], speedTag:"Normal" },
 
-  { id:17, platform:"Facebook", icon:"👍", name:"Facebook Post Likes – Fast",
-    desc:"Boost engagement on your Facebook posts with real-looking likes.",
-    speed:"0–6 hrs", min:100, max:20000, price:0.80, cat:"Likes",
+  { id:17, platform:"Facebook", icon:"👍", name:"Facebook Post Likes - Fast",
+    desc:"Boost engagement on your Facebook posts.",
+    speed:"0-6 hrs", min:100, max:20000, price:0.80, cat:"Likes",
     quality:["High Quality"], speedTag:"Fast" },
 
-  { id:20, platform:"Facebook", icon:"👍", name:"Facebook Reel Views – Stable",
-    desc:"Boost your Facebook Reels with high quality views. Increases reach and engagement.",
-    speed:"0–6 hrs", min:1000, max:200000, cat:"Views", badge:"📈 Trending",
+  { id:20, platform:"Facebook", icon:"👍", name:"Facebook Reel Views - Stable",
+    desc:"Boost your Facebook Reels with high quality views.",
+    speed:"0-6 hrs", min:1000, max:200000, cat:"Views", badge:"📈 Trending",
     quality:["High Quality","Non Drop"], speedTag:"Fast",
     tiers:[{qty:1000,price:59},{qty:5000,price:199},{qty:10000,price:359}] },
 
-  // ── TWITTER ───────────────────────────────────────────────────
-  { id:18, platform:"Twitter", icon:"🐦", name:"Twitter Followers – Stable",
-    desc:"Boost your credibility with a higher follower count. Gradual natural delivery.",
-    speed:"1–24 hrs", min:100, max:50000, price:1.80, cat:"Followers",
+  { id:18, platform:"Twitter", icon:"🐦", name:"Twitter Followers - Stable",
+    desc:"Boost your credibility with a higher follower count.",
+    speed:"1-24 hrs", min:100, max:50000, price:1.80, cat:"Followers",
     quality:["High Quality"], speedTag:"Normal" },
 
-  { id:19, platform:"Twitter", icon:"🐦", name:"Twitter Likes – Fast",
-    desc:"Engagement boost for your tweets and posts. Fast delivery worldwide.",
-    speed:"0–6 hrs", min:50, max:20000, price:0.55, cat:"Likes",
+  { id:19, platform:"Twitter", icon:"🐦", name:"Twitter Likes - Fast",
+    desc:"Engagement boost for your tweets and posts.",
+    speed:"0-6 hrs", min:50, max:20000, price:0.55, cat:"Likes",
     quality:["High Quality"], speedTag:"Fast" },
 ];
 
-// ── BUNDLE PACKS ──────────────────────────────────────────────
 const BUNDLES = [
-  { id:"B1", name:"Starter Pack", price:299, badge:"",
-    desc:"Perfect for beginners. Get followers, likes and views together.",
-    items:[
-      {service:"Instagram Followers – Stable", qty:1000, icon:"📸"},
-      {service:"Instagram Likes – HQ",         qty:2000, icon:"📸"},
-      {service:"Instagram Reel Views – HQ",    qty:5000, icon:"📸"},
-    ]},
-  { id:"B2", name:"Influencer Pack", price:499, badge:"⭐ Most Popular",
-    desc:"Recommended for best growth. Most popular choice among creators.",
-    popular:true,
-    items:[
-      {service:"Instagram Followers – Stable", qty:2000,  icon:"📸"},
-      {service:"Instagram Likes – HQ",         qty:5000,  icon:"📸"},
-      {service:"Instagram Reel Views – HQ",    qty:10000, icon:"📸"},
-    ]},
-  { id:"B3", name:"Viral Pack", price:999, badge:"🔥 Best Value",
-    desc:"Go viral fast. Maximum impact for serious creators.",
-    items:[
-      {service:"Instagram Followers – Stable", qty:5000,  icon:"📸"},
-      {service:"Instagram Likes – HQ",         qty:10000, icon:"📸"},
-      {service:"Instagram Reel Views – HQ",    qty:50000, icon:"📸"},
-    ]},
+  { id:"B1", name:"Starter Pack",    price:299, popular:false, items:["1K Followers","2K Likes","5K Reel Views"] },
+  { id:"B2", name:"Influencer Pack", price:499, popular:true,  items:["2K Followers","5K Likes","10K Reel Views"] },
+  { id:"B3", name:"Viral Pack",      price:999, popular:false, items:["5K Followers","10K Likes","50K Reel Views"] },
 ];
 
 
@@ -266,8 +238,6 @@ const BADGE_CONFIG = {
   "🏆 Top Rated":     { bg:"rgba(168,85,247,.15)",  color:"#c4b5fd",  border:"rgba(168,85,247,.3)",  icon:"🏆" },
   "🇮🇳 Indian":      { bg:"rgba(255,153,0,.15)",   color:"#ffa500",  border:"rgba(255,153,0,.3)",   icon:"🇮🇳" },
   "Best Value":       { bg:"rgba(16,185,129,.15)",  color:"#34d399",  border:"rgba(16,185,129,.3)",  icon:"✅" },
-  "⭐ Most Popular": { bg:"rgba(212,160,23,.15)",  color:"#f5c842",  border:"rgba(212,160,23,.3)",  icon:"⭐" },
-  "🔥 Best Value":   { bg:"rgba(239,68,68,.15)",   color:"#f87171",  border:"rgba(239,68,68,.3)",   icon:"🔥" },
 };
 const getBadgeStyle = (badge) => BADGE_CONFIG[badge] || { bg:"rgba(124,58,237,.12)", color:C.purpleL, border:"rgba(124,58,237,.25)", icon:"✦" };
 const SERVICE_CATS = ["All","Followers","Likes","Views","Comments","Members","Engagement"];
@@ -1116,7 +1086,7 @@ const LivePurchaseNotif = () => {
     {name:"Vikram P.",service:"Instagram Reel Views",qty:"10,000",loc:"Pune"},
     {name:"Anita J.",service:"Telegram Members",qty:"1,000",loc:"Chennai"},
     {name:"Ravi T.",service:"YouTube Subscribers",qty:"500",loc:"Kolkata"},
-    {name:"Meera D.",service:"Instagram Story Views – Instant",qty:"5,000",loc:"Ahmedabad"},
+    {name:"Meera D.",service:"Instagram Story Views",qty:"5,000",loc:"Ahmedabad"},
   ];
   React.useEffect(()=>{
     const show=()=>{
@@ -2524,9 +2494,6 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
   const [couponMsg,setCouponMsg]=useState("");
   const [linkErr,setLinkErr]=useState("");
   const [loading,setLoading]=useState(false);
-  const [showCustom,setShowCustom]=useState(false);
-  const [customForm,setCustomForm]=useState({type:"YouTube Views",link:"",qty:"",budget:""});
-  const [customDone,setCustomDone]=useState(false);
 
   const filtered=(pf==="All"?SERVICES:SERVICES.filter(s=>s.platform===pf)).filter(s=>!s.hidden);
   // Price calc: use tiers if available, else price per unit
@@ -2561,41 +2528,18 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
     else { setDisc(0); setCouponMsg(coupon?"❌ Invalid code. Check and try again.":""); }
   };
 
-  const submitCustom=function(){
-    if(!customForm.link.trim()||!customForm.qty||!customForm.budget){ alert("Please fill all fields."); return; }
-    try{
-      if(typeof firebase!=="undefined"&&firebase.apps&&firebase.apps.length){
-        firebase.firestore().collection("customRequests").add({
-          type:customForm.type, link:customForm.link, qty:customForm.qty,
-          budget:customForm.budget, userEmail:sessionStorage.getItem("nx_email")||"anonymous",
-          userName:sessionStorage.getItem("nx_name")||"Visitor",
-          status:"Pending Review", date:today(), ts:Date.now()
-        }).then(function(){ setCustomDone(true); }).catch(function(){});
-      }
-    }catch(e){}
-  };
   const place=()=>{
-    const finalPrice=sel.isBundl?sel.price:total;
-    if(finalPrice>balance){ alert("Insufficient balance! Go to Add Funds."); return; }
+    if(total>balance){ alert("Insufficient balance! Go to Add Funds."); return; }
     setLoading(true);
     setTimeout(()=>{
-      if(sel.isBundl){
-        const newOrd={ id:uid(), service:"Bundle: "+sel.name, platform:"Instagram", icon:"🎁",
-          qty:1, price:sel.price, status:"Pending", date:today(), link,
-          isBundle:true, bundleItems:sel.items, bundleName:sel.name };
-        addOrderSync(newOrd);
-        setBalance(b=>parseFloat((b-sel.price).toFixed(2)));
-      } else {
-        const newOrd={ id:uid(), service:sel.name, platform:sel.platform, icon:sel.icon,
-          qty, price:parseFloat(total.toFixed(2)), status:"Pending", date:today(), link };
-        addOrderSync(newOrd);
-        setBalance(b=>parseFloat((b-total).toFixed(2)));
-      }
+      const newOrd={ id:uid(), service:sel.name, platform:sel.platform, icon:sel.icon,
+        qty, price:parseFloat(total.toFixed(2)), status:"Pending", date:today(), link };
+      addOrderSync(newOrd);
+      setBalance(b=>parseFloat((b-total).toFixed(2)));
       setLoading(false); setStep(4);
     },1400);
   };
 
-  const isBundl=sel&&sel.isBundl;
   if(step===4) return (
     <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",minHeight:"60vh",animation:"fadeIn .5s ease"}}>
       <div style={{width:86,height:86,borderRadius:"50%",background:C.gGr,display:"flex",alignItems:"center",
@@ -2634,63 +2578,14 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
 
       {/* STEP 1 */}
       {step===1&&<>
-        {/* Bundle Packs */}
-        <div style={{marginBottom:24,padding:16,background:"rgba(212,160,23,0.05)",border:"1px solid rgba(212,160,23,0.2)",borderRadius:14}}>
-          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
-            <span style={{fontSize:16}}>🎁</span>
-            <span style={{fontWeight:800,color:C.goldL,fontSize:14}}>Bundle Packs</span>
-            <span style={{fontSize:11,color:C.muted,marginLeft:4}}>Better results than single services</span>
-          </div>
-          <div style={{display:"flex",gap:10,flexWrap:"wrap",marginTop:12}}>
-            {BUNDLES.map(b=>(
-              <div key={b.id} onClick={function(){ var bnd=Object.assign({},b,{isBundl:true}); setSel(bnd); setStep(3); }}
-                style={{flex:1,minWidth:140,background:b.popular?"rgba(212,160,23,0.12)":"rgba(255,255,255,0.03)",
-                  border:`2px solid ${b.popular?"rgba(212,160,23,0.5)":"rgba(255,255,255,0.08)"}`,
-                  borderRadius:12,padding:"12px 14px",cursor:"pointer",position:"relative",transition:"all 0.2s"}}>
-                {b.badge&&<div style={{position:"absolute",top:-10,left:"50%",transform:"translateX(-50%)",
-                  background:C.gGold,borderRadius:20,padding:"2px 10px",fontSize:10,fontWeight:800,color:"#000",whiteSpace:"nowrap"}}>{b.badge}</div>}
-                <div style={{fontWeight:800,color:b.popular?C.goldL:"#e8e8f2",fontSize:13,marginBottom:4}}>{b.name}</div>
-                <div style={{fontSize:22,fontWeight:900,color:b.popular?"#f5c842":"#c4b5fd",marginBottom:6}}>₹{b.price}</div>
-                {b.items.map((it,i)=>(
-                  <div key={i} style={{fontSize:11,color:C.muted,marginBottom:2}}>{it.icon} {it.qty.toLocaleString()} {it.service.split("–")[1]||it.service}</div>
-                ))}
-                {b.popular&&<div style={{marginTop:8,fontSize:10,color:"rgba(212,160,23,0.7)"}}>Recommended for best growth</div>}
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Platform filters */}
         <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:20}}>
           {PLATFORMS.map(p=>(
-            <button key={p} onClick={()=>setPf(p)} style={{background:pf===p?C.gP:"rgba(255,255,255,0.04)",
+            <button key={p} onClick={()=>setPf(p)} style={{background:pf===p?C.gP:"rgba(255,255,255,.04)",
               border:`1px solid ${pf===p?"transparent":C.border}`,borderRadius:8,padding:"7px 14px",
-              color:pf===p?"#fff":C.muted,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s"}}>{p}</button>
+              color:pf===p?"#fff":C.muted,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all .2s"}}>{p}</button>
           ))}
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(270px,1fr))",gap:14}}>
-          {/* YouTube Premium Custom Request */}
-          {pf==="YouTube"&&<div style={{marginBottom:16,padding:16,background:"rgba(168,85,247,0.06)",border:"1px solid rgba(168,85,247,0.2)",borderRadius:12}}>
-            <div style={{fontWeight:700,color:"#c4b5fd",fontSize:13,marginBottom:4}}>📊 Premium Services (Custom Order)</div>
-            <div style={{color:C.muted,fontSize:12,marginBottom:10}}>Need Watch Hours, Shorts Views, or bulk orders? Submit a custom request and our team will contact you.</div>
-            {!showCustom&&!customDone&&<button onClick={function(){ setShowCustom(true); }} style={{background:"rgba(168,85,247,0.15)",border:"1px solid rgba(168,85,247,0.3)",borderRadius:8,padding:"7px 14px",color:"#c4b5fd",fontSize:12,fontWeight:700,cursor:"pointer"}}>📝 Request Custom Order</button>}
-            {showCustom&&!customDone&&<div style={{marginTop:8}}>
-              <select value={customForm.type} onChange={function(ev){ setCustomForm(function(f){ return Object.assign({},f,{type:ev.target.value}); }); }}
-                style={{width:"100%",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"8px 10px",color:"#e8e8f2",fontSize:12,marginBottom:8}}>
-                <option>YouTube Views</option><option>YouTube Watch Hours</option><option>YouTube Shorts Views</option><option>YouTube Subscribers</option><option>YouTube Likes</option>
-              </select>
-              <input placeholder="YouTube link" value={customForm.link} onChange={function(ev){ setCustomForm(function(f){ return Object.assign({},f,{link:ev.target.value}); }); }}
-                style={{width:"100%",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"8px 10px",color:"#e8e8f2",fontSize:12,marginBottom:8,boxSizing:"border-box"}}/>
-              <input placeholder="Quantity needed" value={customForm.qty} onChange={function(ev){ setCustomForm(function(f){ return Object.assign({},f,{qty:ev.target.value}); }); }}
-                style={{width:"100%",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"8px 10px",color:"#e8e8f2",fontSize:12,marginBottom:8,boxSizing:"border-box"}}/>
-              <input placeholder="Your budget (₹)" value={customForm.budget} onChange={function(ev){ setCustomForm(function(f){ return Object.assign({},f,{budget:ev.target.value}); }); }}
-                style={{width:"100%",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"8px 10px",color:"#e8e8f2",fontSize:12,marginBottom:8,boxSizing:"border-box"}}/>
-              <div style={{display:"flex",gap:8}}>
-                <button onClick={submitCustom} style={{background:C.gP,border:"none",borderRadius:8,padding:"8px 16px",color:"#fff",fontSize:12,fontWeight:700,cursor:"pointer"}}>Submit Request</button>
-                <button onClick={function(){ setShowCustom(false); }} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"8px 16px",color:C.muted,fontSize:12,cursor:"pointer"}}>Cancel</button>
-              </div>
-            </div>}
-            {customDone&&<div style={{color:"#34d399",fontSize:12,fontWeight:700}}>✅ Request submitted! Our team will contact you within 24 hours.</div>}
-          </div>}
           {filtered.map(svc=>(
             <div key={svc.id} onClick={()=>{ setSel(svc); setQty(svc.tiers?svc.tiers[0].qty:svc.min); setStep(2); }}
               style={{cursor:"pointer",border:`2px solid ${sel?.id===svc.id?"#7c3aed":C.border}`,
@@ -6965,4 +6860,118 @@ const AdminAnnounce = ({ announcements, setAnnouncements }) => {
                 </span>
                 <span style={{fontSize:11,color:C.muted}}>{p.date}</span>
               </div>
-              <div style={{fontWeight:800,color:"#e8e8f2",fontSize:14,
+              <div style={{fontWeight:800,color:"#e8e8f2",fontSize:14,marginBottom:5}}>{p.title}</div>
+              <div style={{color:C.muted,fontSize:13,lineHeight:1.6}}>{p.body}</div>
+            </div>
+            <button onClick={()=>{ if(window.confirm("Delete this announcement?")) setAnnouncements(x=>x.filter(a=>a.id!==p.id)); }}
+              style={{background:"rgba(239,68,68,.1)",border:"1px solid rgba(239,68,68,.2)",
+                borderRadius:8,padding:"7px 14px",color:"#f87171",fontSize:12,fontWeight:700,
+                cursor:"pointer",flexShrink:0,whiteSpace:"nowrap"}}>
+              🗑 Delete
+            </button>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  ROOT
+// ═══════════════════════════════════════════════════════════════
+function App() {
+  // ── SPA routing: detect hidden admin route via URL hash ──────
+  const getInitialScreen = () => {
+    const hash = window.location.hash;
+    if(hash === "#secure-opulent-dashboard-9821") return "adminlogin";
+    return sessionStorage.getItem("nx_screen") || "landing";
+  };
+
+  const savedScreen = getInitialScreen();
+  const savedName   = sessionStorage.getItem("nx_name")||"";
+  const savedEmail  = sessionStorage.getItem("nx_email")||"";
+
+  const [screen,setScreen]=useState(savedScreen);
+  const [userName,setUserName]=useState(savedName);
+  const [userEmail,setUserEmail]=useState(savedEmail);
+
+  // ── History API: push state on screen change ──────────────
+  const goScreen=(s, replace=false)=>{
+    const state={screen:s};
+    if(replace) window.history.replaceState(state,"",window.location.pathname);
+    else window.history.pushState(state,"",window.location.pathname);
+    setScreen(s);
+  };
+
+  // ── Listen to browser back/forward button ─────────────────
+  useEffect(()=>{
+    // Set initial history state so back button has something to go to
+    window.history.replaceState({screen:savedScreen},"",window.location.pathname);
+
+    const handlePop=(e)=>{
+      const s = e.state?.screen||"landing";
+      // If going back to landing while logged in → just go to overview, not logout
+      if(s==="landing" && sessionStorage.getItem("nx_screen")==="user"){
+        setScreen("user");
+        // Push a new state so they can't keep going back
+        window.history.pushState({screen:"user"},"",window.location.pathname);
+        return;
+      }
+      if(s==="landing" && sessionStorage.getItem("nx_screen")==="admin"){
+        setScreen("admin");
+        window.history.pushState({screen:"admin"},"",window.location.pathname);
+        return;
+      }
+      setScreen(s);
+    };
+    const handleHash = () => {
+      if(window.location.hash === "#secure-opulent-dashboard-9821") setScreen("adminlogin");
+    };
+    window.addEventListener("popstate", handlePop);
+    window.addEventListener("hashchange", handleHash);
+    return()=>{ window.removeEventListener("popstate", handlePop); window.removeEventListener("hashchange", handleHash); };
+  },[]);
+
+  const loginUser=(name,email="")=>{
+    const normEmail = (email||"").toLowerCase().trim();
+    setUserName(name);
+    setUserEmail(normEmail);
+    sessionStorage.setItem("nx_screen","user");
+    sessionStorage.setItem("nx_name",name);
+    sessionStorage.setItem("nx_email",normEmail);
+    DB.addUser({
+      id:"USR-"+Date.now(),
+      name: name||(normEmail.split("@")[0]),
+      email: normEmail,
+      balance:0, orders:0,
+      joined:today(), status:"Active",
+    });
+    goScreen("user");
+  };
+  const loginAdmin=()=>{ sessionStorage.setItem("nx_screen","admin"); goScreen("admin"); };
+  const logout=()=>{
+    sessionStorage.clear();
+    goScreen("landing", true);
+    setUserName(""); setUserEmail("");
+  };
+
+  return (
+    <>
+      <GS/>
+      <ToastContainer/>
+      {screen==="landing"    && <Landing goLogin={()=>goScreen("login")} goSignup={()=>goScreen("signup")}/>}
+      {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
+      {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
+      {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing")}/>}
+      {screen==="user"       && <UserDash userName={userName||"User"} userEmail={userEmail} onLogout={logout}/>}
+      {screen==="admin"      && <AdminDash onLogout={logout}/>}
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+  </script>
+
+</body>
+</html>
