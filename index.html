@@ -696,7 +696,7 @@ const GS = () => (
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Syne:wght@700;800;900&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{background:#06060a;color:#e8e8f2;font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased}
+    body{background:#06060a;color:#e8e8f2;font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased;}
     ::-webkit-scrollbar{width:5px;height:5px}
     ::-webkit-scrollbar-track{background:rgba(255,255,255,.02)}
     ::-webkit-scrollbar-thumb{background:rgba(212,160,23,.4);border-radius:4px}
@@ -6968,31 +6968,44 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
   </script>
 
-  <!-- ══ OPULENTSMM CONVERSION CHATBOT ══ -->
-  <style>
-    #xcb{position:fixed!important;bottom:24px!important;right:20px!important;z-index:2147483647!important;display:block!important;visibility:visible!important;opacity:1!important;clip:auto!important;overflow:visible!important}
-    #xcb-btn{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;cursor:pointer;box-shadow:0 6px 28px rgba(124,58,237,.65);position:relative;display:flex;align-items:center;justify-content:center}
-    #xcb-ring{position:absolute;inset:0;border-radius:50%;border:2.5px solid rgba(168,85,247,.5);animation:xcbR 2s ease-out infinite;pointer-events:none}
-    @keyframes xcbR{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.65);opacity:0}}
-    #xcb-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;background:#ef4444;border-radius:50%;border:2px solid #06060a;font-size:10px;color:#fff;display:none;align-items:center;justify-content:center;font-weight:900}
-    #xcb-teaser{position:absolute;bottom:70px;right:0;background:rgba(10,10,20,.97);border:1px solid rgba(124,58,237,.4);border-radius:14px;padding:12px 16px;width:230px;box-shadow:0 8px 32px rgba(0,0,0,.5);animation:xcbPop .3s ease;font-family:'Plus Jakarta Sans',Arial,sans-serif}
-    @keyframes xcbPop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    #xcb-win{position:fixed;bottom:98px;right:16px;width:340px;height:520px;background:#0c0c1a;border:1px solid rgba(124,58,237,.35);border-radius:22px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 28px 70px rgba(0,0,0,.75);z-index:2147483647}
-    #xcb-head{padding:16px 18px;background:linear-gradient(135deg,#5b21b6,#7c3aed,#6d28d9);display:flex;align-items:center;gap:12px;flex-shrink:0;position:relative}
-    #xcb-msgs{flex:1;overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:10px}
-    #xcb-msgs::-webkit-scrollbar{width:3px}
-    #xcb-msgs::-webkit-scrollbar-thumb{background:rgba(124,58,237,.5);border-radius:3px}
-    #xcb-foot{padding:11px 13px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:8px;flex-shrink:0;background:#08081a}
-    #xcb-inp{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(124,58,237,.3);border-radius:11px;padding:10px 13px;color:#f0f0ff;font-size:13px;outline:none;font-family:'Plus Jakarta Sans',Arial,sans-serif}
-    #xcb-inp:focus{border-color:rgba(168,85,247,.7);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
-    #xcb-inp::placeholder{color:rgba(255,255,255,.3)}
-    #xcb-snd{width:40px;height:40px;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s}
-    #xcb-snd:hover{transform:scale(1.05)}
-    .xb{align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:16px 16px 16px 4px;padding:10px 14px;max-width:88%;color:#e8e8f2;font-size:13px;line-height:1.65;word-break:break-word;font-family:'Plus Jakarta Sans',Arial,sans-serif}
-    .xu{align-self:flex-end;background:linear-gradient(135deg,rgba(124,58,237,.4),rgba(168,85,247,.3));border:1px solid rgba(124,58,237,.45);border-radius:16px 16px 4px 16px;padding:10px 14px;max-width:82%;color:#f0f0ff;font-size:13px;line-height:1.5;word-break:break-word;font-family:'Plus Jakarta Sans',Arial,sans-serif}
-    .xt{font-size:10px;color:rgba(255,255,255,.28);margin-top:3px}
-    .xtyp{display:flex;gap:5px;padding:4px 2px;align-items:center}
-    .xtyp span{width:8px;height:8px;border-radius:50%;background:rgba(168,85,247,.7);animation:xD 1.2s ease infinite}
-    .xtyp span:nth-child(2){animation-delay:.2s}.xtyp span:nth-child(3){animation-delay:.4s}
-    @keyframes xD{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
-    .xcta{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:9px 16px;background:linear-
+<!-- OPULENTSMM AI CHATBOT - Full inline styles, always visible -->
+<script>
+(function(){
+  var _open=false,_hist=[],_timer=null,_unread=0;
+  var _sid="CB-"+Date.now()+"-"+Math.random().toString(36).slice(2,6);
+
+  var KB=[
+    {k:["hi","hello","hey","hii","namaste","start","help","helo","sup","yo"],
+     a:"Hey! Welcome to <b>OpulentSMM!</b><br><br>India's best SMM panel. I help creators &amp; businesses grow social media <b>fast &amp; affordably</b>.<br><br>New users get <b>Rs.10 FREE</b> just for signing up!<br><br>Which platform do you want to grow?",
+     q:["Instagram","YouTube","TikTok","Telegram","How it works"]},
+    {k:["instagram","insta","ig","followers","follow","reel","story","likes","comment"],
+     a:"Instagram is our #1 service!<br><br>We offer:<br>- Indian &amp; Premium Followers<br>- Reel Views (go viral!)<br>- Story Views &amp; Post Likes<br>- Comments &amp; Saves<br><br>Orders start in 30 mins!<br>Sign up to unlock full catalogue",
+     q:["Sign Up Free","How it works","Is it safe?"]},
+    {k:["youtube","yt","views","subscriber","sub","video","watch","monetize"],
+     a:"YouTube growth done right!<br><br>We offer:<br>- High Retention Views<br>- Real Subscribers<br>- Watch Time Hours<br>- Safe for monetization!<br><br>Trusted by 1000s of Indian YouTubers!<br>Create free account to see plans!",
+     q:["Sign Up Free","Is it safe?","How fast?"]},
+    {k:["tiktok","telegram","twitter","facebook","fb","social","other","platform"],
+     a:"We cover ALL platforms!<br><br>- TikTok Followers &amp; Views<br>- Telegram Members<br>- Twitter/X Followers<br>- Facebook Page Likes<br>- LinkedIn Connections<br><br>100+ services available after signup!",
+     q:["Sign Up Free","How it works"]},
+    {k:["price","cost","rate","kitna","cheap","rs","rupee","how much","plan","pricing","unlock"],
+     a:"Pricing unlocks after FREE signup - and here's the deal:<br><br>- Get Rs.10 FREE credit just for joining<br>- 20% BONUS on first deposit<br>- Plans start from Rs.0.09/unit<br><br>Signup takes 2 mins. No card needed!",
+     cta:true,q:["Sign Up Free","Tell me more"]},
+    {k:["how","work","process","explain","kaise","step","tell me more"],
+     a:"How OpulentSMM works:<br><br>1. Create free account (2 mins)<br>2. Add wallet via UPI/GPay/Paytm<br>3. Choose service &amp; paste your link<br>4. Watch your account grow!<br><br>Delivery starts automatically!",
+     q:["Sign Up Free","Is it safe?","How fast?"]},
+    {k:["safe","real","fake","drop","quality","guarantee","refill","password","legit","trust"],
+     a:"100% safe - always!<br><br>- We NEVER ask for your password<br>- 30-day refill guarantee<br>- Real-looking accounts only<br>- Non-drop protection<br>- 1,00,000+ orders delivered safely<br><br>Trusted by 10,000+ Indian creators!",
+     q:["Sign Up Free","How fast?"]},
+    {k:["fast","speed","delivery","time","kab","instant","quick","how long","kitne"],
+     a:"Super fast delivery!<br><br>- Likes &amp; Views: 0-30 mins<br>- Followers: 1-12 hours<br>- YT Views: 1-6 hours<br>- Subscribers: 12-24 hours<br><br>Most orders start automatically!",
+     q:["Sign Up Free","Is it safe?"]},
+    {k:["payment","pay","upi","gpay","phonepe","paytm","deposit","add money","fund"],
+     a:"Easy Indian payments!<br><br>- Google Pay<br>- PhonePe<br>- Paytm<br>- Any UPI ID<br>- NEFT / IMPS<br><br>Min: Rs.100. First deposit: +20% bonus!",
+     q:["Sign Up Free"]},
+    {k:["refund","cancel","money back","return","wapas"],
+     a:"Risk-free guarantee!<br><br>- Full refund if order fails<br>- Wallet refund is instant<br>- 30-day follower refill<br><br>98% satisfaction across 1,00,000+ orders!",
+     q:["Sign Up Free"]},
+    {k:["free","bonus","credit","signup","register","account","join","create","sign up","get started"],
+     a:"Getting started is easy and FREE!<br><br>1. Click Sign Up below<br>2. Enter email &amp; password<br>3. Verify email<br>4. Get Rs.10 FREE instantly!<br><br>No card needed. Takes 2 minutes!",
+     cta:true},
+ 
