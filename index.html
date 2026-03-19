@@ -19,8 +19,17 @@
   <meta name="twitter:image" content="https://opulentsmm.in/og.png"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-title" content="OpulentSMM"/>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- React - primary CDN (jsDelivr - fastest in India) -->
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- React - fallback if jsDelivr fails -->
+  <script>
+    if(typeof React === 'undefined'){
+      document.write('<script src="https://unpkg.com/react@18/umd/react.production.min.js"><\/script>');
+      document.write('<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"><\/script>');
+    }
+  </script>
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -58,6 +67,9 @@
       .hero-cta-wrap{flex-direction:column!important;align-items:stretch!important}
       .hero-cta-wrap button{width:100%!important}
     }
+    /* Mobile touch improvements */
+    button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+    input,select,textarea{font-size:16px!important}
   </style>
 </head>
 <body>
@@ -67,6 +79,19 @@
 // OpulentSMM — Pure React.createElement (No Babel needed)
 // Works on ALL mobile browsers instantly
 // ═══════════════════════════════════════════════════════
+
+// Safety: wait for React if not yet loaded
+(function waitForReact(){
+  if(typeof React === 'undefined' || typeof ReactDOM === 'undefined'){
+    console.log('Waiting for React...');
+    setTimeout(waitForReact, 50);
+    return;
+  }
+  initApp();
+})();
+
+function initApp(){
+
 const {useState,useEffect,useRef,useCallback,useMemo,createElement:h,Fragment} = React;
 
 // ─── Config ──────────────────────────────────────────
@@ -1493,14 +1518,14 @@ const UserInfluencer = ({userEmail,userName,refCode}) => {
       h('div',{style:{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:16}},
         h('div',{style:{flex:1}},
           h('div',{style:{fontSize:11,color:C.muted,marginBottom:8,textTransform:"uppercase",letterSpacing:".08em"}},"Your Level"),
-          currentLevel
-            ? h('div',{style:{display:"flex",alignItems:"center",gap:12,marginBottom:14}},
-                h('span',{style:{fontSize:32}}),currentLevel.icon),
+          currentLevel && h('div',{style:{display:"flex",alignItems:"center",gap:12,marginBottom:14}},
+                h('span',{style:{fontSize:32}},currentLevel.icon),
                 h('div',null,
                   h('div',{style:{fontWeight:900,color:currentLevel.color,fontSize:20,fontFamily:"Syne,sans-serif"}},currentLevel.level),
                   h('div',{style:{fontSize:12,color:"#34d399"}},currentLevel.reward)
                 )
-            : h('div',{style:{color:C.muted,fontSize:14,marginBottom:14}},"Submit proof to unlock rewards"),
+            ),
+          !currentLevel && h('div',{style:{color:C.muted,fontSize:14,marginBottom:14}},"Submit proof to unlock rewards"),
           nextLevel&&h('div',null,
             h('div',{style:{display:"flex",justifyContent:"space-between",fontSize:11,color:C.muted,marginBottom:3}},
               h('span',"Followers"),h('span',{style:{color:nextLevel.color}},(approvedSub?.followers||0).toLocaleString()+" / "+nextLevel.minFollowers.toLocaleString())
@@ -2719,6 +2744,8 @@ function App() {
 // ─── Mount ────────────────────────────────────────────
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
+
+} // end initApp
 </script>
 
   <!-- ══════════ AI CHATBOT ══════════ -->
@@ -2862,8 +2889,7 @@ root.render(React.createElement(App));
         if(!last)return;
         if(!_ocbHistory.some(function(m){return m.role==="admin"&&m.ts===last.ts;})){
           _ocbHistory.push(last);
-          _ocbBot("<b>Support:</b> "+last.text.replace(/
-/g,"<br>"));
+          _ocbBot("<b>Support:</b> "+last.text.replace(/\n/g,"<br>"));
         }
       }).catch(function(){});
     }catch(e){}
