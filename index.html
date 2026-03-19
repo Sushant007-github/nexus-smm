@@ -113,125 +113,121 @@ captureReferral(); // Run immediately on page load
 // IG Views:     1k=₹100, 5k=₹479,  10k=₹799,  20k=₹1998
 // IG Likes:     1k=₹100, 5k=₹250,  10k=₹500,  20k=₹1800
 const SERVICES = [
-  { id:1,  platform:"Instagram", icon:"📸", name:"Instagram Followers - Stable",
-    desc:"High quality stable followers. 30-day no-drop guarantee.",
-    speed:"0-12 hrs", min:1000, max:100000, cat:"Followers", badge:"🔥 Best Seller",
+  // ── INSTAGRAM ────────────────────────────────────────────────────
+  { id:1, platform:"Instagram", icon:"📸", name:"Instagram Followers – Stable",
+    desc:"100% Indian stable followers. Gradual natural delivery. No-drop guarantee for 30 days. Safe for all account types.",
+    speed:"0–12 hrs", min:1000, max:100000, cat:"Followers", badge:"🔥 Best Seller",
     quality:["Non Drop","Refill Available","High Quality"], speedTag:"Normal",
     tiers:[{qty:1000,price:179},{qty:5000,price:849},{qty:10000,price:1599},{qty:20000,price:2999}] },
 
-  { id:2,  platform:"Instagram", icon:"📸", name:"Instagram Followers - Premium",
-    desc:"Premium quality followers with high retention.",
-    speed:"0-6 hrs", min:500, max:50000, cat:"Followers", badge:"💎 Premium",
+  { id:2, platform:"Instagram", icon:"📸", name:"Instagram Followers – Premium",
+    desc:"Premium quality Indian followers with high retention. Best for personal brands and verified accounts.",
+    speed:"0–6 hrs", min:500, max:50000, cat:"Followers", badge:"💎 Premium",
     quality:["High Quality","Non Drop","Refill Available"], speedTag:"Fast",
     tiers:[{qty:500,price:149},{qty:1000,price:299},{qty:5000,price:1399},{qty:10000,price:2699}] },
 
-  { id:3,  platform:"Instagram", icon:"📸", name:"Instagram Likes - HQ",
-    desc:"High quality likes. Instant start. Pushes post to Explore page.",
-    speed:"0-30 min", min:100, max:50000, cat:"Likes", badge:"⚡ Instant",
+  { id:3, platform:"Instagram", icon:"📸", name:"Instagram Likes – HQ",
+    desc:"Real Indian likes. Instant start. Pushes post to Explore page for organic reach boost.",
+    speed:"0–30 min", min:100, max:50000, cat:"Likes", badge:"⚡ Instant",
     quality:["High Quality","Non Drop"], speedTag:"Instant",
     tiers:[{qty:1000,price:59},{qty:5000,price:249},{qty:10000,price:449},{qty:50000,price:1999}] },
 
-  { id:4,  platform:"Instagram", icon:"📸", name:"Instagram Reel Views - HQ",
-    desc:"High quality reel views. Boosts reel to Explore and For You pages.",
-    speed:"0-2 hrs", min:1000, max:500000, cat:"Views", badge:"📈 Trending",
+  { id:4, platform:"Instagram", icon:"📸", name:"Instagram Reel Views – HQ",
+    desc:"Indian reel views. Boosts your reel to Explore & For You pages. Best for viral growth strategy.",
+    speed:"0–2 hrs", min:1000, max:500000, cat:"Views", badge:"📈 Trending",
     quality:["High Quality","Non Drop"], speedTag:"Fast",
     tiers:[{qty:1000,price:21},{qty:5000,price:81},{qty:10000,price:179},{qty:50000,price:599},{qty:100000,price:1099}] },
 
-  { id:5,  platform:"Instagram", icon:"📸", name:"Instagram Story Views - Instant",
-    desc:"Boost story views. Improves reach and profile visibility.",
-    speed:"0-1 hr", min:1000, max:200000, cat:"Views",
+  { id:5, platform:"Instagram", icon:"📸", name:"Instagram Story Views",
+    desc:"Boost story views from Indian accounts. Improves reach and profile visibility significantly.",
+    speed:"0–1 hr", min:1000, max:200000, cat:"Views",
     quality:["High Quality"], speedTag:"Instant",
-    tiers:[{qty:1000,price:19},{qty:5000,price:69},{qty:10000,price:119},{qty:50000,price:499}] },
+    tiers:[{qty:1000,price:12},{qty:5000,price:45},{qty:10000,price:79},{qty:50000,price:349}] },
 
-  { id:6,  platform:"Instagram", icon:"📸", name:"Instagram Comments - Custom",
-    desc:"Custom comments from real-looking profiles.",
-    speed:"0-6 hrs", min:10, max:1000, price:5, cat:"Comments", hidden:true,
+  { id:6, platform:"Instagram", icon:"📸", name:"Instagram Comments – Custom",
+    desc:"Positive custom comments from Indian-looking profiles. You provide the comment text.",
+    speed:"0–6 hrs", min:10, max:1000, price:5, cat:"Comments", hidden:true,
     quality:["High Quality"], speedTag:"Normal" },
 
-  { id:7,  platform:"Instagram", icon:"📸", name:"Instagram Saves - High Retention",
-    desc:"Post saves from real accounts.",
-    speed:"0-3 hrs", min:500, max:20000, price:0.15, cat:"Engagement", hidden:true,
+  { id:7, platform:"Instagram", icon:"📸", name:"Instagram Saves – Indian",
+    desc:"Post saves from real Indian accounts. Saves are a top ranking signal on Instagram algorithm.",
+    speed:"0–3 hrs", min:500, max:20000, price:0.15, cat:"Engagement", hidden:true,
     quality:["High Quality"], speedTag:"Normal" },
 
-  { id:8,  platform:"YouTube", icon:"▶️", name:"YouTube Views - Stable",
-    desc:"High-retention views with watch time boost. Safe for monetization.",
-    speed:"1-24 hrs", min:1000, max:500000, cat:"Views", badge:"🏆 Top Rated",
+  // ── YOUTUBE ──────────────────────────────────────────────────────
+  { id:8, platform:"YouTube", icon:"▶️", name:"YouTube Views – Stable",
+    desc:"High-retention Indian views with watch time boost. Helps reach monetization thresholds faster.",
+    speed:"1–24 hrs", min:1000, max:500000, cat:"Views", badge:"🏆 Top Rated",
     quality:["High Quality","Non Drop"], speedTag:"Normal",
     tiers:[{qty:1000,price:149},{qty:5000,price:599},{qty:10000,price:1099}] },
 
-  { id:9,  platform:"YouTube", icon:"▶️", name:"YouTube Subscribers - Stable",
-    desc:"Real subscribers. Grows channel credibility.",
-    speed:"1-48 hrs", min:100, max:50000, price:3.50, cat:"Followers",
+  { id:9, platform:"YouTube", icon:"▶️", name:"YouTube Subscribers – Stable",
+    desc:"Real Indian subscribers. Grows channel credibility and helps monetize faster.",
+    speed:"1–48 hrs", min:100, max:50000, price:3.50, cat:"Followers",
     quality:["High Quality","Refill Available"], speedTag:"Normal" },
 
-  { id:10, platform:"YouTube", icon:"▶️", name:"YouTube Likes - Fast",
-    desc:"Boost your video with high quality likes.",
-    speed:"1-12 hrs", min:100, max:50000, price:1.20, cat:"Likes",
+  { id:10, platform:"YouTube", icon:"▶️", name:"YouTube Likes – Fast",
+    desc:"Boost your video with Indian likes. Increases trust and ranking in search results.",
+    speed:"1–12 hrs", min:100, max:50000, price:1.20, cat:"Likes",
     quality:["High Quality"], speedTag:"Fast" },
 
-  { id:11, platform:"Telegram", icon:"✈️", name:"Telegram Members - Targeted",
-    desc:"Real members for your Telegram channel.", speed:"0-12 hrs", min:100, max:200000,
-    cat:"Members", hidden:true, quality:["High Quality","Non Drop"], speedTag:"Normal",
+  // ── TELEGRAM ─────────────────────────────────────────────────────
+  { id:11, platform:"Telegram", hidden:true,, icon:"✈️", name:"Telegram Members – Targeted",
+    desc:"Real Indian members for your Telegram channel or group. Boosts credibility and trust.",
+    speed:"0–12 hrs", min:100, max:200000, cat:"Members", badge:"🇮🇳 Indian",
+    quality:["High Quality","Non Drop"], speedTag:"Normal",
     tiers:[{qty:1000,price:149},{qty:5000,price:599},{qty:10000,price:1099}] },
 
-  { id:12, platform:"Telegram", icon:"✈️", name:"Telegram Post Views - Instant",
-    desc:"Increase view count on Telegram posts.", speed:"0-30 min", min:500, max:500000,
-    price:0.05, cat:"Views", hidden:true, quality:["High Quality"], speedTag:"Instant" },
-
-  { id:13, platform:"TikTok", icon:"🎵", name:"TikTok Views - Fast",
-    desc:"Push content to For You pages worldwide.",
-    speed:"0-6 hrs", min:1000, max:1000000, price:0.09, cat:"Views",
-    quality:["High Quality"], speedTag:"Fast" },
-
-  { id:14, platform:"TikTok", icon:"🎵", name:"TikTok Followers - Stable",
-    desc:"Grow your TikTok presence fast.",
-    speed:"0-12 hrs", min:100, max:100000, price:1.50, cat:"Followers",
-    quality:["High Quality","Non Drop"], speedTag:"Normal" },
-
-  { id:15, platform:"TikTok", icon:"🎵", name:"TikTok Likes - Instant",
-    desc:"Instant likes for your TikTok videos.",
-    speed:"0-2 hrs", min:100, max:100000, price:0.50, cat:"Likes",
+  { id:12, platform:"Telegram", icon:"✈️", name:"Telegram Post Views",
+    desc:"Increase view count on your Telegram posts and channels. Instant delivery.",
+    speed:"0–30 min", min:500, max:500000, price:0.05, cat:"Views",
     quality:["High Quality"], speedTag:"Instant" },
 
-  { id:16, platform:"Facebook", icon:"👍", name:"Facebook Page Likes - Stable",
-    desc:"Real page likes for your Facebook business page.",
-    speed:"1-48 hrs", min:100, max:50000, price:1.10, cat:"Likes",
-    quality:["High Quality","Non Drop"], speedTag:"Normal" },
-
-  { id:17, platform:"Facebook", icon:"👍", name:"Facebook Post Likes - Fast",
-    desc:"Boost engagement on your Facebook posts.",
-    speed:"0-6 hrs", min:100, max:20000, price:0.80, cat:"Likes",
+  // ── TIKTOK ───────────────────────────────────────────────────────
+  { id:13, platform:"TikTok", icon:"🎵", name:"TikTok Views – Worldwide",
+    desc:"Push content to For You pages worldwide. Fast delivery, no password needed.",
+    speed:"0–6 hrs", min:1000, max:1000000, price:0.09, cat:"Views",
     quality:["High Quality"], speedTag:"Fast" },
 
-  { id:20, platform:"Facebook", icon:"👍", name:"Facebook Reel Views - Stable",
-    desc:"Boost your Facebook Reels with high quality views.",
-    speed:"0-6 hrs", min:1000, max:200000, cat:"Views", badge:"📈 Trending",
+  { id:14, platform:"TikTok", icon:"🎵", name:"TikTok Followers – Global",
+    desc:"Grow your TikTok presence fast with real-looking followers worldwide.",
+    speed:"0–12 hrs", min:100, max:100000, price:1.50, cat:"Followers",
+    quality:["High Quality","Non Drop"], speedTag:"Normal" },
+
+  { id:15, platform:"TikTok", icon:"🎵", name:"TikTok Likes – Global",
+    desc:"Instant likes for your TikTok videos. Safe and fast delivery guaranteed.",
+    speed:"0–2 hrs", min:100, max:100000, price:0.50, cat:"Likes",
+    quality:["High Quality"], speedTag:"Instant" },
+
+  // ── FACEBOOK ─────────────────────────────────────────────────────
+  { id:16, platform:"Facebook", icon:"👍", name:"Facebook Page Likes – Stable",
+    desc:"Indian page likes for your Facebook business page. Looks 100% natural and organic.",
+    speed:"1–48 hrs", min:100, max:50000, price:1.10, cat:"Likes",
+    quality:["High Quality","Non Drop"], speedTag:"Normal" },
+
+  { id:17, platform:"Facebook", icon:"👍", name:"Facebook Post Likes",
+    desc:"Boost engagement on your Facebook posts with real-looking likes.",
+    speed:"0–6 hrs", min:100, max:20000, price:0.80, cat:"Likes",
+    quality:["High Quality"], speedTag:"Fast" },
+
+  { id:20, platform:"Facebook", icon:"👍", name:"Facebook Reel Views – Stable",
+    desc:"Boost your Facebook Reels with high quality views. Increases reach and engagement.",
+    speed:"0–6 hrs", min:1000, max:200000, cat:"Views", badge:"📈 Trending",
     quality:["High Quality","Non Drop"], speedTag:"Fast",
     tiers:[{qty:1000,price:59},{qty:5000,price:199},{qty:10000,price:359}] },
 
-  { id:18, platform:"Twitter", icon:"🐦", name:"Twitter Followers - Stable",
-    desc:"Boost your credibility with a higher follower count.",
-    speed:"1-24 hrs", min:100, max:50000, price:1.80, cat:"Followers",
+  // ── TWITTER ──────────────────────────────────────────────────────
+  { id:18, platform:"Twitter", icon:"🐦", name:"Twitter Followers – Stable",
+    desc:"Boost your credibility with a higher follower count. Gradual natural delivery.",
+    speed:"1–24 hrs", min:100, max:50000, price:1.80, cat:"Followers",
     quality:["High Quality"], speedTag:"Normal" },
 
-  { id:19, platform:"Twitter", icon:"🐦", name:"Twitter Likes - Fast",
-    desc:"Engagement boost for your tweets and posts.",
-    speed:"0-6 hrs", min:50, max:20000, price:0.55, cat:"Likes",
+  { id:19, platform:"Twitter", icon:"🐦", name:"Twitter Likes – Fast",
+    desc:"Engagement boost for your tweets and posts. Fast delivery worldwide.",
+    speed:"0–6 hrs", min:50, max:20000, price:0.55, cat:"Likes",
     quality:["High Quality"], speedTag:"Fast" },
 ];
 
-const BUNDLES = [
-  { id:"B1", name:"Starter Pack",    price:299, popular:false, items:["1K Followers","2K Likes","5K Reel Views"] },
-  { id:"B2", name:"Influencer Pack", price:499, popular:true,  items:["2K Followers","5K Likes","10K Reel Views"] },
-  { id:"B3", name:"Viral Pack",      price:999, popular:false, items:["5K Followers","10K Likes","50K Reel Views"] },
-];
-
-
-const BUNDLES = [
-  { id:"B1", name:"Starter Pack",    price:299, popular:false, items:["1K Followers","2K Likes","5K Reel Views"] },
-  { id:"B2", name:"Influencer Pack", price:499, popular:true,  items:["2K Followers","5K Likes","10K Reel Views"] },
-  { id:"B3", name:"Viral Pack",      price:999, popular:false, items:["5K Followers","10K Likes","50K Reel Views"] },
-];
 const PLATFORMS = ["All","Instagram","YouTube","Facebook","TikTok","Twitter"];
 
 // ─── Service Badge Config ─────────────────────────────────────
@@ -2452,7 +2448,7 @@ const OTable = ({ orders, onCancel, adminView=false }) => (
           </thead>
           <tbody>
             {orders.map((o,i)=>(
-              <tr key={o.id} style={{borderBottom:`1px solid rgba(255,255,255,.04)`,background:o.isBundle?"rgba(212,160,23,0.06)":i%2?"rgba(255,255,255,.01)":"transparent"}}>
+              <tr key={o.id} style={{borderBottom:`1px solid rgba(255,255,255,.04)`,background:i%2?"rgba(255,255,255,.01)":"transparent"}}>
                 <td style={{padding:"11px 12px",color:C.purpleL,fontWeight:800,fontFamily:"monospace",fontSize:11,whiteSpace:"nowrap"}}>{o.id}</td>
                 <td style={{padding:"11px 12px"}}>
                   <div style={{display:"flex",alignItems:"center",gap:7}}>
@@ -5044,7 +5040,7 @@ Qty: ${order.qty}`)) return;
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
-      <PgH title="All Orders" sub={`${orders.length} total · ${filtered.length} shown · ${orders.filter(function(o){return o.isBundle;}).length} bundles`}
+      <PgH title="All Orders" sub={`${orders.length} total · ${filtered.length} shown`}
         action={<div style={{display:"flex",gap:8}}>
           <button onClick={()=>upd("bulk","Completed")} style={{display:"none"}}/>
         </div>}/>
@@ -6512,7 +6508,7 @@ const AdminReferrals = () => {
               <tbody>
                 {users.map((u,i)=>(
                   <tr key={u.email} style={{borderBottom:`1px solid rgba(255,255,255,.04)`,background:i%2?"rgba(255,255,255,.01)":"transparent"}}>
-                    <td style={{padding:"10px 12px",fontWeight:600}}><span style={{color:"#e8e8f2"}}>{u.name||"—"}</span>{(function(){var sp=(window._adminOrders||[]).filter(function(o){return(o.userEmail||"").toLowerCase()===(u.email||"").toLowerCase();}).reduce(function(s,o){return s+(o.price||0);},0);return sp>=500?<span style={{marginLeft:5,background:"rgba(212,160,23,0.2)",border:"1px solid rgba(212,160,23,0.4)",borderRadius:10,padding:"1px 7px",fontSize:9,fontWeight:900,color:"#f5c842"}}>HIGH VALUE</span>:null;})()}</td>
+                    <td style={{padding:"10px 12px",color:"#e8e8f2",fontWeight:600}}>{u.name||"—"}</td>
                     <td style={{padding:"10px 12px",color:"#60a5fa",fontSize:11}}>{u.email}</td>
                     <td style={{padding:"10px 12px"}}>
                       <span style={{background:"rgba(212,160,23,.1)",border:"1px solid rgba(212,160,23,.2)",borderRadius:6,padding:"2px 8px",color:C.goldL,fontWeight:700,fontFamily:"monospace",fontSize:11}}>{u.referral}</span>
@@ -6977,6 +6973,5 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
   </script>
-
 </body>
 </html>
