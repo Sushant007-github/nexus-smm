@@ -2705,7 +2705,8 @@ function App() {
   // Check hash for admin route
   useEffect(()=>{
     const checkHash = () => {
-      if(window.location.hash==="secure-opulent-dashboard-9821") {
+      const h = window.location.hash.replace(/^#+/, "");
+      if(h === "secure-opulent-dashboard-9821") {
         setScreen("adminlogin");
       }
     };
