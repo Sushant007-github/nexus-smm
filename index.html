@@ -1019,7 +1019,7 @@ const UserDash = ({userName,userEmail,onLogout}) => {
 const MobileBar = ({page,setPage,isAdmin,onLogout}) => {
   const [drawer,setDrawer] = useState(false);
   const items = isAdmin
-    ? [{id:"a-overview",i:"📊",l:"Analytics"},{id:"a-orders",i:"📦",l:"Orders"},{id:"a-payments",i:"💰",l:"Payments"},{id:"a-users",i:"👥",l:"Users"},{id:"a-tickets",i:"🎫",l:"Tickets"}]
+    ? [{id:"a-overview",i:"📊",l:"Analytics"},{id:"a-orders",i:"📦",l:"Orders"},{id:"a-payments",i:"💰",l:"Payments"},{id:"a-chatbot",i:"🤖",l:"AI Chat"},{id:"a-tickets",i:"🎫",l:"Tickets"}]
     : [{id:"overview",i:"📊",l:"Overview"},{id:"neworder",i:"✦",l:"New Order"},{id:"orders",i:"📦",l:"Orders"},{id:"wallet",i:"💰",l:"Wallet"},{id:"addfunds",i:"➕",l:"Funds"}];
 
   return h(Fragment,null,
@@ -1055,7 +1055,7 @@ const MobileBar = ({page,setPage,isAdmin,onLogout}) => {
           (isAdmin
             ? [{id:"a-overview",i:"📊",l:"Analytics"},{id:"a-orders",i:"📦",l:"Orders"},{id:"a-payments",i:"💰",l:"Payments"},
                {id:"a-users",i:"👥",l:"Users"},{id:"a-tickets",i:"🎫",l:"Tickets"},{id:"a-influencer",i:"🌟",l:"Influencers"},
-               {id:"a-referrals",i:"🔗",l:"Referrals"},{id:"a-coupons",i:"🎟",l:"Coupons"},{id:"a-announce",i:"📣",l:"News"}]
+               {id:"a-referrals",i:"🔗",l:"Referrals"},{id:"a-chatbot",i:"🤖",l:"AI Chat"},{id:"a-coupons",i:"🎟",l:"Coupons"},{id:"a-announce",i:"📣",l:"News"}]
             : [{id:"overview",i:"📊",l:"Overview"},{id:"neworder",i:"✦",l:"New Order"},{id:"orders",i:"📦",l:"Orders"},
                {id:"wallet",i:"💰",l:"Wallet"},{id:"addfunds",i:"➕",l:"Add Funds"},{id:"services",i:"◇",l:"Services"},
                {id:"influencer",i:"🌟",l:"Influencer"},{id:"support",i:"💬",l:"Support"},{id:"settings",i:"⚙️",l:"Settings"}]
@@ -2081,7 +2081,7 @@ const AdminDash = ({onLogout}) => {
         h('div',{style:{fontWeight:800,color:C.goldL,fontSize:13}},"🔐 Administrator"),
         h('div',{style:{fontSize:10,color:C.muted,marginTop:2}},"Full Access")
       ),
-      h('nav',NAV.map(item=>h(NavItem,{key:item.id,item,active:page===item.id,onClick:()=>setPage(item.id),badge:item.badge||0}))),
+      h('nav',{style:{flex:1}},NAV.map(item=>h(NavItem,{key:item.id,item,active:page===item.id,onClick:()=>setPage(item.id),badge:item.badge||0}))),
       h(Divider),
       h('button',{onClick:onLogout,style:{width:"100%",padding:"10px 12px",background:"rgba(239,68,68,.08)",
         border:"1px solid rgba(239,68,68,.2)",borderRadius:10,color:"#f87171",fontSize:13,fontWeight:700,cursor:"pointer"}},"🚪 Log Out")
