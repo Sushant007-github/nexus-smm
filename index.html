@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OpulentSMM - Best SMM Panel for Instagram, YouTube &amp; Social Media Growth</title>
+  <title>OpulentSMM - Premium Growth Platform | Best SMM Panel India</title>
   <meta name="description" content="Buy Instagram followers, likes, views and social media services at affordable prices. Fast delivery, secure UPI payments and 24/7 support. India's most trusted SMM panel."/>
   <meta name="keywords" content="SMM panel India, buy Instagram followers, cheap SMM panel, Instagram likes, YouTube views, TikTok followers, social media growth, buy followers India, OpulentSMM"/>
   <meta name="robots" content="index, follow"/>
@@ -2176,10 +2176,6 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
         </nav>
 
         <Divider/>
-        <button onClick={function(){var o=document.getElementById("gpOverlay");if(o){o.style.display="block";document.body.style.overflow="hidden";}}} style={{display:"flex",alignItems:"center",gap:11,width:"100%",padding:"10px 12px",marginBottom:4,background:"rgba(212,160,23,0.08)",border:"1px solid rgba(212,160,23,0.2)",borderRadius:10,color:"#f5c842",fontWeight:700,fontSize:13,cursor:"pointer"}}>
-          <span style={{fontSize:16}}>GP</span>
-          <span>Growth Packs</span>
-        </button>
         <button onClick={onLogout} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 12px",
           marginTop:10,width:"100%",background:"rgba(239,68,68,.08)",border:"1px solid rgba(239,68,68,.2)",
           borderRadius:10,color:"#f87171",fontSize:13,fontWeight:600,cursor:"pointer",transition:"all .2s"}}
@@ -2398,7 +2394,7 @@ const UserOverview = ({ orders, balance, setPage, userName, announcements, userE
       {/* QUICK ACTIONS */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(190px,1fr))",gap:12,marginBottom:24}}>
         {[
-          {icon:"GP",label:"Growth Packs", sub:"Bundle packages for fast growth",page:"growthpacks",grad:C.gGold},{icon:"✦",label:"New Order", sub:"Buy followers, likes & more",page:"neworder",grad:C.gP},
+          {icon:"✦",label:"New Order", sub:"Buy followers, likes & more",page:"neworder",grad:C.gP},
           {icon:"⊕",label:"Add Funds", sub:"Top up your ₹ wallet",      page:"addfunds",grad:C.gG},
           {icon:"📦",label:"My Orders", sub:"Track all your orders",       page:"orders",  grad:C.gB},
           {icon:"💬",label:"Support",   sub:"Chat with our team",          page:"support", grad:C.gGr},
@@ -2407,7 +2403,7 @@ const UserOverview = ({ orders, balance, setPage, userName, announcements, userE
           {icon:"🌟",label:"Influencer", sub:"Submit proof & earn rewards",    page:"influencer",grad:"linear-gradient(135deg,#f5c842,#d4a017)"},
           {icon:"🎫",label:"Support",   sub:"Tickets & help center",         page:"support", grad:"linear-gradient(135deg,#7c3aed,#6d28d9)"},
         ].map(q=>(
-          <Card key={q.label} onClick={function(){if(q.page==="growthpacks"){var o=document.getElementById("gpOverlay");if(o){o.style.display="block";document.body.style.overflow="hidden";}}else{setPage(q.page);}}} style={{padding:18,cursor:"pointer",display:"flex",alignItems:"center",gap:13,transition:"transform .18s,box-shadow .18s"}}
+          <Card key={q.label} onClick={()=>setPage(q.page)} style={{padding:18,cursor:"pointer",display:"flex",alignItems:"center",gap:13,transition:"transform .18s,box-shadow .18s"}}
             onMouseEnter={e=>{ e.currentTarget.style.transform="translateY(-2px)"; e.currentTarget.style.boxShadow="0 8px 30px rgba(0,0,0,.4)"; }}
             onMouseLeave={e=>{ e.currentTarget.style.transform="none"; e.currentTarget.style.boxShadow=""; }}>
             <div style={{width:40,height:40,borderRadius:11,background:q.grad,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0,boxShadow:`0 4px 12px rgba(0,0,0,.3)`}}>{q.icon}</div>
@@ -6972,38 +6968,34 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
   </script>
 
-<!-- ═══ GROWTH PACKS OVERLAY - Pure HTML/CSS/JS, no React, no Babel ═══ -->
+<!-- GROWTH PACKS SYSTEM - 100% Pure HTML, zero React, zero Babel -->
 <style>
-#gpOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#06060a;z-index:99999;overflow-y:auto;font-family:Arial,sans-serif;color:#f0f0f0}
-#gpOverlay h1{font-size:20px;font-weight:900;color:#f5c842;margin:0 0 4px 0}
-#gpOverlay p{font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 20px 0}
-.gp-pack{padding:18px;border-radius:14px;margin-bottom:14px;cursor:pointer;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08)}
-.gp-pack.popular{background:linear-gradient(135deg,rgba(212,160,23,0.12),rgba(124,58,237,0.06));border:2px solid rgba(212,160,23,0.5);box-shadow:0 0 24px rgba(212,160,23,0.12)}
-.gp-badge{display:inline-block;background:linear-gradient(135deg,#d4a017,#f5c842);color:#000;font-size:10px;font-weight:900;padding:2px 12px;border-radius:12px;margin-bottom:10px}
-.gp-name{font-size:16px;font-weight:800;color:#f5c842;margin-bottom:2px}
-.gp-tag{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px}
-.gp-price{font-size:26px;font-weight:900;color:#f5c842}
-.gp-item{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:3px}
-.gp-btn{display:block;width:100%;padding:10px;background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.3);border-radius:8px;color:#f5c842;font-size:12px;font-weight:700;text-align:center;margin-top:12px;cursor:pointer}
-.popular .gp-name{color:#f5c842}
+#gpBtn{display:none;position:fixed;bottom:80px;right:16px;z-index:9000;background:linear-gradient(135deg,#d4a017,#f5c842);color:#000;border:none;border-radius:50px;padding:12px 20px;font-size:13px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(212,160,23,0.5);font-family:Arial,sans-serif}
+#gpWrap{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#06060a;z-index:99999;overflow-y:auto;font-family:Arial,sans-serif;color:#f0f0f0;-webkit-overflow-scrolling:touch}
+.gp-inner{max-width:520px;margin:0 auto;padding:16px}
+.gp-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;background:#06060a;z-index:10}
+.gp-title{font-size:18px;font-weight:900;color:#f5c842}
+.gp-subtitle{font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px}
+.gp-close{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:7px 14px;color:#e8e8f2;font-size:12px;cursor:pointer;font-family:Arial,sans-serif}
+.gp-pack{padding:18px;border-radius:14px;margin-bottom:14px;cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);-webkit-tap-highlight-color:transparent}
+.gp-pack.hot{background:linear-gradient(135deg,rgba(212,160,23,0.12),rgba(124,58,237,0.06));border:2px solid rgba(212,160,23,0.5);box-shadow:0 0 24px rgba(212,160,23,0.12)}
+.gp-badge{display:inline-block;background:linear-gradient(135deg,#d4a017,#f5c842);color:#000;font-size:10px;font-weight:900;padding:3px 12px;border-radius:12px;margin-bottom:8px}
+.gp-pname{font-size:15px;font-weight:800;color:#e8e8f2;margin-bottom:2px}.hot .gp-pname{color:#f5c842}
+.gp-ptag{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px}
+.gp-price{font-size:26px;font-weight:900;color:#c4b5fd;margin-bottom:8px}.hot .gp-price{color:#f5c842}
+.gp-item{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:3px;padding-left:4px}
+.gp-sel{display:block;width:100%;padding:10px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);border-radius:8px;color:#c4b5fd;font-size:12px;font-weight:700;text-align:center;margin-top:12px;cursor:pointer;font-family:Arial,sans-serif}.hot .gp-sel{background:rgba(212,160,23,0.15);border-color:rgba(212,160,23,0.4);color:#f5c842}
+/* FORM */
 #gpForm{display:none}
-#gpList{display:block}
-.gp-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:9px;padding:10px 12px;color:#f0f0f0;font-size:13px;margin-bottom:12px;box-sizing:border-box;outline:none}
-.gp-warn{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:14px;margin-bottom:14px}
-.gp-warn-title{color:#f87171;font-weight:800;font-size:13px;margin-bottom:8px}
-.gp-warn-item{color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:4px}
-.gp-alert{background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.3);border-radius:8px;padding:8px 12px;color:#fbbf24;font-weight:700;font-size:12px;margin-top:8px}
-.gp-check-label{display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:14px;cursor:pointer}
-.gp-check-label span{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6}
-#gpPlaceBtn{width:100%;padding:14px;background:rgba(255,255,255,0.05);border:none;border-radius:11px;color:rgba(255,255,255,0.3);font-size:14px;font-weight:800;cursor:not-allowed;margin-bottom:8px}
-#gpPlaceBtn.active{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;cursor:pointer}
-#gpDone{display:none;text-align:center;padding:40px 20px}
-</style>
-
-<div id="gpOverlay">
-  <div style="max-width:520px;margin:0 auto;padding:20px">
-    <!-- TOP BAR -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08)">
-      <div>
-        <div style="font-size:18px;font-weight:900;color:#f5c842">Growth Packs</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4)">All
+.gp-back{background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:13px;margin-bottom:14px;padding:0;font-family:Arial,sans-serif}
+.gp-flabel{display:block;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}
+.gp-finput{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:9px;padding:11px 13px;color:#f0f0f0;font-size:13px;margin-bottom:12px;box-sizing:border-box;outline:none;font-family:Arial,sans-serif}
+.gp-err{color:#f87171;font-size:11px;margin-top:-8px;margin-bottom:10px;display:none}
+.gp-inst{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:14px;margin-bottom:14px}
+.gp-inst-title{color:#f87171;font-weight:800;font-size:13px;margin-bottom:8px}
+.gp-inst-item{color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:4px}
+.gp-warn{background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.25);border-radius:8px;padding:8px 12px;color:#fbbf24;font-weight:700;font-size:12px;margin-top:8px}
+.gp-agree{display:flex;align-items:flex-start;gap:10px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:14px;cursor:pointer}
+.gp-agree span{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6}
+#gpSubmit{width:100%;padding:14px;background:rgba(255,255,255,0.05);border:none;border-radius:11px;color:rgba(255,255,255,0.3);font-size:14px;font-weight:800;cursor:not-allowed;font-family:Arial,sans-serif}
+#
