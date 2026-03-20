@@ -1,9 +1,38 @@
-<!DOCTYPE html>
+<
+      {/* Growth Packs */}
+      <div style={{border:"1px solid rgba(212,160,23,0.4)",padding:16,marginBottom:20,borderRadius:12,background:"rgba(212,160,23,0.04)"}}>
+        <h2 style={{color:"#f5c842",fontSize:16,fontWeight:900,marginBottom:4}}>Growth Packages</h2>
+        <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,marginBottom:14}}>Choose a package and place order via New Order page</p>
+        <div style={{marginBottom:12,padding:12,background:"rgba(255,255,255,0.03)",borderRadius:8}}>
+          <h3 style={{color:"#e8e8f2",fontSize:14,fontWeight:700,marginBottom:4}}>Starter Pack - Rs.299</h3>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,marginBottom:2}}>1K Followers + 2K Likes + 5K Views</p>
+          <p style={{color:"rgba(255,255,255,0.4)",fontSize:11}}>Go to New Order and mention Starter Pack in notes</p>
+        </div>
+        <div style={{marginBottom:12,padding:12,background:"rgba(212,160,23,0.08)",borderRadius:8,border:"1px solid rgba(212,160,23,0.3)"}}>
+          <h3 style={{color:"#f5c842",fontSize:14,fontWeight:700,marginBottom:4}}>Influencer Pack - Rs.499 - Most Popular</h3>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,marginBottom:2}}>2K Followers + 5K Likes + 10K Views</p>
+          <p style={{color:"rgba(255,255,255,0.4)",fontSize:11}}>Go to New Order and mention Influencer Pack in notes</p>
+        </div>
+        <div style={{marginBottom:14,padding:12,background:"rgba(255,255,255,0.03)",borderRadius:8}}>
+          <h3 style={{color:"#e8e8f2",fontSize:14,fontWeight:700,marginBottom:4}}>Viral Pack - Rs.999</h3>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,marginBottom:2}}>5K Followers + 10K Likes + 50K Views</p>
+          <p style={{color:"rgba(255,255,255,0.4)",fontSize:11}}>Go to New Order and mention Viral Pack in notes</p>
+        </div>
+        <div style={{marginTop:4,padding:12,background:"rgba(239,120,0,0.07)",border:"1px solid rgba(239,120,0,0.25)",borderRadius:8}}>
+          <h4 style={{color:"#fb923c",fontSize:13,fontWeight:700,marginBottom:8}}>How to Order</h4>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,marginBottom:4}}>1. Go to New Order page</p>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,marginBottom:4}}>2. Enter your profile link</p>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,marginBottom:4}}>3. Enter your reel or post link</p>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:12,marginBottom:4}}>4. Mention selected pack name in notes</p>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:12}}>5. Admin will process your order manually</p>
+        </div>
+      </div>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OpulentSMM - Premium Growth Platform | Best SMM Panel India</title>
+  <title>OpulentSMM - Best SMM Panel for Instagram, YouTube &amp; Social Media Growth</title>
   <meta name="description" content="Buy Instagram followers, likes, views and social media services at affordable prices. Fast delivery, secure UPI payments and 24/7 support. India's most trusted SMM panel."/>
   <meta name="keywords" content="SMM panel India, buy Instagram followers, cheap SMM panel, Instagram likes, YouTube views, TikTok followers, social media growth, buy followers India, OpulentSMM"/>
   <meta name="robots" content="index, follow"/>
@@ -1957,7 +1986,6 @@ const AuthWrap = ({ children }) => (
 // ═══════════════════════════════════════════════════════════════
 //  USER DASHBOARD
 // ═══════════════════════════════════════════════════════════════
-
 const UserDash = ({ userName, userEmail, onLogout }) => {
   const [page,setPage]=useState("overview");
   const [orders,setOrders]=useState([]);
@@ -2288,44 +2316,12 @@ const NotifBell = ({ userEmail, setPage }) => {
 };
 
 // ─── User: Overview ───────────────────────────────────────────
-
 const UserOverview = ({ orders, balance, setPage, userName, announcements, userEmail="" }) => {
   const comp=orders.filter(o=>o.status==="Completed").length;
   const active=orders.filter(o=>["Processing","Pending"].includes(o.status)).length;
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
-
-      {/* Growth Packs */}
-      <div style={{border:"1px solid rgba(212,160,23,0.35)",borderRadius:14,padding:16,marginBottom:20,background:"rgba(212,160,23,0.04)"}}>
-        <div style={{fontWeight:800,color:"#f5c842",fontSize:15,marginBottom:4}}>Growth Packs</div>
-        <div style={{fontSize:12,color:"rgba(255,255,255,0.5)",marginBottom:14}}>All-in-One packages for fast growth</div>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
-          <div onClick={function(){window.selectedPack="starter";setPage("neworder");}} style={{padding:12,borderRadius:10,background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",cursor:"pointer",textAlign:"center"}}>
-            <div style={{fontWeight:700,color:"#e8e8f2",fontSize:12,marginBottom:4}}>Starter</div>
-            <div style={{fontWeight:900,color:"#c4b5fd",fontSize:16,marginBottom:6}}>Rs.299</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>1K Followers</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>2K Likes</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>5K Views</div>
-          </div>
-          <div onClick={function(){window.selectedPack="influencer";setPage("neworder");}} style={{padding:12,borderRadius:10,background:"rgba(212,160,23,0.1)",border:"2px solid rgba(212,160,23,0.4)",cursor:"pointer",textAlign:"center"}}>
-            <div style={{fontSize:9,fontWeight:900,color:"#000",background:"linear-gradient(135deg,#d4a017,#f5c842)",borderRadius:8,padding:"2px 6px",marginBottom:6,display:"inline-block"}}>POPULAR</div>
-            <div style={{fontWeight:700,color:"#f5c842",fontSize:12,marginBottom:4}}>Influencer</div>
-            <div style={{fontWeight:900,color:"#f5c842",fontSize:16,marginBottom:6}}>Rs.499</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>2K Followers</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>5K Likes</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>10K Views</div>
-          </div>
-          <div onClick={function(){window.selectedPack="viral";setPage("neworder");}} style={{padding:12,borderRadius:10,background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",cursor:"pointer",textAlign:"center"}}>
-            <div style={{fontWeight:700,color:"#e8e8f2",fontSize:12,marginBottom:4}}>Viral</div>
-            <div style={{fontWeight:900,color:"#c4b5fd",fontSize:16,marginBottom:6}}>Rs.999</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>5K Followers</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>10K Likes</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>50K Views</div>
-          </div>
-        </div>
-      </div>
-
       {/* Top action bar */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:26,flexWrap:"wrap",gap:12}}>
         <div>
@@ -2522,10 +2518,6 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
   const [couponMsg,setCouponMsg]=useState("");
   const [linkErr,setLinkErr]=useState("");
   const [loading,setLoading]=useState(false);
-  const [reelLink,setReelLink]=useState("");
-  const [bundleNotes,setBundleNotes]=useState("");
-  const bundle = window.selectedPack || null;
-  const bundlePrice = bundle==="starter"?299:bundle==="influencer"?499:bundle==="viral"?999:0;
 
   const filtered=(pf==="All"?SERVICES:SERVICES.filter(s=>s.platform===pf)).filter(s=>!s.hidden);
   // Price calc: use tiers if available, else price per unit
@@ -2560,21 +2552,6 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
     else { setDisc(0); setCouponMsg(coupon?"❌ Invalid code. Check and try again.":""); }
   };
 
-  const bundlePlace=function(){
-    if(!link.trim()||link.indexOf("http")!==0){alert("Enter valid profile link");return;}
-    if(!reelLink.trim()||reelLink.indexOf("http")!==0){alert("Enter valid reel link");return;}
-    if(bundlePrice>balance){alert("Insufficient balance. Add funds first.");return;}
-    setLoading(true);
-    setTimeout(function(){
-      var bname=bundle==="starter"?"Starter Pack":bundle==="influencer"?"Influencer Pack":"Viral Pack";
-      var ord={id:uid(),service:"Bundle: "+bname,platform:"Instagram",icon:"GP",qty:1,price:bundlePrice,status:"Pending",date:today(),link:link,reelLink:reelLink,notes:bundleNotes,isBundle:true,bundlePack:bundle,type:"bundle",userEmail:sessionStorage.getItem("nx_email")||"anon",userName:sessionStorage.getItem("nx_name")||"Visitor"};
-      addOrderSync(ord);
-      setBalance(function(b){return parseFloat((b-bundlePrice).toFixed(2));});
-      try{if(typeof firebase!=="undefined"&&firebase.apps&&firebase.apps.length){firebase.firestore().collection("bundleOrders").add({type:"bundle",pack:bundle,packName:bname,profileLink:link,reelLink:reelLink,notes:bundleNotes,price:bundlePrice,status:"pending",userEmail:sessionStorage.getItem("nx_email")||"anon",userName:sessionStorage.getItem("nx_name")||"Visitor",date:today(),ts:Date.now()}).catch(function(){});}}catch(ex){}
-      window.selectedPack=null;
-      setLoading(false);setStep(4);
-    },1200);
-  };
   const place=()=>{
     if(total>balance){ alert("Insufficient balance! Go to Add Funds."); return; }
     setLoading(true);
@@ -2604,28 +2581,6 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="New Order" sub="Choose a service and grow your presence"/>
-
-      {/* Bundle banner if coming from Growth Packs */}
-      {bundle&&<div style={{border:"1px solid rgba(212,160,23,0.4)",borderRadius:12,padding:14,marginBottom:20,background:"rgba(212,160,23,0.06)"}}>
-        <div style={{fontWeight:800,color:"#f5c842",fontSize:14,marginBottom:4}}>
-          {bundle==="starter"?"Starter Pack":bundle==="influencer"?"Influencer Pack":"Viral Pack"}
-        </div>
-        <div style={{fontSize:12,color:"rgba(255,255,255,0.5)",marginBottom:12}}>
-          {bundle==="starter"?"1K Followers + 2K Likes + 5K Views":bundle==="influencer"?"2K Followers + 5K Likes + 10K Views":"5K Followers + 10K Likes + 50K Views"}
-        </div>
-        <Inp label="Profile Link (for Followers)" value={link} onChange={function(e){setLink(e.target.value);}} placeholder="https://instagram.com/yourusername" icon="link" hint="Followers will be sent here"/>
-        <Inp label="Reel or Post Link (for Likes and Views)" value={reelLink} onChange={function(e){setReelLink(e.target.value);}} placeholder="https://instagram.com/reel/..." icon="link" hint="Likes and views will be sent here"/>
-        <Inp label="Notes (optional)" value={bundleNotes} onChange={function(e){setBundleNotes(e.target.value);}} placeholder="Any special instructions" icon="note"/>
-        <p style={{fontSize:11,color:"rgba(255,255,255,0.4)",marginBottom:12}}>Followers go to profile link. Likes and views go to reel or post link.</p>
-        <div style={{background:"rgba(239,68,68,0.07)",border:"1px solid rgba(239,68,68,0.2)",borderRadius:9,padding:12,marginBottom:12}}>
-          <div style={{color:"#f87171",fontWeight:700,fontSize:12,marginBottom:6}}>Important</div>
-          <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",marginBottom:3}}>- Account must be PUBLIC</div>
-          <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",marginBottom:3}}>- Do NOT change username during delivery</div>
-          <div style={{fontSize:11,color:"rgba(255,255,255,0.5)"}}>- Delivery: 0-24 hours. No refunds after start.</div>
-        </div>
-        <Btn onClick={bundlePlace} loading={loading} style={{width:"100%",justifyContent:"center"}}>Place Bundle Order - Rs.{bundlePrice}</Btn>
-        <Btn v="ghost" onClick={function(){window.selectedPack=null;setPage("overview");}} style={{width:"100%",justifyContent:"center",marginTop:8}}>Cancel - Back to Dashboard</Btn>
-      </div>}
 
       {/* Step pills */}
       <div style={{display:"flex",gap:0,marginBottom:28,width:"fit-content",
@@ -6969,3 +6924,77 @@ function App() {
     const state={screen:s};
     if(replace) window.history.replaceState(state,"",window.location.pathname);
     else window.history.pushState(state,"",window.location.pathname);
+    setScreen(s);
+  };
+
+  // ── Listen to browser back/forward button ─────────────────
+  useEffect(()=>{
+    // Set initial history state so back button has something to go to
+    window.history.replaceState({screen:savedScreen},"",window.location.pathname);
+
+    const handlePop=(e)=>{
+      const s = e.state?.screen||"landing";
+      // If going back to landing while logged in → just go to overview, not logout
+      if(s==="landing" && sessionStorage.getItem("nx_screen")==="user"){
+        setScreen("user");
+        // Push a new state so they can't keep going back
+        window.history.pushState({screen:"user"},"",window.location.pathname);
+        return;
+      }
+      if(s==="landing" && sessionStorage.getItem("nx_screen")==="admin"){
+        setScreen("admin");
+        window.history.pushState({screen:"admin"},"",window.location.pathname);
+        return;
+      }
+      setScreen(s);
+    };
+    const handleHash = () => {
+      if(window.location.hash === "#secure-opulent-dashboard-9821") setScreen("adminlogin");
+    };
+    window.addEventListener("popstate", handlePop);
+    window.addEventListener("hashchange", handleHash);
+    return()=>{ window.removeEventListener("popstate", handlePop); window.removeEventListener("hashchange", handleHash); };
+  },[]);
+
+  const loginUser=(name,email="")=>{
+    const normEmail = (email||"").toLowerCase().trim();
+    setUserName(name);
+    setUserEmail(normEmail);
+    sessionStorage.setItem("nx_screen","user");
+    sessionStorage.setItem("nx_name",name);
+    sessionStorage.setItem("nx_email",normEmail);
+    DB.addUser({
+      id:"USR-"+Date.now(),
+      name: name||(normEmail.split("@")[0]),
+      email: normEmail,
+      balance:0, orders:0,
+      joined:today(), status:"Active",
+    });
+    goScreen("user");
+  };
+  const loginAdmin=()=>{ sessionStorage.setItem("nx_screen","admin"); goScreen("admin"); };
+  const logout=()=>{
+    sessionStorage.clear();
+    goScreen("landing", true);
+    setUserName(""); setUserEmail("");
+  };
+
+  return (
+    <>
+      <GS/>
+      <ToastContainer/>
+      {screen==="landing"    && <Landing goLogin={()=>goScreen("login")} goSignup={()=>goScreen("signup")}/>}
+      {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
+      {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
+      {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing")}/>}
+      {screen==="user"       && <UserDash userName={userName||"User"} userEmail={userEmail} onLogout={logout}/>}
+      {screen==="admin"      && <AdminDash onLogout={logout}/>}
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+  </script>
+</body>
+</html>
