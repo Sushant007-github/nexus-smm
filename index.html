@@ -1957,150 +1957,10 @@ const AuthWrap = ({ children }) => (
 // ═══════════════════════════════════════════════════════════════
 //  USER DASHBOARD
 // ═══════════════════════════════════════════════════════════════
-// User Growth Packs Tab
-const UserGrowthPacks = ({ balance, addOrderSync, setBalance, setPage }) => {
-  const selState = React.useState(null);
-  const sel = selState[0]; const setSel = selState[1];
-  const profState = React.useState(""); const prof = profState[0]; const setProf = profState[1];
-  const reelState = React.useState(""); const reel = reelState[0]; const setReel = reelState[1];
-  const notesState = React.useState(""); const notes = notesState[0]; const setNotes = notesState[1];
-  const agreedState = React.useState(false); const agreed = agreedState[0]; const setAgreed = agreedState[1];
-  const loadState = React.useState(false); const loading = loadState[0]; const setLoading = loadState[1];
-  const doneState = React.useState(false); const done = doneState[0]; const setDone = doneState[1];
-
-  const h = React.createElement;
-
-  const PACKS = [
-    {id:"starter",    name:"Starter Pack",    price:299, popular:false, tag:"Perfect to start your growth",    items:["1,000 Followers","2,000 Likes","5,000 Views"]},
-    {id:"influencer", name:"Influencer Pack",  price:499, popular:true,  tag:"Best for fast growth",            items:["2,000 Followers","5,000 Likes","10,000 Views"]},
-    {id:"viral",      name:"Viral Pack",       price:999, popular:false, tag:"For influencers and brands",     items:["5,000 Followers","10,000 Likes","50,000 Views"]}
-  ];
-
-  function placeOrder(){
-    if(!prof.trim() || prof.indexOf("http") !== 0){ alert("Please enter a valid profile link starting with http"); return; }
-    if(!reel.trim() || reel.indexOf("http") !== 0){ alert("Please enter a valid reel link starting with http"); return; }
-    if(!agreed){ alert("Please agree to all instructions first"); return; }
-    if(sel.price > balance){ alert("Insufficient balance. Please add funds first."); return; }
-    setLoading(true);
-    setTimeout(function(){
-      var today = new Date().toISOString().split("T")[0];
-      var ord = {id:"GP-"+Date.now(), service:"Bundle: "+sel.name, platform:"Instagram", icon:"GP", qty:1, price:sel.price, status:"Pending", date:today, link:prof, reelLink:reel, notes:notes, isBundle:true, bundlePack:sel.id, userEmail:sessionStorage.getItem("nx_email")||"anon", userName:sessionStorage.getItem("nx_name")||"Visitor", type:"bundle"};
-      addOrderSync(ord);
-      setBalance(function(b){ return parseFloat((b - sel.price).toFixed(2)); });
-      try{
-        if(typeof firebase !== "undefined" && firebase.apps && firebase.apps.length){
-          firebase.firestore().collection("bundleOrders").add({type:"bundle", pack:sel.id, packName:sel.name, profileLink:prof, reelLink:reel, notes:notes, price:sel.price, status:"pending", userEmail:sessionStorage.getItem("nx_email")||"anon", userName:sessionStorage.getItem("nx_name")||"Visitor", date:today, ts:Date.now()}).catch(function(){});
-        }
-      }catch(ex){}
-      setLoading(false);
-      setDone(true);
-    }, 1200);
-  }
-
-  const gold = "#f5c842";
-  const muted = "rgba(255,255,255,0.5)";
-
-  if(done){
-    return h("div", {style:{display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"60vh"}},
-      h("div", {style:{width:72, height:72, borderRadius:"50%", background:"rgba(52,211,153,0.15)", border:"2px solid #34d399", display:"flex", alignItems:"center", justifyContent:"center", fontSize:28, fontWeight:900, color:"#34d399", marginBottom:20}}, "OK"),
-      h("h2", {style:{fontFamily:"Syne,sans-serif", fontSize:24, fontWeight:900, color:"#34d399", marginBottom:8}}, "Order Placed!"),
-      h("p", {style:{color:muted, marginBottom:4, textAlign:"center"}}, sel ? sel.name + " is being processed" : ""),
-      h("p", {style:{color:muted, fontSize:12, marginBottom:24, textAlign:"center"}}, "Delivery within 0-24 hours"),
-      h(Btn, {onClick:function(){ setPage("orders"); }}, "View Orders"),
-      h(Btn, {v:"ghost", onClick:function(){ setSel(null); setDone(false); setProf(""); setReel(""); setNotes(""); setAgreed(false); }, style:{marginTop:8}}, "Order Again")
-    );
-  }
-
-  if(sel){
-    return h("div", {className:"page-enter", style:{maxWidth:540, margin:"0 auto"}},
-      h("button", {onClick:function(){ setSel(null); }, style:{background:"none", border:"none", color:muted, cursor:"pointer", fontSize:13, marginBottom:16, padding:0}}, "Back to Packs"),
-      h(PgH, {title:sel.name, sub:sel.tag}),
-
-      h(Card, {style:{padding:16, marginBottom:14, background:"rgba(212,160,23,0.07)", border:"1px solid rgba(212,160,23,0.25)"}},
-        h("div", {style:{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10}},
-          h("div", {style:{fontWeight:800, color:gold, fontSize:15}}, sel.name),
-          h("div", {style:{fontWeight:900, color:gold, fontSize:22}}, "Rs.", sel.price)
-        ),
-        h("div", {style:{display:"flex", flexWrap:"wrap", gap:6}},
-          sel.items.map(function(it, i){ return h("span", {key:i, style:{background:"rgba(212,160,23,0.1)", border:"1px solid rgba(212,160,23,0.2)", borderRadius:16, padding:"2px 10px", fontSize:11, color:gold}}, it); })
-        )
-      ),
-
-      h(Card, {style:{padding:16, marginBottom:14, background:"rgba(239,68,68,0.06)", border:"1px solid rgba(239,68,68,0.2)"}},
-        h("div", {style:{fontWeight:800, color:"#f87171", fontSize:13, marginBottom:8}}, "Important Instructions"),
-        h("div", {style:{background:"rgba(234,179,8,0.1)", border:"1px solid rgba(234,179,8,0.25)", borderRadius:8, padding:"7px 10px", marginBottom:8}},
-          h("span", {style:{color:"#fbbf24", fontWeight:800, fontSize:12}}, "90% of failed orders are due to private accounts!")
-        ),
-        ["Account must be PUBLIC", "Turn OFF Review Flagged Content on Instagram", "Do NOT change username during delivery", "Do NOT place duplicate orders", "Ensure your links are correct", "Delivery: 0-24 hours", "No refunds after order starts"].map(function(r, i){
-          return h("div", {key:i, style:{fontSize:12, color:muted, marginBottom:3}}, "- " + r);
-        })
-      ),
-
-      h(Card, {style:{padding:16, marginBottom:14}},
-        h(Inp, {label:"Instagram Profile Link (for Followers) *", value:prof, onChange:function(e){ setProf(e.target.value); }, placeholder:"https://instagram.com/yourusername", icon:"link", hint:"Your Instagram profile URL"}),
-        h(Inp, {label:"Reel or Post Link (for Likes and Views) *", value:reel, onChange:function(e){ setReel(e.target.value); }, placeholder:"https://instagram.com/reel/...", icon:"link", hint:"Link to your specific post or reel"}),
-        h(Inp, {label:"Notes (optional)", value:notes, onChange:function(e){ setNotes(e.target.value); }, placeholder:"Any special instructions", icon:"note"})
-      ),
-
-      h(Card, {style:{padding:14, marginBottom:16}},
-        h("label", {style:{display:"flex", alignItems:"flex-start", gap:10, cursor:"pointer"}},
-          h("input", {type:"checkbox", checked:agreed, onChange:function(e){ setAgreed(e.target.checked); }, style:{marginTop:2, width:16, height:16, flexShrink:0, cursor:"pointer"}}),
-          h("span", {style:{fontSize:12, color:muted, lineHeight:1.6}}, "I have read all instructions. My account is PUBLIC. I understand there are no refunds after the order starts.")
-        )
-      ),
-
-      h(Btn, {onClick:placeOrder, loading:loading, disabled:!agreed, style:{width:"100%", justifyContent:"center", opacity:agreed?1:0.5}},
-        loading ? "Placing Order..." : "Place Order - Rs." + sel.price
-      )
-    );
-  }
-
-  return h("div", {className:"page-enter"},
-    h(PgH, {title:"Growth Packs", sub:"All-in-One Growth Packages for creators and brands"}),
-
-    h("div", {style:{textAlign:"center", padding:"12px 16px", background:"linear-gradient(135deg,rgba(212,160,23,0.06),rgba(124,58,237,0.06))", border:"1px solid rgba(212,160,23,0.15)", borderRadius:12, marginBottom:20}},
-      h("div", {style:{fontSize:12, color:muted, marginBottom:3}}, "Trusted by thousands of creators"),
-      h("div", {style:{fontSize:12, color:muted, marginBottom:3}}, "Fast delivery and safe growth"),
-      h("div", {style:{fontSize:12, color:gold, fontWeight:700}}, "Most users choose the Rs.499 Influencer Pack")
-    ),
-
-    h("div", {style:{display:"grid", gridTemplateColumns:"1fr", gap:14, marginBottom:20}},
-      PACKS.map(function(pack){
-        return h("div", {key:pack.id, onClick:function(){ setSel(pack); },
-          style:{borderRadius:14, padding:20, marginBottom:14, cursor:"pointer",
-            background: pack.popular ? "linear-gradient(135deg,rgba(212,160,23,0.1),rgba(124,58,237,0.06))" : "rgba(255,255,255,0.02)",
-            border: pack.popular ? "2px solid rgba(212,160,23,0.5)" : "1px solid rgba(255,255,255,0.07)",
-            boxShadow: pack.popular ? "0 0 24px rgba(212,160,23,0.1)" : "none",
-            position: "relative"
-          }},
-          pack.popular && h("div", {style:{position:"absolute", top:-11, left:"50%", transform:"translateX(-50%)", background:"linear-gradient(135deg,#d4a017,#f5c842)", borderRadius:20, padding:"3px 14px", fontSize:10, fontWeight:900, color:"#000", whiteSpace:"nowrap"}}, "MOST POPULAR"),
-          h("div", {style:{display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:10}},
-            h("div", null,
-              h("div", {style:{fontWeight:800, fontSize:15, color:pack.popular?gold:"#e8e8f2", marginBottom:2}}, pack.name),
-              h("div", {style:{fontSize:11, color:muted}}, pack.tag)
-            ),
-            h("div", {style:{textAlign:"right"}},
-              h("div", {style:{fontWeight:900, fontSize:22, color:pack.popular?gold:"#c4b5fd"}}, "Rs.", pack.price),
-              h("div", {style:{fontSize:10, color:muted}}, "one time")
-            )
-          ),
-          h("div", {style:{marginBottom:12}},
-            pack.items.map(function(it, i){ return h("div", {key:i, style:{display:"flex", gap:8, fontSize:12, color:muted, marginBottom:3}}, h("span", {style:{color:"#34d399", fontWeight:900}}, "+"), it); })
-          ),
-          h("div", {style:{background:pack.popular?"rgba(212,160,23,0.15)":"rgba(124,58,237,0.1)", border:pack.popular?"1px solid rgba(212,160,23,0.3)":"1px solid rgba(124,58,237,0.2)", borderRadius:9, padding:"9px 14px", textAlign:"center", fontWeight:700, fontSize:12, color:pack.popular?gold:"#c4b5fd"}}, "Select " + pack.name)
-        );
-      })
-    ),
-
-    h("div", {style:{padding:16, background:"rgba(124,58,237,0.05)", border:"1px solid rgba(124,58,237,0.12)", borderRadius:12}},
-      h("div", {style:{fontWeight:700, color:"#c4b5fd", fontSize:13, marginBottom:10}}, "How It Works"),
-      ["Select a pack above", "Enter your Instagram profile and reel link", "We deliver growth within 0-24 hours"].map(function(step, i){
-        return h("div", {key:i, style:{display:"flex", alignItems:"center", gap:10, marginBottom:i<2?8:0}},
-          h("div", {style:{width:22, height:22, borderRadius:"50%", background:"rgba(124,58,237,0.3)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:900, color:"#c4b5fd", flexShrink:0}}, i+1),
-          h("span", {style:{fontSize:12, color:muted}}, step)
-        );
-      })
-    )
+const UserGrowthPacks = function(){
+  return React.createElement("div", {style:{padding:"20px", color:"white"}},
+    React.createElement("h2", null, "Growth Packs Working"),
+    React.createElement("p", null, "Tab is connected. Full UI coming soon.")
   );
 };
 
@@ -6954,4 +6814,240 @@ const AdminAnnounce = ({ announcements, setAnnouncements }) => {
               letterSpacing:".07em",textTransform:"uppercase"}}>Message</label>
             <textarea value={form.body} onChange={e=>F("body",e.target.value)} rows={4}
               placeholder="Write your message to users — e.g. Get 20% off all Instagram services today only! Use code DIWALI20 at checkout."
-              style={{width:"
+              style={{width:"100%",background:"rgba(255,255,255,.04)",border:`1px solid ${C.border}`,
+                borderRadius:11,padding:"13px 14px",color:C.text,fontSize:13,
+                resize:"vertical",fontFamily:"inherit",lineHeight:1.6}}/>
+          </div>
+
+          {/* Preview */}
+          {form.title&&(
+            <div style={{marginBottom:18,padding:"14px 16px",borderRadius:11,
+              background:`${typeColor[form.type]}0d`,border:`1px solid ${typeColor[form.type]}33`}}>
+              <div style={{fontSize:10,color:typeColor[form.type],fontWeight:800,letterSpacing:".08em",marginBottom:6}}>
+                PREVIEW — how users will see it:
+              </div>
+              <div style={{fontWeight:700,color:"#e8e8f2",fontSize:13,marginBottom:3}}>{form.title}</div>
+              <div style={{fontSize:12,color:C.muted}}>{form.body||"(message preview)"}</div>
+            </div>
+          )}
+
+          <Btn onClick={add} style={{width:"100%",justifyContent:"center",fontSize:15}} size="lg">
+            📣 Publish to All Users Now
+          </Btn>
+          <p style={{fontSize:11,color:C.muted,marginTop:10,textAlign:"center"}}>
+            Appears on every user's Overview page immediately
+          </p>
+        </Card>
+      )}
+
+      {/* PUBLISHED ANNOUNCEMENTS LIST */}
+      <div style={{fontSize:11,fontWeight:700,color:C.muted,letterSpacing:".08em",marginBottom:14,textTransform:"uppercase"}}>
+        Published ({announcements.length})
+      </div>
+
+      {announcements.length===0&&(
+        <Card style={{padding:44,textAlign:"center"}}>
+          <div style={{fontSize:44,marginBottom:12}}>📭</div>
+          <p style={{color:"#e8e8f2",fontWeight:700,marginBottom:6}}>No announcements published yet</p>
+          <p style={{color:C.muted,fontSize:13}}>Use the form above to create your first announcement.<br/>It will appear on all user dashboards instantly.</p>
+        </Card>
+      )}
+
+      {announcements.map(p=>(
+        <Card key={p.id} style={{padding:20,marginBottom:12,borderLeft:`3px solid ${typeColor[p.type]||C.border}`}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:10}}>
+            <div style={{flex:1}}>
+              <div style={{display:"flex",alignItems:"center",gap:9,marginBottom:8}}>
+                <span style={{fontSize:12,fontWeight:800,color:typeColor[p.type],
+                  background:`${typeColor[p.type]}18`,border:`1px solid ${typeColor[p.type]}40`,
+                  borderRadius:20,padding:"3px 12px",letterSpacing:".06em"}}>
+                  {typeIcon[p.type]} {p.type.toUpperCase()}
+                </span>
+                <span style={{fontSize:11,color:C.muted}}>{p.date}</span>
+              </div>
+              <div style={{fontWeight:800,color:"#e8e8f2",fontSize:14,marginBottom:5}}>{p.title}</div>
+              <div style={{color:C.muted,fontSize:13,lineHeight:1.6}}>{p.body}</div>
+            </div>
+            <button onClick={()=>{ if(window.confirm("Delete this announcement?")) setAnnouncements(x=>x.filter(a=>a.id!==p.id)); }}
+              style={{background:"rgba(239,68,68,.1)",border:"1px solid rgba(239,68,68,.2)",
+                borderRadius:8,padding:"7px 14px",color:"#f87171",fontSize:12,fontWeight:700,
+                cursor:"pointer",flexShrink:0,whiteSpace:"nowrap"}}>
+              🗑 Delete
+            </button>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  ROOT
+// ═══════════════════════════════════════════════════════════════
+function App() {
+  // ── SPA routing: detect hidden admin route via URL hash ──────
+  const getInitialScreen = () => {
+    const hash = window.location.hash;
+    if(hash === "#secure-opulent-dashboard-9821") return "adminlogin";
+    return sessionStorage.getItem("nx_screen") || "landing";
+  };
+
+  const savedScreen = getInitialScreen();
+  const savedName   = sessionStorage.getItem("nx_name")||"";
+  const savedEmail  = sessionStorage.getItem("nx_email")||"";
+
+  const [screen,setScreen]=useState(savedScreen);
+  const [userName,setUserName]=useState(savedName);
+  const [userEmail,setUserEmail]=useState(savedEmail);
+
+  // ── History API: push state on screen change ──────────────
+  const goScreen=(s, replace=false)=>{
+    const state={screen:s};
+    if(replace) window.history.replaceState(state,"",window.location.pathname);
+    else window.history.pushState(state,"",window.location.pathname);
+    setScreen(s);
+  };
+
+  // ── Listen to browser back/forward button ─────────────────
+  useEffect(()=>{
+    // Set initial history state so back button has something to go to
+    window.history.replaceState({screen:savedScreen},"",window.location.pathname);
+
+    const handlePop=(e)=>{
+      const s = e.state?.screen||"landing";
+      // If going back to landing while logged in → just go to overview, not logout
+      if(s==="landing" && sessionStorage.getItem("nx_screen")==="user"){
+        setScreen("user");
+        // Push a new state so they can't keep going back
+        window.history.pushState({screen:"user"},"",window.location.pathname);
+        return;
+      }
+      if(s==="landing" && sessionStorage.getItem("nx_screen")==="admin"){
+        setScreen("admin");
+        window.history.pushState({screen:"admin"},"",window.location.pathname);
+        return;
+      }
+      setScreen(s);
+    };
+    const handleHash = () => {
+      if(window.location.hash === "#secure-opulent-dashboard-9821") setScreen("adminlogin");
+    };
+    window.addEventListener("popstate", handlePop);
+    window.addEventListener("hashchange", handleHash);
+    return()=>{ window.removeEventListener("popstate", handlePop); window.removeEventListener("hashchange", handleHash); };
+  },[]);
+
+  const loginUser=(name,email="")=>{
+    const normEmail = (email||"").toLowerCase().trim();
+    setUserName(name);
+    setUserEmail(normEmail);
+    sessionStorage.setItem("nx_screen","user");
+    sessionStorage.setItem("nx_name",name);
+    sessionStorage.setItem("nx_email",normEmail);
+    DB.addUser({
+      id:"USR-"+Date.now(),
+      name: name||(normEmail.split("@")[0]),
+      email: normEmail,
+      balance:0, orders:0,
+      joined:today(), status:"Active",
+    });
+    goScreen("user");
+  };
+  const loginAdmin=()=>{ sessionStorage.setItem("nx_screen","admin"); goScreen("admin"); };
+  const logout=()=>{
+    sessionStorage.clear();
+    goScreen("landing", true);
+    setUserName(""); setUserEmail("");
+  };
+
+  return (
+    <>
+      <GS/>
+      <ToastContainer/>
+      {screen==="landing"    && <Landing goLogin={()=>goScreen("login")} goSignup={()=>goScreen("signup")}/>}
+      {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
+      {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
+      {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing")}/>}
+      {screen==="user"       && <UserDash userName={userName||"User"} userEmail={userEmail} onLogout={logout}/>}
+      {screen==="admin"      && <AdminDash onLogout={logout}/>}
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+  </script>
+
+<script>
+function createGrowthButton(){
+  if(document.getElementById("gp-btn")) return;
+  var btn = document.createElement("button");
+  btn.id = "gp-btn";
+  btn.innerText = "Growth Packs";
+  btn.style.position = "fixed";
+  btn.style.bottom = "80px";
+  btn.style.right = "16px";
+  btn.style.zIndex = "9999";
+  btn.style.padding = "12px 18px";
+  btn.style.background = "gold";
+  btn.style.color = "black";
+  btn.style.border = "none";
+  btn.style.borderRadius = "8px";
+  btn.style.fontWeight = "bold";
+  btn.style.fontSize = "14px";
+  btn.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
+  btn.style.cursor = "pointer";
+  btn.onclick = function(){ showGrowthPage(); };
+  document.body.appendChild(btn);
+}
+
+function showGrowthPage(){
+  var existing = document.getElementById("gp-popup");
+  if(existing){ existing.style.display = "block"; return; }
+
+  var popup = document.createElement("div");
+  popup.id = "gp-popup";
+  popup.style.position = "fixed";
+  popup.style.top = "0";
+  popup.style.left = "0";
+  popup.style.width = "100%";
+  popup.style.height = "100%";
+  popup.style.background = "#07070f";
+  popup.style.color = "white";
+  popup.style.zIndex = "99999";
+  popup.style.overflowY = "auto";
+  popup.style.fontFamily = "Arial,sans-serif";
+  popup.style.WebkitOverflowScrolling = "touch";
+
+  var profLink = "";
+  var reelLink = "";
+  var selPack = null;
+  var agreed = false;
+
+  var packs = [
+    {id:"starter",    name:"Starter Pack",    price:299, items:["1,000 Followers","2,000 Likes","5,000 Views"],    popular:false},
+    {id:"influencer", name:"Influencer Pack",  price:499, items:["2,000 Followers","5,000 Likes","10,000 Views"],   popular:true},
+    {id:"viral",      name:"Viral Pack",       price:999, items:["5,000 Followers","10,000 Likes","50,000 Views"],  popular:false}
+  ];
+
+  function render(){
+    var html = '<div style="max-width:520px;margin:0 auto;padding:16px">';
+
+    // TOP BAR
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-bottom:16px;border-bottom:1px solid #222;position:sticky;top:0;background:#07070f;z-index:10">';
+    html += '<div style="font-size:18px;font-weight:900;color:gold">Growth Packs</div>';
+    html += '<button onclick="document.getElementById(\'gp-popup\').style.display=\'none\'" style="background:rgba(255,255,255,0.07);border:1px solid #333;border-radius:8px;padding:7px 14px;color:white;font-size:12px;cursor:pointer;font-family:Arial,sans-serif">Close</button>';
+    html += '</div>';
+
+    if(!selPack){
+      // PACK LIST
+      html += '<div style="text-align:center;padding:10px;background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.2);border-radius:10px;margin-bottom:16px;font-size:12px;color:gold;font-weight:700">Most users choose the Rs.499 Influencer Pack</div>';
+
+      for(var i=0;i<packs.length;i++){
+        var p = packs[i];
+        var border = p.popular ? "2px solid gold" : "1px solid #222";
+        var bg = p.popular ? "rgba(212,160,23,0.08)" : "rgba(255,255,255,0.02)";
+        html += '<div onclick="gpSelectPack(\''+p.id+'\')" style="padding:18px;border-radius:14px;margin-bottom:12px;cursor:pointer;background:'+bg+';border:'+border+'">';
+        if(p.popular) html += '<div style="display:inline-block;background:gold;color:black;font-size:10px;font-weight:900;padding:2px 12px;border-radius:12px;margin-bottom:8px">MOST POPULAR</div>';
+        html += '<div style="font-size:16px;font-weight:800;color:'+(p.popular?'gold':'white')+'">'+p.name+'</div>';
+        html += '<div style="font-size:24px;font-weight
