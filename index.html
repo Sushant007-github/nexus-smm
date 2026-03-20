@@ -2176,7 +2176,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
         </nav>
 
         <Divider/>
-        <button onClick={function(){if(typeof gpOpen==="function")gpOpen();}} style={{display:"flex",alignItems:"center",gap:11,width:"100%",padding:"10px 12px",marginBottom:4,background:"rgba(212,160,23,0.08)",border:"1px solid rgba(212,160,23,0.2)",borderRadius:10,color:"#f5c842",fontWeight:700,fontSize:13,cursor:"pointer"}}>
+        <button onClick={function(){var o=document.getElementById("gpOverlay");if(o){o.style.display="block";document.body.style.overflow="hidden";}}} style={{display:"flex",alignItems:"center",gap:11,width:"100%",padding:"10px 12px",marginBottom:4,background:"rgba(212,160,23,0.08)",border:"1px solid rgba(212,160,23,0.2)",borderRadius:10,color:"#f5c842",fontWeight:700,fontSize:13,cursor:"pointer"}}>
           <span style={{fontSize:16}}>GP</span>
           <span>Growth Packs</span>
         </button>
@@ -2407,7 +2407,7 @@ const UserOverview = ({ orders, balance, setPage, userName, announcements, userE
           {icon:"🌟",label:"Influencer", sub:"Submit proof & earn rewards",    page:"influencer",grad:"linear-gradient(135deg,#f5c842,#d4a017)"},
           {icon:"🎫",label:"Support",   sub:"Tickets & help center",         page:"support", grad:"linear-gradient(135deg,#7c3aed,#6d28d9)"},
         ].map(q=>(
-          <Card key={q.label} onClick={()=>setPage(q.page)} style={{padding:18,cursor:"pointer",display:"flex",alignItems:"center",gap:13,transition:"transform .18s,box-shadow .18s"}}
+          <Card key={q.label} onClick={function(){if(q.page==="growthpacks"){var o=document.getElementById("gpOverlay");if(o){o.style.display="block";document.body.style.overflow="hidden";}}else{setPage(q.page);}}} style={{padding:18,cursor:"pointer",display:"flex",alignItems:"center",gap:13,transition:"transform .18s,box-shadow .18s"}}
             onMouseEnter={e=>{ e.currentTarget.style.transform="translateY(-2px)"; e.currentTarget.style.boxShadow="0 8px 30px rgba(0,0,0,.4)"; }}
             onMouseLeave={e=>{ e.currentTarget.style.transform="none"; e.currentTarget.style.boxShadow=""; }}>
             <div style={{width:40,height:40,borderRadius:11,background:q.grad,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0,boxShadow:`0 4px 12px rgba(0,0,0,.3)`}}>{q.icon}</div>
@@ -7006,6 +7006,4 @@ root.render(React.createElement(App));
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08)">
       <div>
         <div style="font-size:18px;font-weight:900;color:#f5c842">Growth Packs</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4)">All-in-One Growth Packages</div>
-      </div>
-      <button onclick="gpClose()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:7px 14px;color:#e8e8f2;font-size:12px;cursor:
+        <div style="font-size:12px;color:rgba(255,255,255,0.4)">All
