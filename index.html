@@ -1957,13 +1957,6 @@ const AuthWrap = ({ children }) => (
 // ═══════════════════════════════════════════════════════════════
 //  USER DASHBOARD
 // ═══════════════════════════════════════════════════════════════
-const UserGrowthPacks = function(){
-  return React.createElement("div", {style:{padding:"20px", color:"white"}},
-    React.createElement("h2", null, "Growth Packs Working"),
-    React.createElement("p", null, "Tab is connected. Full UI coming soon.")
-  );
-};
-
 
 const UserDash = ({ userName, userEmail, onLogout }) => {
   const [page,setPage]=useState("overview");
@@ -2136,7 +2129,6 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
     {id:"influencer", label:"Influencer",    icon:"🌟"},
     {id:"support",    label:"Support",       icon:"💬"},
     {id:"settings",   label:"Profile",       icon:"👤"},
-    {id:"growthpacks", label:"Growth Packs",  icon:"GP"},
   ];
 
   const renderPage=()=>{
@@ -2150,7 +2142,6 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
       case "influencer": return <UserInfluencer userEmail={userEmail} userName={userName}/>;
       case "support":    return <UserSupport userEmail={userEmail} userName={userName}/>;
       case "settings":   return <UserProfile userName={userName} userEmail={userEmail} balance={balance} orders={orders} onLogout={onLogout}/>;
-      case "growthpacks": return <UserGrowthPacks balance={balance} addOrderSync={addOrderSync} setBalance={setBalanceSync} setPage={goPage}/>;
       default:           return <UserOverview orders={orders} balance={balance} setPage={goPage} userName={userName} announcements={announcements} userEmail={userEmail}/>;
     }
   };
@@ -2303,23 +2294,9 @@ const UserOverview = ({ orders, balance, setPage, userName, announcements, userE
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
-      {/* Growth Packages Section */}
-      <div style={{border:"1px solid rgba(212,160,23,0.4)",padding:"16px",marginBottom:"20px",borderRadius:"12px",background:"rgba(212,160,23,0.05)"}}>
-        <h2 style={{color:"#f5c842",marginBottom:"8px",fontSize:"16px",fontWeight:"800"}}>Growth Packages</h2>
-        <p style={{color:"rgba(255,255,255,0.5)",fontSize:"13px",marginBottom:"14px"}}>All in one packages for fast growth</p>
-        <div style={{marginBottom:"10px",padding:"12px",background:"rgba(255,255,255,0.03)",borderRadius:"8px"}}>
-          <h3 style={{color:"white",fontSize:"14px",fontWeight:"700",marginBottom:"4px"}}>Starter Pack - Rs.299</h3>
-          <p style={{color:"rgba(255,255,255,0.5)",fontSize:"12px"}}>1K Followers + 2K Likes + 5K Views</p>
-        </div>
-        <div style={{marginBottom:"10px",padding:"12px",background:"rgba(212,160,23,0.08)",borderRadius:"8px",border:"1px solid rgba(212,160,23,0.3)"}}>
-          <h3 style={{color:"#f5c842",fontSize:"14px",fontWeight:"700",marginBottom:"4px"}}>Influencer Pack - Rs.499 - Most Popular</h3>
-          <p style={{color:"rgba(255,255,255,0.5)",fontSize:"12px"}}>2K Followers + 5K Likes + 10K Views</p>
-        </div>
-        <div style={{padding:"12px",background:"rgba(255,255,255,0.03)",borderRadius:"8px"}}>
-          <h3 style={{color:"white",fontSize:"14px",fontWeight:"700",marginBottom:"4px"}}>Viral Pack - Rs.999</h3>
-          <p style={{color:"rgba(255,255,255,0.5)",fontSize:"12px"}}>5K Followers + 10K Likes + 50K Views</p>
-        </div>
-      </div>
+
+      <button onClick={function(){ alert("Growth Packs Working"); }} style={{padding:"10px",marginBottom:"10px",background:"gold",color:"black",border:"none",borderRadius:"8px",fontWeight:"700",cursor:"pointer",width:"100%",fontSize:"14px"}}>Test Growth Packs</button>
+
       {/* Top action bar */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:26,flexWrap:"wrap",gap:12}}>
         <div>
@@ -6994,61 +6971,5 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
   </script>
-
-<script>
-function createGrowthButton(){
-  if(document.getElementById("gp-btn")) return;
-  var btn = document.createElement("button");
-  btn.id = "gp-btn";
-  btn.innerText = "Growth Packs";
-  btn.style.position = "fixed";
-  btn.style.bottom = "80px";
-  btn.style.right = "16px";
-  btn.style.zIndex = "9999";
-  btn.style.padding = "12px 18px";
-  btn.style.background = "gold";
-  btn.style.color = "black";
-  btn.style.border = "none";
-  btn.style.borderRadius = "8px";
-  btn.style.fontWeight = "bold";
-  btn.style.fontSize = "14px";
-  btn.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
-  btn.style.cursor = "pointer";
-  btn.onclick = function(){ showGrowthPage(); };
-  document.body.appendChild(btn);
-}
-
-function showGrowthPage(){
-  var existing = document.getElementById("gp-popup");
-  if(existing){ existing.style.display = "block"; return; }
-
-  var popup = document.createElement("div");
-  popup.id = "gp-popup";
-  popup.style.position = "fixed";
-  popup.style.top = "0";
-  popup.style.left = "0";
-  popup.style.width = "100%";
-  popup.style.height = "100%";
-  popup.style.background = "#07070f";
-  popup.style.color = "white";
-  popup.style.zIndex = "99999";
-  popup.style.overflowY = "auto";
-  popup.style.fontFamily = "Arial,sans-serif";
-  popup.style.WebkitOverflowScrolling = "touch";
-
-  var profLink = "";
-  var reelLink = "";
-  var selPack = null;
-  var agreed = false;
-
-  var packs = [
-    {id:"starter",    name:"Starter Pack",    price:299, items:["1,000 Followers","2,000 Likes","5,000 Views"],    popular:false},
-    {id:"influencer", name:"Influencer Pack",  price:499, items:["2,000 Followers","5,000 Likes","10,000 Views"],   popular:true},
-    {id:"viral",      name:"Viral Pack",       price:999, items:["5,000 Followers","10,000 Likes","50,000 Views"],  popular:false}
-  ];
-
-  function render(){
-    var html = '<div style="max-width:520px;margin:0 auto;padding:16px">';
-
-    // TOP BAR
-    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-botto
+</body>
+</html>
