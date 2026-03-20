@@ -2598,9 +2598,9 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
         <div style={{fontSize:12,color:"rgba(255,255,255,0.5)",marginBottom:12}}>
           {bundle==="starter"?"1K Followers + 2K Likes + 5K Views":bundle==="influencer"?"2K Followers + 5K Likes + 10K Views":"5K Followers + 10K Likes + 50K Views"}
         </div>
-        <Inp label="Profile Link (for Followers)" value={link} onChange={e=>setLink(e.target.value)} placeholder="https://instagram.com/yourusername" icon="link" hint="Followers will be sent here"/>
-        <Inp label="Reel or Post Link (for Likes and Views)" value={reelLink} onChange={e=>setReelLink(e.target.value)} placeholder="https://instagram.com/reel/..." icon="link" hint="Likes and views will be sent here"/>
-        <Inp label="Notes (optional)" value={bundleNotes} onChange={e=>setBundleNotes(e.target.value)} placeholder="Any special instructions" icon="note"/>
+        <Inp label="Profile Link (for Followers)" value={link} onChange={function(e){setLink(e.target.value);}} placeholder="https://instagram.com/yourusername" icon="link" hint="Followers will be sent here"/>
+        <Inp label="Reel or Post Link (for Likes and Views)" value={reelLink} onChange={function(e){setReelLink(e.target.value);}} placeholder="https://instagram.com/reel/..." icon="link" hint="Likes and views will be sent here"/>
+        <Inp label="Notes (optional)" value={bundleNotes} onChange={function(e){setBundleNotes(e.target.value);}} placeholder="Any special instructions" icon="note"/>
         <p style={{fontSize:11,color:"rgba(255,255,255,0.4)",marginBottom:12}}>Followers go to profile link. Likes and views go to reel or post link.</p>
         <div style={{background:"rgba(239,68,68,0.07)",border:"1px solid rgba(239,68,68,0.2)",borderRadius:9,padding:12,marginBottom:12}}>
           <div style={{color:"#f87171",fontWeight:700,fontSize:12,marginBottom:6}}>Important</div>
@@ -6966,5 +6966,4 @@ function App() {
   const goScreen=(s, replace=false)=>{
     const state={screen:s};
     if(replace) window.history.replaceState(state,"",window.location.pathname);
-    else window.history.pushState(state,"",window.location.pathname);
-  
+    else window.history.pushState(state
