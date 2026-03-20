@@ -155,18 +155,18 @@ const SERVICES = [
     quality:["High Quality"], speedTag:"Normal" },
 
   // ── YOUTUBE ──────────────────────────────────────────────────────
-  { id:8, platform:"YouTube", icon:"▶️", name:"YouTube Views – Stable",
+  { id:8, platform:"YouTube", icon:"▶️", name:"YouTube Views – Stable", hidden:true,
     desc:"High-retention Indian views with watch time boost. Helps reach monetization thresholds faster.",
     speed:"1–24 hrs", min:1000, max:500000, cat:"Views", badge:"🏆 Top Rated",
     quality:["High Quality","Non Drop"], speedTag:"Normal",
     tiers:[{qty:1000,price:149},{qty:5000,price:599},{qty:10000,price:1099}] },
 
-  { id:9, platform:"YouTube", icon:"▶️", name:"YouTube Subscribers – Stable",
+  { id:9, platform:"YouTube", icon:"▶️", name:"YouTube Subscribers – Stable", hidden:true,
     desc:"Real Indian subscribers. Grows channel credibility and helps monetize faster.",
     speed:"1–48 hrs", min:100, max:50000, price:3.50, cat:"Followers",
     quality:["High Quality","Refill Available"], speedTag:"Normal" },
 
-  { id:10, platform:"YouTube", icon:"▶️", name:"YouTube Likes – Fast",
+  { id:10, platform:"YouTube", icon:"▶️", name:"YouTube Likes – Fast", hidden:true,
     desc:"Boost your video with Indian likes. Increases trust and ranking in search results.",
     speed:"1–12 hrs", min:100, max:50000, price:1.20, cat:"Likes",
     quality:["High Quality"], speedTag:"Fast" },
@@ -184,31 +184,45 @@ const SERVICES = [
     quality:["High Quality"], speedTag:"Instant" },
 
   // ── TIKTOK ───────────────────────────────────────────────────────
-  { id:13, platform:"TikTok", icon:"🎵", name:"TikTok Views – Worldwide",
+  { id:13, platform:"TikTok", icon:"🎵", name:"TikTok Views – Worldwide", hidden:true,
     desc:"Push content to For You pages worldwide. Fast delivery, no password needed.",
     speed:"0–6 hrs", min:1000, max:1000000, price:0.09, cat:"Views",
     quality:["High Quality"], speedTag:"Fast" },
 
-  { id:14, platform:"TikTok", icon:"🎵", name:"TikTok Followers – Global",
+  { id:14, platform:"TikTok", icon:"🎵", name:"TikTok Followers – Global", hidden:true,
     desc:"Grow your TikTok presence fast with real-looking followers worldwide.",
     speed:"0–12 hrs", min:100, max:100000, price:1.50, cat:"Followers",
     quality:["High Quality","Non Drop"], speedTag:"Normal" },
 
-  { id:15, platform:"TikTok", icon:"🎵", name:"TikTok Likes – Global",
+  { id:15, platform:"TikTok", icon:"🎵", name:"TikTok Likes – Global", hidden:true,
     desc:"Instant likes for your TikTok videos. Safe and fast delivery guaranteed.",
     speed:"0–2 hrs", min:100, max:100000, price:0.50, cat:"Likes",
     quality:["High Quality"], speedTag:"Instant" },
 
   // ── FACEBOOK ─────────────────────────────────────────────────────
-  { id:16, platform:"Facebook", icon:"👍", name:"Facebook Page Likes – Stable",
-    desc:"Indian page likes for your Facebook business page. Looks 100% natural and organic.",
-    speed:"1–48 hrs", min:100, max:50000, price:1.10, cat:"Likes",
-    quality:["High Quality","Non Drop"], speedTag:"Normal" },
+  { id:16, platform:"Facebook", icon:"👍", name:"Facebook Followers – Stable",
+    desc:"Real Facebook followers. Safe gradual delivery. Non-drop guarantee.",
+    speed:"1–48 hrs", min:100, max:50000, cat:"Followers",
+    quality:["High Quality","Non Drop"], speedTag:"Normal",
+    tiers:[{qty:1000,price:399},{qty:5000,price:1799},{qty:10000,price:3299}] },
 
-  { id:17, platform:"Facebook", icon:"👍", name:"Facebook Post Likes",
-    desc:"Boost engagement on your Facebook posts with real-looking likes.",
-    speed:"0–6 hrs", min:100, max:20000, price:0.80, cat:"Likes",
-    quality:["High Quality"], speedTag:"Fast" },
+  { id:17, platform:"Facebook", icon:"👍", name:"Facebook Post Likes – HQ",
+    desc:"High quality likes for your Facebook posts. Fast delivery.",
+    speed:"0–6 hrs", min:100, max:20000, cat:"Likes",
+    quality:["High Quality"], speedTag:"Fast",
+    tiers:[{qty:1000,price:150},{qty:5000,price:599},{qty:10000,price:1099}] },
+
+  { id:21, platform:"Facebook", icon:"👍", name:"Facebook Followers – Premium",
+    desc:"Premium quality Facebook followers with high retention.",
+    speed:"0–24 hrs", min:100, max:20000, cat:"Followers",
+    quality:["High Quality","Non Drop","Refill Available"], speedTag:"Fast",
+    tiers:[{qty:1000,price:499},{qty:5000,price:2299},{qty:10000,price:4299}] },
+
+  { id:22, platform:"Facebook", icon:"👍", name:"Facebook Reel Likes – Premium",
+    desc:"Premium likes for your Facebook Reels. Boosts reach and engagement.",
+    speed:"0–6 hrs", min:100, max:50000, cat:"Likes",
+    quality:["High Quality"], speedTag:"Fast",
+    tiers:[{qty:1000,price:199},{qty:5000,price:849},{qty:10000,price:1499}] },
 
   // ── TWITTER ──────────────────────────────────────────────────────
   { id:18, platform:"Twitter", icon:"🐦", name:"Twitter Followers – Stable",
@@ -222,7 +236,7 @@ const SERVICES = [
     quality:["High Quality"], speedTag:"Fast" },
 ];
 
-const PLATFORMS = ["All","Instagram","YouTube","Facebook","TikTok","Twitter"];
+const PLATFORMS = ["All","Instagram","Facebook","Twitter"];
 
 // ─── Service Badge Config ─────────────────────────────────────
 const BADGE_CONFIG = {
@@ -2304,6 +2318,13 @@ const UserOverview = ({ orders, balance, setPage, userName, announcements, userE
           <NotifBell userEmail={userEmail} setPage={setPage}/>
           <Btn onClick={()=>setPage("neworder")}>✦ New Order</Btn>
         </div>
+      </div>
+
+      {/* Coming Soon Notice */}
+      <div style={{border:"1px solid rgba(212,160,23,0.3)",padding:14,marginBottom:18,borderRadius:10,background:"rgba(212,160,23,0.04)"}}>
+        <h3 style={{color:"#f5c842",fontSize:14,fontWeight:800,marginBottom:6}}>Coming Soon</h3>
+        <p style={{color:"rgba(255,255,255,0.6)",fontSize:12,marginBottom:4}}>New Growth Packs and Influencer Packages are launching soon.</p>
+        <p style={{color:"#fb923c",fontSize:12,fontWeight:600}}>Stay ready for powerful growth tools.</p>
       </div>
 
       {/* FREE TRIAL BANNER for new users with low balance */}
