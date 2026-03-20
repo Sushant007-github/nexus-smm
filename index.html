@@ -2303,6 +2303,23 @@ const UserOverview = ({ orders, balance, setPage, userName, announcements, userE
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
+      {/* Growth Packages Section */}
+      <div style={{border:"1px solid rgba(212,160,23,0.4)",padding:"16px",marginBottom:"20px",borderRadius:"12px",background:"rgba(212,160,23,0.05)"}}>
+        <h2 style={{color:"#f5c842",marginBottom:"8px",fontSize:"16px",fontWeight:"800"}}>Growth Packages</h2>
+        <p style={{color:"rgba(255,255,255,0.5)",fontSize:"13px",marginBottom:"14px"}}>All in one packages for fast growth</p>
+        <div style={{marginBottom:"10px",padding:"12px",background:"rgba(255,255,255,0.03)",borderRadius:"8px"}}>
+          <h3 style={{color:"white",fontSize:"14px",fontWeight:"700",marginBottom:"4px"}}>Starter Pack - Rs.299</h3>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:"12px"}}>1K Followers + 2K Likes + 5K Views</p>
+        </div>
+        <div style={{marginBottom:"10px",padding:"12px",background:"rgba(212,160,23,0.08)",borderRadius:"8px",border:"1px solid rgba(212,160,23,0.3)"}}>
+          <h3 style={{color:"#f5c842",fontSize:"14px",fontWeight:"700",marginBottom:"4px"}}>Influencer Pack - Rs.499 - Most Popular</h3>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:"12px"}}>2K Followers + 5K Likes + 10K Views</p>
+        </div>
+        <div style={{padding:"12px",background:"rgba(255,255,255,0.03)",borderRadius:"8px"}}>
+          <h3 style={{color:"white",fontSize:"14px",fontWeight:"700",marginBottom:"4px"}}>Viral Pack - Rs.999</h3>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:"12px"}}>5K Followers + 10K Likes + 50K Views</p>
+        </div>
+      </div>
       {/* Top action bar */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:26,flexWrap:"wrap",gap:12}}>
         <div>
@@ -7034,20 +7051,4 @@ function showGrowthPage(){
     var html = '<div style="max-width:520px;margin:0 auto;padding:16px">';
 
     // TOP BAR
-    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-bottom:16px;border-bottom:1px solid #222;position:sticky;top:0;background:#07070f;z-index:10">';
-    html += '<div style="font-size:18px;font-weight:900;color:gold">Growth Packs</div>';
-    html += '<button onclick="document.getElementById(\'gp-popup\').style.display=\'none\'" style="background:rgba(255,255,255,0.07);border:1px solid #333;border-radius:8px;padding:7px 14px;color:white;font-size:12px;cursor:pointer;font-family:Arial,sans-serif">Close</button>';
-    html += '</div>';
-
-    if(!selPack){
-      // PACK LIST
-      html += '<div style="text-align:center;padding:10px;background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.2);border-radius:10px;margin-bottom:16px;font-size:12px;color:gold;font-weight:700">Most users choose the Rs.499 Influencer Pack</div>';
-
-      for(var i=0;i<packs.length;i++){
-        var p = packs[i];
-        var border = p.popular ? "2px solid gold" : "1px solid #222";
-        var bg = p.popular ? "rgba(212,160,23,0.08)" : "rgba(255,255,255,0.02)";
-        html += '<div onclick="gpSelectPack(\''+p.id+'\')" style="padding:18px;border-radius:14px;margin-bottom:12px;cursor:pointer;background:'+bg+';border:'+border+'">';
-        if(p.popular) html += '<div style="display:inline-block;background:gold;color:black;font-size:10px;font-weight:900;padding:2px 12px;border-radius:12px;margin-bottom:8px">MOST POPULAR</div>';
-        html += '<div style="font-size:16px;font-weight:800;color:'+(p.popular?'gold':'white')+'">'+p.name+'</div>';
-        html += '<div style="font-size:24px;font-weight
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-botto
