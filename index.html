@@ -269,7 +269,7 @@ const VALID_COUPONS = { "OPULENT20":20, "SAVE10":10, "FIRST50":50 };
 const fmt = (n) => "₹" + parseFloat(n).toFixed(2);
 
 // ─── Marketing Config ─────────────────────────────────────────
-const FIRST_DEPOSIT_BONUS_PCT = 20; // 20% bonus on first deposit
+const FIRST_DEPOSIT_BONUS_PCT = 10; // Rs.10 flat bonus on first deposit (min deposit Rs.100)
 const REFERRAL_COMMISSION_PCT = 5;  // 5% commission on referrals
 const FREE_TRIAL_AMOUNT = 10;       // ₹10 free trial credit for new signups
 
@@ -1627,10 +1627,10 @@ const Landing = ({ goLogin, goSignup }) => {
             <span style={{fontSize:11,fontWeight:800,color:C.goldL,letterSpacing:".1em"}}>FIRST DEPOSIT BONUS</span>
           </div>
           <h2 style={{fontFamily:"Syne,sans-serif",fontSize:34,fontWeight:900,color:"#f0f0ff",marginBottom:12,letterSpacing:"-.02em"}}>
-            Get <span style={{background:C.gG,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{FIRST_DEPOSIT_BONUS_PCT}% Extra</span> Free
+            Get <span style={{background:C.gG,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Rs.10 Bonus</span> Free
           </h2>
           <p style={{color:C.muted,fontSize:14,marginBottom:32,lineHeight:1.7}}>
-            New users automatically receive <strong style={{color:C.goldL}}>{FIRST_DEPOSIT_BONUS_PCT}% bonus</strong> on their first deposit.
+            New users automatically receive <strong style={{color:C.goldL}}>Rs.10 free bonus</strong> on their first deposit of Rs.100 or more.
           </p>
           <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",marginBottom:32}}>
             {[["₹500","₹"+( 500+Math.round(500*FIRST_DEPOSIT_BONUS_PCT/100))],["₹1,000","₹"+(1000+Math.round(1000*FIRST_DEPOSIT_BONUS_PCT/100))],["₹2,000","₹"+(2000+Math.round(2000*FIRST_DEPOSIT_BONUS_PCT/100))]].map(([dep,get])=>(
@@ -6230,8 +6230,8 @@ const AdminPayments = () => {
         const prevDeps = await fs.collection("deposits")
           .where("email","==",dep.email.toLowerCase().trim())
           .where("status","==","approved").get();
-        if(prevDeps.empty){
-          bonusAdded = parseFloat((dep.amount * FIRST_DEPOSIT_BONUS_PCT / 100).toFixed(2));
+        if(prevDeps.empty && dep.amount >= 100){
+          bonusAdded = 10; // Flat Rs.10 bonus, only on first deposit >= Rs.100
           newBal = parseFloat((newBal + bonusAdded).toFixed(2));
         }
       }catch{}
