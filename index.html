@@ -2792,6 +2792,16 @@ const UserOrders = ({ orders, setOrders, userEmail="" }) => {
   const pctMap={"Pending":5,"Processing":60,"Completed":100,"Cancelled":0,"Refunded":0};
   const colMap={"Pending":"#f59e0b","Processing":"#3b82f6","Completed":"#10b981","Cancelled":"#ef4444","Refunded":"#a855f7"};
 
+  const doRefill=async(o)=>{
+    var reason=prompt("Refill reason? (e.g. followers dropped)");
+    if(!reason||!reason.trim()){return;}
+    try{
+      const fs=await getFS(); if(!fs){Toast.error("Connection error");return;}
+      await fs.collection("refillRequests").add({orderId:o.id,service:o.service||"",userEmail:userEmail||"",qty:o.qty||0,date:today(),ts:Date.now(),status:"pending",reason:reason.trim()});
+      Toast.success("Refill submitted! Admin will process within 24hrs.");
+    }catch(e){Toast.error("Failed to submit refill");}
+  };
+
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
       <PgH title="My Orders" sub={`${orders.length} total`}
@@ -2884,15 +2894,7 @@ const UserOrders = ({ orders, setOrders, userEmail="" }) => {
               <div style={{display:"flex",gap:7}}>
                 {o.status==="Pending"&&<button onClick={()=>cancel(o.id)} style={{background:"rgba(239,68,68,.12)",border:"1px solid rgba(239,68,68,.3)",borderRadius:7,padding:"5px 11px",color:"#f87171",fontSize:11,fontWeight:700,cursor:"pointer"}}>✕ Cancel</button>}
                 {o.status==="Completed"&&<button onClick={()=>setPage("neworder")} style={{background:"rgba(16,185,129,.08)",border:"1px solid rgba(16,185,129,.25)",borderRadius:7,padding:"5px 11px",color:"#34d399",fontSize:11,fontWeight:700,cursor:"pointer"}}>🔁 Reorder</button>}
-                {o.status==="Completed"&&<button onClick={async()=>{
-                  var reason=prompt("Enter refill reason (e.g. followers dropped)");
-                  if(!reason||!reason.trim()){alert("Please enter a reason");return;}
-                  if(!window.confirm("Submit refill request for order "+o.id+"?")) return;
-                  const fs=await getFS(); if(!fs){Toast.error("No connection");return;}
-                  await fs.collection("refillRequests").add({orderId:o.id,service:o.service,userEmail:userEmail,qty:o.qty,date:today(),ts:Date.now(),status:"pending",reason:reason.trim()});
-                  await fs.collection("refills").add({orderId:o.id,service:o.service,userEmail,qty:o.qty,date:today(),status:"pending"});
-                  Toast.success("Refill request sent! Admin will process within 24hrs.");
-                }} style={{background:"rgba(96,165,250,.08)",border:"1px solid rgba(96,165,250,.25)",borderRadius:7,padding:"5px 11px",color:"#60a5fa",fontSize:11,fontWeight:700,cursor:"pointer"}}>🔄 Refill</button>}
+                {o.status==="Completed"&&<button onClick={()=>doRefill(o)} style={{background:"rgba(96,165,250,.08)",border:"1px solid rgba(96,165,250,.25)",borderRadius:7,padding:"5px 11px",color:"#60a5fa",fontSize:11,fontWeight:700,cursor:"pointer"}}>Refill</button>}
                 <button onClick={()=>window.open(`https://wa.me/${WHATSAPP_NUM}?text=Hi, I need help with order ${o.id} - ${o.service}`,"_blank")} style={{background:"rgba(124,58,237,.08)",border:"1px solid rgba(124,58,237,.25)",borderRadius:7,padding:"5px 11px",color:"#c4b5fd",fontSize:11,fontWeight:700,cursor:"pointer"}}>💬 Help</button>
               </div>
             </div>
