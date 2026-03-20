@@ -222,6 +222,11 @@ const SERVICES = [
     quality:["High Quality"], speedTag:"Fast" },
 ];
 
+const BUNDLES = [
+  { id:"B1", name:"Starter Pack",    price:299, popular:false, items:["1K Followers","2K Likes","5K Reel Views"] },
+  { id:"B2", name:"Influencer Pack", price:499, popular:true,  items:["2K Followers","5K Likes","10K Reel Views"] },
+  { id:"B3", name:"Viral Pack",      price:999, popular:false, items:["5K Followers","10K Likes","50K Reel Views"] },
+];
 const PLATFORMS = ["All","Instagram","YouTube","Facebook","TikTok","Twitter"];
 
 // ─── Service Badge Config ─────────────────────────────────────
@@ -2523,14 +2528,21 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
     else { setDisc(0); setCouponMsg(coupon?"❌ Invalid code. Check and try again.":""); }
   };
 
+  const isBundl=sel&&sel.isBundl;
   const place=()=>{
-    if(total>balance){ alert("Insufficient balance! Go to Add Funds."); return; }
+    const fp=isBundl?sel.price:total;
+    if(fp>balance){ alert("Insufficient balance! Go to Add Funds."); return; }
     setLoading(true);
     setTimeout(()=>{
-      const newOrd={ id:uid(), service:sel.name, platform:sel.platform, icon:sel.icon,
-        qty, price:parseFloat(total.toFixed(2)), status:"Pending", date:today(), link };
-      addOrderSync(newOrd);
-      setBalance(b=>parseFloat((b-total).toFixed(2)));
+      if(isBundl){
+        addOrderSync({ id:uid(), service:"Bundle: "+sel.name, platform:"Instagram", icon:"🎁",
+          qty:1, price:sel.price, status:"Pending", date:today(), link, isBundle:true, bundleItems:sel.items });
+        setBalance(function(b){ return parseFloat((b-sel.price).toFixed(2)); });
+      } else {
+        addOrderSync({ id:uid(), service:sel.name, platform:sel.platform, icon:sel.icon,
+          qty, price:parseFloat(total.toFixed(2)), status:"Pending", date:today(), link });
+        setBalance(function(b){ return parseFloat((b-total).toFixed(2)); });
+      }
       setLoading(false); setStep(4);
     },1400);
   };
@@ -2573,6 +2585,25 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
 
       {/* STEP 1 */}
       {step===1&&<>
+        {/* ── Bundle Packs ── */}
+        <div style={{marginBottom:22,padding:16,background:"rgba(212,160,23,0.05)",border:"1px solid rgba(212,160,23,0.25)",borderRadius:14}}>
+          <div style={{fontWeight:800,color:C.goldL,fontSize:14,marginBottom:4}}>🎁 Bundle Packs</div>
+          <div style={{fontSize:12,color:C.muted,marginBottom:12}}>Bundles give better results than single services</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:10}}>
+            {BUNDLES.map(function(b){
+              return (
+                <div key={b.id} onClick={function(){ setSel({id:b.id,name:b.name,price:b.price,icon:"🎁",platform:"Instagram",isBundl:true,items:b.items,speed:"1-24 hrs",cat:"Bundle"}); setStep(3); }} style={{padding:12,borderRadius:12,cursor:"pointer",position:"relative",background:b.popular?"rgba(212,160,23,0.12)":"rgba(255,255,255,0.03)",border:b.popular?"2px solid rgba(212,160,23,0.5)":"1px solid rgba(255,255,255,0.08)"}}>
+                  {b.popular&&<div style={{fontSize:9,fontWeight:900,color:"#000",background:"linear-gradient(135deg,#d4a017,#f5c842)",borderRadius:6,padding:"2px 8px",marginBottom:6,display:"inline-block"}}>MOST POPULAR</div>}
+                  <div style={{fontWeight:800,fontSize:13,color:b.popular?C.goldL:"#e8e8f2",marginBottom:4}}>{b.name}</div>
+                  <div style={{fontSize:20,fontWeight:900,color:b.popular?"#f5c842":"#c4b5fd",marginBottom:6}}>&#x20B9;{b.price}</div>
+                  {b.items.map(function(it,j){ return <div key={j} style={{fontSize:11,color:C.muted,marginBottom:1}}>+ {it}</div>; })}
+                  {b.popular&&<div style={{marginTop:6,fontSize:10,color:"rgba(212,160,23,0.8)",fontWeight:700}}>Recommended for best growth</div>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:20}}>
           {PLATFORMS.map(p=>(
             <button key={p} onClick={()=>setPf(p)} style={{background:pf===p?C.gP:"rgba(255,255,255,.04)",
