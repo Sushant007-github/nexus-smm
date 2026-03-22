@@ -832,6 +832,87 @@ const GS = () => (
     /* ── Live notification ── */
     .live-notif{animation:slideInUp .4s ease}
     @keyframes slideInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ════════════════════════════════════════
+       PREMIUM SPACING SYSTEM
+       Consistent spacing like modern luxury sites
+    ════════════════════════════════════════ */
+
+    /* ── Dashboard main content breathing room ── */
+    .dash-main > div { max-width:100%; }
+
+    /* ── Section spacing — every top-level page section ── */
+    .page-enter > *:not(:last-child){ margin-bottom:24px; }
+
+    /* ── Page header spacing ── */
+    .pg-header{ margin-bottom:24px !important; }
+
+    /* ── Cards consistent padding ── */
+    .card-base{ padding:16px !important; }
+
+    /* ── Stat grid consistent gap ── */
+    .stat-grid{ gap:16px !important; }
+
+    /* ── Flex/grid containers consistent gap ── */
+    .gap-std{ gap:10px !important; }
+
+    /* ── Form elements breathing room ── */
+    input,textarea,select{
+      padding:10px 14px !important;
+      border-radius:10px !important;
+      margin-bottom:0;
+    }
+
+    /* ── Label spacing ── */
+    label{ margin-bottom:6px; display:block; }
+
+    /* ── Table cells consistent ── */
+    th,td{ padding:10px 12px !important; }
+
+    /* ── Button consistent padding ── */
+    button{ padding:10px 16px; }
+
+    /* ── List items consistent ── */
+    li{ margin-bottom:8px; line-height:1.6; }
+
+    /* ── Dashboard sidebar nav items ── */
+    .sidebar nav button{ margin-bottom:4px !important; }
+
+    /* ── Card grids consistent gap ── */
+    .cards-grid{ display:grid; gap:16px; }
+
+    /* ── Alignment: centre content in main ── */
+    .dash-main{
+      padding:24px 28px 90px !important;
+    }
+    @media(max-width:768px){
+      .dash-main{
+        padding:16px 14px 90px !important;
+      }
+    }
+    @media(max-width:480px){
+      .dash-main{
+        padding:12px 10px 90px !important;
+      }
+      /* ── Tighter spacing on very small screens ── */
+      .page-enter > *:not(:last-child){ margin-bottom:16px; }
+      th,td{ padding:8px 10px !important; }
+    }
+
+    /* ── Remove excess bold from body text ── */
+    p,span,div{ font-weight:inherit; }
+
+    /* ── Equal left/right alignment in cards ── */
+    .card-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    /* ── Vertical stack with consistent spacing ── */
+    .v-stack > *:not(:last-child){ margin-bottom:10px; }
+    .v-stack-lg > *:not(:last-child){ margin-bottom:16px; }
   `}</style>
 );
 
@@ -6993,59 +7074,3 @@ function App() {
         return;
       }
       if(s==="landing" && sessionStorage.getItem("nx_screen")==="admin"){
-        setScreen("admin");
-        window.history.pushState({screen:"admin"},"",window.location.pathname);
-        return;
-      }
-      setScreen(s);
-    };
-    const handleHash = () => {
-      if(window.location.hash === "#secure-opulent-dashboard-9821") setScreen("adminlogin");
-    };
-    window.addEventListener("popstate", handlePop);
-    window.addEventListener("hashchange", handleHash);
-    return()=>{ window.removeEventListener("popstate", handlePop); window.removeEventListener("hashchange", handleHash); };
-  },[]);
-
-  const loginUser=(name,email="")=>{
-    const normEmail = (email||"").toLowerCase().trim();
-    setUserName(name);
-    setUserEmail(normEmail);
-    sessionStorage.setItem("nx_screen","user");
-    sessionStorage.setItem("nx_name",name);
-    sessionStorage.setItem("nx_email",normEmail);
-    DB.addUser({
-      id:"USR-"+Date.now(),
-      name: name||(normEmail.split("@")[0]),
-      email: normEmail,
-      balance:0, orders:0,
-      joined:today(), status:"Active",
-    });
-    goScreen("user");
-  };
-  const loginAdmin=()=>{ sessionStorage.setItem("nx_screen","admin"); goScreen("admin"); };
-  const logout=()=>{
-    sessionStorage.clear();
-    goScreen("landing", true);
-    setUserName(""); setUserEmail("");
-  };
-
-  return (
-    <>
-      <GS/>
-      <ToastContainer/>
-      {screen==="landing"    && <Landing goLogin={()=>goScreen("login")} goSignup={()=>goScreen("signup")}/>}
-      {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
-      {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
-      {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing")}/>}
-      {screen==="user"       && <UserDash userName={userName||"User"} userEmail={userEmail} onLogout={logout}/>}
-      {screen==="admin"      && <AdminDash onLogout={logout}/>}
-    </>
-  );
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(React.createElement(App));
-  </script>
-</body>
-  </html>
