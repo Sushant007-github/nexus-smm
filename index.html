@@ -786,6 +786,11 @@ const GS = () => (
     .float-badge{animation:floatY 3s ease-in-out infinite;}
     /* ── Gold border glow ── */
     .gold-border-pulse{animation:borderGlow 2.5s ease infinite;}
+    /* ── Notification dropdown ── */
+    .notif-dropdown{position:absolute;top:50px;right:0;left:auto;width:320px;max-width:90vw;max-height:400px;overflow-y:auto;overflow-x:hidden;transform:translateX(0);background:#09090f;border:1px solid rgba(124,58,237,.35);border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,.6);z-index:500;}
+    @media(max-width:600px){
+      .notif-dropdown{right:5px;left:5px;width:auto;max-width:none;}
+    }
     /* ── Mobile ── */
     @media(max-width:768px){
       .sidebar{display:none!important}
@@ -2327,9 +2332,7 @@ const NotifBell = ({ userEmail, setPage }) => {
           fontSize:9,fontWeight:900,color:"#fff",border:"2px solid #06060a",padding:"0 3px",animation:"popIn .3s ease"}}>{unread>9?"9+":unread}</div>}
       </div>
       {open&&(
-        <div style={{position:"absolute",right:10,left:"auto",top:46,width:320,maxWidth:"90vw",maxHeight:400,overflowY:"auto",overflowX:"hidden",
-          background:"#09090f",border:"1px solid rgba(124,58,237,.35)",borderRadius:14,
-          boxShadow:"0 16px 48px rgba(0,0,0,.6)",zIndex:500}}>
+        <div className="notif-dropdown">
           <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
             <span style={{fontWeight:800,color:"#e8e8f2",fontSize:14}}>🔔 Notifications</span>
             {unread>0&&<span style={{fontSize:11,color:C.muted}}>{unread} unread</span>}
