@@ -2044,10 +2044,13 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
   const [announcements]=useState([]);
   const [showProfile,setShowProfile]=useState(false);
   const [dashLoading,setDashLoading]=useState(false);
+  const [selectedService,setSelectedService]=useState(null); // pre-selected service
 
   // ── Back button: push history on page change ─────────────
-  const goPage = React.useCallback((p) => {
+  const goPage = React.useCallback((p, svc=null) => {
     window.history.pushState({screen:"user", page:p},"",window.location.pathname);
+    if(svc) setSelectedService(svc);
+    else setSelectedService(null);
     setPage(p);
   }, []);
 
@@ -2211,7 +2214,7 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
   const renderPage=()=>{
     switch(page){
       case "overview":   return <UserOverview orders={orders} balance={balance} setPage={goPage} userName={userName} announcements={announcements} userEmail={userEmail}/>;
-      case "neworder":   return <UserNewOrder orders={orders} addOrderSync={addOrderSync} balance={balance} setBalance={setBalanceSync} setPage={goPage}/>;
+      case "neworder":   return <UserNewOrder orders={orders} addOrderSync={addOrderSync} balance={balance} setBalance={setBalanceSync} setPage={goPage} initialService={selectedService}/>;
       case "orders":     return <UserOrders orders={orders} setOrders={setOrders} userEmail={userEmail}/>;
       case "wallet":     return <UserWallet balance={balance} txns={txns} userEmail={userEmail}/>;
       case "addfunds":   return <UserAddFunds balance={balance} setBalance={setBalanceSync} setPage={goPage} setTxns={addTxnSync} userName={userName} userEmail={userEmail}/>;
@@ -2591,12 +2594,12 @@ const useLiveServices = () => {
 };
 
 // ─── User: New Order ──────────────────────────────────────────
-const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) => {
-  const [step,setStep]=useState(1);
+const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage, initialService=null }) => {
+  const [step,setStep]=useState(initialService ? 2 : 1);
   const [pf,setPf]=useState("All");
-  const [sel,setSel]=useState(null);
+  const [sel,setSel]=useState(initialService);
   const [link,setLink]=useState("");
-  const [qty,setQty]=useState(1000);
+  const [qty,setQty]=useState(initialService?.min || 1000);
   const [coupon,setCoupon]=useState("");
   const [disc,setDisc]=useState(0);
   const [couponMsg,setCouponMsg]=useState("");
@@ -3949,7 +3952,7 @@ const UserServices = ({ setPage }) => {
           </Card>
         ):(
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:16}}>
-            {filtered.map(s=><SvcCard key={s.id} svc={s} onOrder={()=>setPage("neworder")}/>)}
+            {filtered.map(s=><SvcCard key={s.id} svc={s} onOrder={()=>setPage("neworder", s)}/>)}
           </div>
         )
       )}
@@ -3961,7 +3964,7 @@ const UserServices = ({ setPage }) => {
             <p style={{color:C.muted}}>No services in this category</p>
           </Card>
         ):(
-          <ServiceCompare services={filtered} onOrder={()=>setPage("neworder")}/>
+          <ServiceCompare services={filtered} onOrder={(s)=>setPage("neworder", s)}/>
         )
       )}
     </div>
