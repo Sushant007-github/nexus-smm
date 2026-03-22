@@ -2327,7 +2327,7 @@ const NotifBell = ({ userEmail, setPage }) => {
           fontSize:9,fontWeight:900,color:"#fff",border:"2px solid #06060a",padding:"0 3px",animation:"popIn .3s ease"}}>{unread>9?"9+":unread}</div>}
       </div>
       {open&&(
-        <div style={{position:"absolute",right:0,top:46,width:320,maxHeight:400,overflowY:"auto",
+        <div style={{position:"absolute",right:10,left:"auto",top:46,width:320,maxWidth:"90vw",maxHeight:400,overflowY:"auto",overflowX:"hidden",
           background:"#09090f",border:"1px solid rgba(124,58,237,.35)",borderRadius:14,
           boxShadow:"0 16px 48px rgba(0,0,0,.6)",zIndex:500}}>
           <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
