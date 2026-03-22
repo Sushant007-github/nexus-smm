@@ -787,9 +787,9 @@ const GS = () => (
     /* ── Gold border glow ── */
     .gold-border-pulse{animation:borderGlow 2.5s ease infinite;}
     /* ── Notification dropdown ── */
-    .notif-dropdown{position:absolute;top:50px;right:0;left:auto;width:320px;max-width:90vw;max-height:400px;overflow-y:auto;overflow-x:hidden;transform:translateX(0);background:#09090f;border:1px solid rgba(124,58,237,.35);border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,.6);z-index:500;}
+    .notif-dropdown{position:absolute;top:50px;right:0;left:auto;width:320px;max-width:calc(100vw - 20px);max-height:400px;overflow-y:auto;overflow-x:hidden;transform:translateX(0);background:#09090f;border:1px solid rgba(124,58,237,.35);border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,.6);z-index:9999;}
     @media(max-width:600px){
-      .notif-dropdown{right:5px;left:5px;width:auto;max-width:none;}
+      .notif-dropdown{position:fixed;top:70px;right:10px;left:10px;width:auto;max-width:none;max-height:70vh;}
     }
     /* ── Mobile ── */
     @media(max-width:768px){
@@ -2346,9 +2346,9 @@ const NotifBell = ({ userEmail, setPage }) => {
               onClick={()=>{ setOpen(false); if(n.action) setPage(n.action); }}>
               <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
                 <span style={{fontSize:18,flexShrink:0}}>{typeIcon[n.type]||"📢"}</span>
-                <div style={{flex:1}}>
-                  <div style={{fontWeight:n.read?500:700,color:"#e8e8f2",fontSize:13,marginBottom:2}}>{n.title}</div>
-                  <div style={{fontSize:11,color:C.muted,lineHeight:1.4}}>{n.body}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontWeight:n.read?500:700,color:"#e8e8f2",fontSize:13,marginBottom:2,wordBreak:"break-word"}}>{n.title}</div>
+                  <div style={{fontSize:11,color:C.muted,lineHeight:1.5,wordBreak:"break-word"}}>{n.body}</div>
                   <div style={{fontSize:10,color:C.muted,marginTop:4}}>{n.date}</div>
                 </div>
                 {!n.read&&<div style={{width:7,height:7,borderRadius:"50%",background:"#7c3aed",flexShrink:0,marginTop:3}}/>}
