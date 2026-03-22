@@ -5297,21 +5297,23 @@ const AdminServices = () => {
 
   const openAdd=()=>{ setForm(blank); setMode("add"); setEditIdx(null); };
   const openEdit=(s,i)=>{
+    // Get current price — if service has tiers, show base (first tier) price
+    const currentPrice = s.tiers && s.tiers.length>0 ? s.tiers[0].price : (s.price||"");
     setForm({
       name:s.name, platform:s.platform, cat:s.cat||"Followers",
-      price:s.tiers?s.tiers[0].price:s.price||"",
+      price: currentPrice,
       min:s.min, max:s.max, desc:s.desc||"", speed:s.speed||""
     });
     setEditIdx(i); setMode("edit");
-    // Scroll to form
     setTimeout(()=>document.getElementById("svc-form")?.scrollIntoView({behavior:"smooth"}),50);
   };
-  const save=()=>{
-    if(!form.name){ alert("Please enter a service name"); return; }
+  const save=async()=>{
+    if(!form.name){ Toast.error("Please enter a service name"); return; }
+    const newPrice = parseFloat(form.price)||0;
     const entry={
       id:Date.now(), icon:"✦",
       name:form.name, platform:form.platform, cat:form.cat,
-      price:parseFloat(form.price)||0,
+      price:newPrice,
       min:parseInt(form.min)||100, max:parseInt(form.max)||100000,
       desc:form.desc, speed:form.speed
     };
@@ -5319,18 +5321,47 @@ const AdminServices = () => {
     if(mode==="add"){
       updated = [...svcs, entry];
     } else {
-      updated = svcs.map((x,i)=>i===editIdx?{...x,...entry,id:x.id,icon:x.icon,tiers:x.tiers}:x);
+      updated = svcs.map((x,i)=>{
+        if(i!==editIdx) return x;
+        // Update tiers prices proportionally if service has tiers
+        let newTiers = x.tiers;
+        if(x.tiers && x.tiers.length>0){
+          const oldBasePrice = x.tiers[0].price;
+          if(oldBasePrice>0 && newPrice>0){
+            const ratio = newPrice / oldBasePrice;
+            newTiers = x.tiers.map(t=>({...t, price: parseFloat((t.price * ratio).toFixed(2))}));
+          }
+        }
+        return {...x, ...entry, id:x.id, icon:x.icon, tiers:newTiers,
+          quality:x.quality, badge:x.badge, speedTag:x.speedTag};
+      });
     }
     setSvcs(updated);
-    // Save to Firebase so it persists
-    getFS().then(fs=>{
-      if(fs) fs.collection("services").doc("list").set({services:updated}).catch(console.error);
-    });
-    setMode(null); setEditIdx(null); setForm(blank);
-    alert(`✅ Service ${mode==="add"?"added":"updated"}! Changes saved.`);
+    // Save to Firebase — await so we confirm it worked
+    try{
+      const fs = await getFS();
+      if(!fs) throw new Error("Firebase not connected");
+      await fs.collection("services").doc("list").set({services:updated});
+      setMode(null); setEditIdx(null); setForm(blank);
+      Toast.success(`✅ Service ${mode==="add"?"added":"updated"} — live for all users now!`);
+      console.log("Services saved to Firebase:", updated.length, "services");
+    } catch(e){
+      Toast.error("❌ Save failed: " + e.message);
+      console.error("Service save error:", e);
+    }
   };
-  const del=(i)=>{
-    if(window.confirm("Delete this service? Cannot be undone.")) setSvcs(x=>x.filter((_,j)=>j!==i));
+
+  const del=async(i)=>{
+    if(!window.confirm("Delete this service? Cannot be undone.")) return;
+    const updated = svcs.filter((_,j)=>j!==i);
+    setSvcs(updated);
+    try{
+      const fs = await getFS();
+      if(fs) await fs.collection("services").doc("list").set({services:updated});
+      Toast.success("Service deleted.");
+    } catch(e){
+      Toast.error("Delete failed: " + e.message);
+    }
   };
 
   return (
@@ -5382,7 +5413,8 @@ const AdminServices = () => {
                 {["Followers","Likes","Views","Comments","Engagement"].map(c=><option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <Inp label="Price ₹ (per 1000 units)" value={String(form.price)} onChange={e=>F("price",e.target.value)} placeholder="e.g. 349"/>
+            <Inp label="Base Price ₹ (1st tier / per 1000 units)" value={String(form.price)} onChange={e=>F("price",e.target.value)} placeholder="e.g. 349"
+              hint={mode==="edit"?"Changing this updates ALL tier prices proportionally and goes live immediately for users.":"Price per 1000 units (base tier)"}/>
             <Inp label="Min Quantity" value={String(form.min)} onChange={e=>F("min",e.target.value)} placeholder="1000"/>
             <Inp label="Max Quantity" value={String(form.max)} onChange={e=>F("max",e.target.value)} placeholder="100000"/>
             <Inp label="Delivery Speed" value={form.speed} onChange={e=>F("speed",e.target.value)} placeholder="0–12 hrs"/>
