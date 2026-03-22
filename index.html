@@ -75,6 +75,10 @@
 <body>
   <div id="root"></div>
   <script type="text/babel" data-presets="react,env">
+window.onerror = function(message, source, lineno, colno, error) {
+  document.body.innerHTML = '<div style="padding:20px;font-family:Arial;color:red;background:#fff;position:fixed;inset:0;z-index:99999;overflow:auto"><h2>App Crash Detected</h2><p><b>Error:</b> ' + message + '</p><p><b>Line:</b> ' + lineno + '</p><p><b>Source:</b> ' + source + '</p><pre style="font-size:12px;background:#fee;padding:12px;border-radius:6px;overflow:auto">' + (error && error.stack ? error.stack : '') + '</pre></div>';
+};
+
 const { useState, useEffect, useRef, useCallback } = React;
 
 /* ═══════════════════════════════════════════════════════════════
@@ -7033,9 +7037,4 @@ function App() {
   return (
     <>
       <GS/>
-      <ToastContainer/>
-      {screen==="landing"    && <Landing goLogin={()=>goScreen("login")} goSignup={()=>goScreen("signup")}/>}
-      {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
-      {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
-      {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing")}/>}
-      {scr
+      
