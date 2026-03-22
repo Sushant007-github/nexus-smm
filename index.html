@@ -2599,7 +2599,7 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage, init
   const [pf,setPf]=useState("All");
   const [sel,setSel]=useState(initialService);
   const [link,setLink]=useState("");
-  const [qty,setQty]=useState(initialService?.min || 1000);
+  const [qty,setQty]=useState((initialService && initialService.min) || 1000);
   const [coupon,setCoupon]=useState("");
   const [disc,setDisc]=useState(0);
   const [couponMsg,setCouponMsg]=useState("");
@@ -7038,4 +7038,4 @@ function App() {
       {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
       {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
       {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing")}/>}
-      {screen==="user"       && <UserDash
+      {screen==="user"
