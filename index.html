@@ -65,7 +65,7 @@
   </script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.23.10/babel.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <!-- Firebase compat SDK - loaded directly so always available -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -74,7 +74,7 @@
 </head>
 <body>
   <div id="root"></div>
-  <script type="text/babel" data-presets="react">
+  <script type="text/babel" data-presets="react,env">
 const { useState, useEffect, useRef, useCallback } = React;
 
 /* ═══════════════════════════════════════════════════════════════
@@ -7038,4 +7038,4 @@ function App() {
       {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
       {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
       {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing")}/>}
-      {screen==="user"
+      {scr
