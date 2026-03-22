@@ -721,14 +721,24 @@ const GS = () => (
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{background:#06060a;color:#e8e8f2;font-family:'Poppins','DM Sans',sans-serif;font-size:14px;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    body{background:#06060a;color:#e8e8f2;font-family:'Poppins',sans-serif;font-size:14px;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    /* ── Typography — class based only ── */
+    h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;line-height:1.3;letter-spacing:0.3px}
+    h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;line-height:1.4;letter-spacing:0.3px}
+    h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;line-height:1.5;letter-spacing:0.2px}
+    p{font-size:14px;font-weight:400;line-height:1.6;margin-bottom:10px}
+    p:last-child{margin-bottom:0}
+    /* ── Hero title class — safe clamp ── */
+    .hero-title{font-family:'Playfair Display',serif!important;font-size:clamp(18px,4vw,22px)!important;font-weight:600!important;line-height:1.4!important;max-width:90%!important}
+    /* ── Scrollbar ── */
     ::-webkit-scrollbar{width:5px;height:5px}
     ::-webkit-scrollbar-track{background:rgba(255,255,255,.02)}
     ::-webkit-scrollbar-thumb{background:rgba(212,160,23,.4);border-radius:4px}
     ::-webkit-scrollbar-thumb:hover{background:rgba(212,160,23,.7)}
-    input,textarea,select,button{font-family:'Poppins','DM Sans',sans-serif}
+    /* ── Font family for form elements only ── */
+    input,textarea,select,button{font-family:'Poppins',sans-serif}
     input:focus,textarea:focus{outline:none;border-color:rgba(212,160,23,.6)!important;box-shadow:0 0 0 3px rgba(212,160,23,.1)}
-    select:focus{outline:none;border-color:rgba(212,160,23,.6)!important;}
+    select:focus{outline:none;border-color:rgba(212,160,23,.6)!important}
     img{max-width:100%;height:auto;display:block}
     /* ── Keyframes ── */
     @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -749,44 +759,40 @@ const GS = () => (
     @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
     @keyframes borderGlow{0%,100%{border-color:rgba(212,160,23,.2)}50%{border-color:rgba(212,160,23,.6)}}
     @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    /* ── Page transitions ── */
-    .page-enter{animation:fadeUp .35s ease forwards;}
-    /* ── Skeleton ── */
-    .skeleton{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.09) 50%,rgba(255,255,255,.04) 75%);background-size:1000px 100%;animation:shimmer 1.8s infinite linear;border-radius:8px;}
-    /* ── Badges ── */
-    .notif-badge{animation:popIn .3s ease forwards;}
-    .count-anim{animation:countUp .6s ease forwards;}
-    /* ── Cards ── */
-    .svc-card-hover{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease!important;}
-    .svc-card-hover:hover{transform:translateY(-5px)!important;box-shadow:0 20px 56px rgba(212,160,23,.12),0 8px 24px rgba(0,0,0,.4)!important;border-color:rgba(212,160,23,.35)!important;}
-    .svc-card-locked{filter:blur(3px);pointer-events:none;user-select:none;}
-    /* ── Toasts ── */
-    .toast-enter{animation:toastIn .35s ease forwards;}
-    .toast-exit{animation:toastOut .35s ease forwards;}
-    /* ── Pills ── */
-    .pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+    @keyframes slideInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    /* ── Component classes ── */
+    .page-enter{animation:fadeUp .35s ease forwards}
+    .skeleton{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.09) 50%,rgba(255,255,255,.04) 75%);background-size:1000px 100%;animation:shimmer 1.8s infinite linear;border-radius:8px}
+    .notif-badge{animation:popIn .3s ease forwards}
+    .count-anim{animation:countUp .6s ease forwards}
+    .svc-card-hover{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease!important}
+    .svc-card-hover:hover{transform:translateY(-5px)!important;box-shadow:0 20px 56px rgba(212,160,23,.12),0 8px 24px rgba(0,0,0,.4)!important;border-color:rgba(212,160,23,.35)!important}
+    .svc-card-locked{filter:blur(3px);pointer-events:none;user-select:none}
+    .toast-enter{animation:toastIn .35s ease forwards}
+    .toast-exit{animation:toastOut .35s ease forwards}
+    .pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+    .live-notif{animation:slideInUp .4s ease}
     /* ── Tables ── */
-    tbody tr{transition:background .15s;}
-    tbody tr:hover{background:rgba(212,160,23,.04)!important;}
+    tbody tr{transition:background .15s}
+    tbody tr:hover{background:rgba(212,160,23,.04)!important}
     /* ── Input focus ── */
-    input:focus,textarea:focus,select:focus{border-color:rgba(212,160,23,.7)!important;box-shadow:0 0 0 3px rgba(212,160,23,.1)!important;}
+    input:focus,textarea:focus,select:focus{border-color:rgba(212,160,23,.7)!important;box-shadow:0 0 0 3px rgba(212,160,23,.1)!important}
     /* ── Image modal ── */
-    .img-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease;cursor:pointer;overflow-y:auto;}
-    .img-modal-inner{position:relative;max-width:90vw;max-height:90vh;animation:fadeInScale .25s ease;}
-    .img-modal-inner img{width:100%;height:auto;object-fit:contain;border-radius:12px;border:1px solid rgba(212,160,23,.3);max-height:85vh;}
-    .img-modal-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#d4a017;color:#000;border:none;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.4);}
-    /* ── Responsive images everywhere ── */
-    .resp-img{width:100%!important;height:auto!important;object-fit:contain!important;}
-    /* ── Urgency badge ── */
-    .urgency-badge{animation:pulseRing 2s infinite;}
-    /* ── Locked overlay ── */
-    .locked-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,rgba(6,6,10,.97) 65%);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:24px;z-index:2;}
-    /* ── Hero gradient text ── */
-    .hero-grad{background:linear-gradient(135deg,#f5c842 0%,#d4a017 40%,#f0f0ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:gradientShift 4s ease infinite;}
-    /* ── Floating decoration ── */
-    .float-badge{animation:floatY 3s ease-in-out infinite;}
-    /* ── Gold border glow ── */
-    .gold-border-pulse{animation:borderGlow 2.5s ease infinite;}
+    .img-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease;cursor:pointer;overflow-y:auto}
+    .img-modal-inner{position:relative;max-width:90vw;max-height:90vh;animation:fadeInScale .25s ease}
+    .img-modal-inner img{width:100%;height:auto;object-fit:contain;border-radius:12px;border:1px solid rgba(212,160,23,.3);max-height:85vh}
+    .img-modal-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#d4a017;color:#000;border:none;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+    .resp-img{width:100%!important;height:auto!important;object-fit:contain!important}
+    .urgency-badge{animation:pulseRing 2s infinite}
+    .locked-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,rgba(6,6,10,.97) 65%);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:24px;z-index:2}
+    .hero-grad{background:linear-gradient(135deg,#f5c842 0%,#d4a017 40%,#f0f0ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:gradientShift 4s ease infinite}
+    .float-badge{animation:floatY 3s ease-in-out infinite}
+    .gold-border-pulse{animation:borderGlow 2.5s ease infinite}
+    /* ── Notification dropdown ── */
+    .notif-dropdown{position:absolute;top:50px;right:0;left:auto;width:320px;max-width:calc(100vw - 20px);max-height:400px;overflow-y:auto;overflow-x:hidden;background:#09090f;border:1px solid rgba(124,58,237,.35);border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,.6);z-index:9999}
+    @media(max-width:600px){
+      .notif-dropdown{position:fixed;top:70px;right:10px;left:10px;width:auto;max-width:none;max-height:70vh}
+    }
     /* ── Mobile ── */
     @media(max-width:768px){
       .sidebar{display:none!important}
@@ -797,7 +803,7 @@ const GS = () => (
       .order-panel{grid-template-columns:1fr!important}
       .hide-mob{display:none!important}
       .two-col{grid-template-columns:1fr!important}
-      .hero-title{font-size:clamp(2rem,8vw,3.5rem)!important}
+      .hero-title{font-size:clamp(18px,4vw,22px)!important;line-height:1.4!important}
       .nav-tagline{display:none!important}
     }
     @media(max-width:480px){
@@ -805,34 +811,10 @@ const GS = () => (
       .hero-cta-wrap{flex-direction:column!important;align-items:stretch!important}
       .hero-cta-wrap button{width:100%!important;justify-content:center!important}
     }
-    /* ── Mobile touch improvements ── */
+    /* ── Mobile touch ── */
     button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-    input,select,textarea{font-size:16px!important} /* prevent iOS zoom on focus */
-    /* ── Urgency badge ── */
-    .urgency-badge{animation:pulseRing 2s infinite}
+    input,select,textarea{font-size:16px!important}
     @keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(212,160,23,.4)}70%{box-shadow:0 0 0 8px rgba(212,160,23,0)}100%{box-shadow:0 0 0 0 rgba(212,160,23,0)}}
-    /* ── Live notification ── */
-    .live-notif{animation:slideInUp .4s ease}
-    @keyframes slideInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    /* ── Typography system — safe class-based only ── */
-    .page-enter h1,.dash-main h1{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;line-height:1.3;letter-spacing:0.3px}
-    .page-enter h2,.dash-main h2{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;line-height:1.4;letter-spacing:0.3px}
-    .page-enter h3,.dash-main h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:500;line-height:1.5;letter-spacing:0.2px}
-    /* Hero title — safe clamp, no overflow */
-    .hero-title{font-family:'Playfair Display',serif!important;font-size:clamp(20px,4.5vw,26px)!important;font-weight:600!important;line-height:1.35!important;letter-spacing:0.3px!important;max-width:95%!important}
-    /* Large Syne section headings on landing — bring down to comfortable size */
-    .landing-section-h2{font-family:'Playfair Display',serif!important;font-size:22px!important;font-weight:600!important;letter-spacing:0.3px!important;line-height:1.4!important}
-    /* ── Safe spacing — existing classes only, no globals ── */
-    .page-enter{padding-bottom:24px}
-    .stat-grid{gap:14px}
-    .pg-header{margin-bottom:20px;gap:10px}
-    .dash-main{padding:26px 30px 90px}
-    .svc-card-hover{margin-bottom:2px}
-    .skeleton{margin-bottom:10px}
-    @media(max-width:768px){
-      .dash-main{padding:16px 14px 90px}
-      .stat-grid{gap:10px}
-    }
   `}</style>
 );
 
@@ -934,40 +916,52 @@ const StatCard = ({ icon, label, value, grad, sub }) => (
 
 const Logo = () => (
   <div style={{display:"flex",alignItems:"center",gap:11}}>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36"
-      style={{filter:"drop-shadow(0 0 7px rgba(212,160,23,.55))",flexShrink:0}}>
+    {/* ── Gold Spire Icon ── */}
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="38" height="38"
+      style={{filter:"drop-shadow(0 0 8px rgba(212,160,23,.55))",flexShrink:0}}>
       <defs>
-        <linearGradient id="sp1" x1="0%" y1="100%" x2="0%" y2="0%">
-          <stop offset="0%" stopColor="#8a6400"/>
-          <stop offset="25%" stopColor="#d4a017"/>
-          <stop offset="55%" stopColor="#ffd700"/>
-          <stop offset="80%" stopColor="#ffe566"/>
+        <linearGradient id="spire_g1" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%"   stopColor="#8a6400"/>
+          <stop offset="25%"  stopColor="#d4a017"/>
+          <stop offset="55%"  stopColor="#ffd700"/>
+          <stop offset="80%"  stopColor="#ffe566"/>
           <stop offset="100%" stopColor="#fffce0"/>
         </linearGradient>
-        <linearGradient id="sp2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#181200"/>
+        <linearGradient id="spire_g2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"  stopColor="#181200"/>
           <stop offset="100%" stopColor="#080800"/>
         </linearGradient>
-        <radialGradient id="sp3" cx="50%" cy="30%" r="50%">
-          <stop offset="0%" stopColor="#ffd700" stopOpacity=".15"/>
+        <radialGradient id="spire_g3" cx="50%" cy="30%" r="50%">
+          <stop offset="0%"  stopColor="#ffd700" stopOpacity=".18"/>
           <stop offset="100%" stopColor="#ffd700" stopOpacity="0"/>
         </radialGradient>
       </defs>
-      <circle cx="50" cy="50" r="48" fill="url(#sp2)"/>
-      <circle cx="50" cy="50" r="48" fill="url(#sp3)"/>
-      <circle cx="50" cy="50" r="46" fill="none" stroke="url(#sp1)" strokeWidth="2" opacity=".85"/>
-      <circle cx="50" cy="50" r="41" fill="none" stroke="url(#sp1)" strokeWidth=".5" opacity=".2"/>
-      <path d="M50,12 L62,52 L50,64 L38,52 Z" fill="url(#sp1)" opacity=".95"/>
-      <path d="M50,18 L58,50 L50,58 L42,50 Z" fill="url(#sp2)" opacity=".55"/>
-      <path d="M38,52 Q26,58 16,62" fill="none" stroke="url(#sp1)" strokeWidth="2" strokeLinecap="round" opacity=".75"/>
-      <path d="M38,56 Q28,62 20,68" fill="none" stroke="url(#sp1)" strokeWidth="1.2" strokeLinecap="round" opacity=".4"/>
-      <path d="M62,52 Q74,58 84,62" fill="none" stroke="url(#sp1)" strokeWidth="2" strokeLinecap="round" opacity=".75"/>
-      <path d="M62,56 Q72,62 80,68" fill="none" stroke="url(#sp1)" strokeWidth="1.2" strokeLinecap="round" opacity=".4"/>
-      <line x1="22" y1="76" x2="78" y2="76" stroke="url(#sp1)" strokeWidth="1.8" opacity=".65"/>
-      <line x1="30" y1="80" x2="70" y2="80" stroke="url(#sp1)" strokeWidth=".6" opacity=".25"/>
-      <circle cx="50" cy="12" r="4" fill="url(#sp1)" opacity=".95"/>
+      {/* Dark circle bg with warm glow */}
+      <circle cx="50" cy="50" r="48" fill="url(#spire_g2)"/>
+      <circle cx="50" cy="50" r="48" fill="url(#spire_g3)"/>
+      {/* Double gold ring */}
+      <circle cx="50" cy="50" r="46" fill="none" stroke="url(#spire_g1)" strokeWidth="2" opacity=".85"/>
+      <circle cx="50" cy="50" r="41" fill="none" stroke="url(#spire_g1)" strokeWidth=".5" opacity=".2"/>
+      {/* Spire / Flame mark */}
+      <path d="M50,12 L62,52 L50,64 L38,52 Z" fill="url(#spire_g1)" opacity=".95"/>
+      {/* Inner dark facet */}
+      <path d="M50,18 L58,50 L50,58 L42,50 Z" fill="url(#spire_g2)" opacity=".55"/>
+      {/* Center highlight line */}
+      <line x1="50" y1="14" x2="50" y2="62" stroke="url(#spire_g1)" strokeWidth="1" opacity=".35"/>
+      {/* Left wing */}
+      <path d="M38,52 Q26,58 16,62" fill="none" stroke="url(#spire_g1)" strokeWidth="2" strokeLinecap="round" opacity=".75"/>
+      <path d="M38,56 Q28,62 20,68" fill="none" stroke="url(#spire_g1)" strokeWidth="1.2" strokeLinecap="round" opacity=".4"/>
+      {/* Right wing */}
+      <path d="M62,52 Q74,58 84,62" fill="none" stroke="url(#spire_g1)" strokeWidth="2" strokeLinecap="round" opacity=".75"/>
+      <path d="M62,56 Q72,62 80,68" fill="none" stroke="url(#spire_g1)" strokeWidth="1.2" strokeLinecap="round" opacity=".4"/>
+      {/* Base platform */}
+      <line x1="22" y1="76" x2="78" y2="76" stroke="url(#spire_g1)" strokeWidth="1.8" opacity=".65"/>
+      <line x1="30" y1="80" x2="70" y2="80" stroke="url(#spire_g1)" strokeWidth=".6" opacity=".25"/>
+      {/* Tip jewel */}
+      <circle cx="50" cy="12" r="4" fill="url(#spire_g1)" opacity=".95"/>
       <circle cx="50" cy="12" r="2" fill="#fffce0"/>
     </svg>
+    {/* ── Wordmark ── */}
     <div>
       <div style={{fontWeight:900,fontSize:16,fontFamily:"Cinzel,serif",
         background:"linear-gradient(135deg,#fffce0,#ffd700,#c8960c)",
@@ -976,7 +970,7 @@ const Logo = () => (
       <div style={{fontSize:8,letterSpacing:".18em",marginTop:2,
         background:"linear-gradient(90deg,#d4a017,#ffd700)",
         WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
-        fontWeight:400}}>SMM PLATFORM</div>
+        fontFamily:"Cinzel,serif",fontWeight:400}}>SMM PLATFORM</div>
     </div>
   </div>
 );
@@ -1008,7 +1002,7 @@ const MobileBar = ({ page, setPage, isAdmin, onLogout }) => {
   // User bottom tabs (5 fit perfectly)
   const uItems = [
     {id:"overview", i:"⊞", l:"Home"},
-    {id:"neworder", i:"✦", l:"Order"},
+    {id:"services", i:"◇", l:"Services"},
     {id:"orders",   i:"📦", l:"Orders"},
     {id:"wallet",   i:"◈", l:"Wallet"},
     {id:"settings", i:"👤", l:"Me"},
@@ -1268,12 +1262,9 @@ const Landing = ({ goLogin, goSignup }) => {
       <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:300,
         background:"rgba(6,6,10,.92)",backdropFilter:"blur(28px)",
         borderBottom:"1px solid rgba(124,58,237,.12)",
-        padding:"0 6%",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        padding:"12px 16px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <Logo/>
-        <div style={{display:"flex",gap:10,alignItems:"center"}}>
-          <Btn v="ghost" onClick={goLogin} size="sm">Log In</Btn>
-          <Btn v="purple" onClick={goSignup} size="sm">Get Started →</Btn>
-        </div>
+        <Btn v="ghost" onClick={goLogin} size="sm">Log In</Btn>
       </nav>
 
       {/* ── HERO ────────────────────────────────────────────── */}
@@ -1301,7 +1292,8 @@ const Landing = ({ goLogin, goSignup }) => {
           </div>
 
           {/* Headline */}
-          <h1 className="hero-title" style={{fontFamily:"'Playfair Display',serif",marginBottom:22}}>
+          <h1 className="hero-title" style={{fontWeight:600,letterSpacing:"0.3px",
+            fontFamily:"'Playfair Display',serif",marginBottom:22,textAlign:"center"}}>
             <span style={{color:"#f0f0ff"}}>Premium Growth</span>
             <br/>
             <span style={{background:"linear-gradient(135deg,#7c3aed 0%,#a855f7 50%,#d4a017 100%)",
@@ -1398,7 +1390,7 @@ const Landing = ({ goLogin, goSignup }) => {
               borderRadius:20,padding:"5px 16px",marginBottom:16}}>
               <span style={{fontSize:10,fontWeight:800,color:C.goldL,letterSpacing:".1em"}}>💎 PREMIUM SERVICES</span>
             </div>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,
+            <h2 style={{lineHeight:1.4,wordBreak:"break-word",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,
               color:"#f0f0ff",marginBottom:10,letterSpacing:"0.3px"}}>
               100+ Services Available
             </h2>
@@ -1462,7 +1454,7 @@ const Landing = ({ goLogin, goSignup }) => {
               borderRadius:20,padding:"5px 16px",marginBottom:16}}>
               <span style={{fontSize:10,fontWeight:800,color:"#c4b5fd",letterSpacing:".1em"}}>✦ WHY CHOOSE US</span>
             </div>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",marginBottom:8,letterSpacing:"0.3px"}}>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",marginBottom:8,letterSpacing:"0.3px",wordBreak:"break-word",lineHeight:1.4}}>
               The OpulentSMM Standard
             </h2>
             <p style={{color:C.muted,fontSize:14,maxWidth:440,margin:"0 auto"}}>Built for results. Not promises.</p>
@@ -1494,7 +1486,7 @@ const Landing = ({ goLogin, goSignup }) => {
       {/* ── HOW IT WORKS ────────────────────────────────────── */}
       <section style={{padding:"90px 6%",borderTop:"1px solid rgba(255,255,255,.05)"}}>
         <div style={{maxWidth:900,margin:"0 auto",textAlign:"center"}}>
-          <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",marginBottom:8,letterSpacing:"0.3px"}}>
+          <h2 style={{lineHeight:1.4,wordBreak:"break-word",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,color:"#f0f0ff",marginBottom:8,letterSpacing:"0.3px"}}>
             Start in 4 Steps
           </h2>
           <p style={{color:C.muted,marginBottom:52,fontSize:14}}>No technical knowledge needed.</p>
@@ -1536,7 +1528,7 @@ const Landing = ({ goLogin, goSignup }) => {
                 borderRadius:20,padding:"5px 16px",marginBottom:20}}>
                 <span style={{fontSize:10,fontWeight:800,color:C.goldL,letterSpacing:".1em"}}>✦ ABOUT OPULENTSMM</span>
               </div>
-              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",
+              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,color:"#f0f0ff",
                 marginBottom:18,letterSpacing:"0.3px",lineHeight:1.15}}>
                 Built for<br/>
                 <span style={{background:"linear-gradient(135deg,#7c3aed,#d4a017)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
@@ -1590,7 +1582,7 @@ const Landing = ({ goLogin, goSignup }) => {
                 animation:"pulse 1.5s infinite",display:"inline-block"}}/>
               <span style={{fontSize:11,fontWeight:700,color:"#34d399",letterSpacing:".06em"}}>LIVE ACTIVITY</span>
             </div>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",marginBottom:4}}>
+            <h2 style={{lineHeight:1.4,wordBreak:"break-word",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,color:"#f0f0ff",marginBottom:4}}>
               Orders Happening Right Now
             </h2>
             <p style={{color:C.muted,fontSize:13}}>Join thousands of creators growing with OpulentSMM</p>
@@ -1608,7 +1600,7 @@ const Landing = ({ goLogin, goSignup }) => {
               borderRadius:20,padding:"5px 16px",marginBottom:16}}>
               <span style={{fontSize:10,fontWeight:800,color:C.goldL,letterSpacing:".1em"}}>⭐ CUSTOMER REVIEWS</span>
             </div>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",letterSpacing:"0.3px"}}>
+            <h2 style={{lineHeight:1.4,wordBreak:"break-word",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,color:"#f0f0ff",letterSpacing:"0.3px"}}>
               Trusted by Creators
             </h2>
           </div>
@@ -1651,7 +1643,7 @@ const Landing = ({ goLogin, goSignup }) => {
               border:"1px solid rgba(212,160,23,.25)",borderRadius:20,padding:"5px 16px",marginBottom:14}}>
               <span style={{fontSize:10,fontWeight:800,color:C.goldL,letterSpacing:".1em"}}>🎁 NEW USER REWARDS</span>
             </div>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",marginBottom:8,letterSpacing:"0.3px"}}>Rewards After Your First Order</h2>
+            <h2 style={{lineHeight:1.4,wordBreak:"break-word",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,color:"#f0f0ff",marginBottom:8,letterSpacing:"0.3px"}}>Rewards After Your First Order</h2>
             <p style={{color:C.muted,fontSize:13}}>Real bonuses automatically granted on completion</p>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(270px,1fr))",gap:16}}>
@@ -1684,7 +1676,7 @@ const Landing = ({ goLogin, goSignup }) => {
             <span>🎁</span>
             <span style={{fontSize:11,fontWeight:800,color:C.goldL,letterSpacing:".1em"}}>FIRST DEPOSIT BONUS</span>
           </div>
-          <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",marginBottom:12,letterSpacing:"0.3px"}}>
+          <h2 style={{lineHeight:1.4,wordBreak:"break-word",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,color:"#f0f0ff",marginBottom:12,letterSpacing:"0.3px"}}>
             Get <span style={{background:C.gG,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Rs.10 Bonus</span> Free
           </h2>
           <p style={{color:C.muted,fontSize:14,marginBottom:32,lineHeight:1.7}}>
@@ -1712,7 +1704,7 @@ const Landing = ({ goLogin, goSignup }) => {
               background:"radial-gradient(ellipse,rgba(124,58,237,.1) 0%,transparent 70%)",pointerEvents:"none"}}/>
             <div style={{position:"relative",zIndex:1}}>
               <div style={{fontSize:48,marginBottom:16,animation:"floatY 3s ease-in-out infinite"}}>🚀</div>
-              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,marginBottom:12,
+              <h2 style={{lineHeight:1.4,wordBreak:"break-word",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,marginBottom:12,
                 background:"linear-gradient(135deg,#c4b5fd,#f5c842)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",letterSpacing:"0.3px"}}>
                 Start Growing Today
               </h2>
@@ -1764,7 +1756,7 @@ const Landing = ({ goLogin, goSignup }) => {
       {/* ── FAQ ──────────────────────────────────────────────── */}
       <section style={{padding:"80px 6%",borderTop:`1px solid ${C.border}`}}>
         <div style={{maxWidth:700,margin:"0 auto"}}>
-          <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:600,color:"#f0f0ff",marginBottom:36,textAlign:"center",letterSpacing:"0.3px"}}>
+          <h2 style={{lineHeight:1.4,wordBreak:"break-word",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:600,color:"#f0f0ff",marginBottom:36,textAlign:"center",letterSpacing:"0.3px"}}>
             Frequently Asked Questions
           </h2>
           {[
@@ -2203,11 +2195,10 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
 
   const NAV=[
     {id:"overview",   label:"Overview",      icon:"⊞"},
-    {id:"neworder",   label:"New Order",     icon:"✦"},
-    {id:"orders",     label:"My Orders",     icon:"📦"},
-    {id:"wallet",     label:"Wallet",        icon:"◈"},
-    {id:"addfunds",   label:"Add Funds",     icon:"⊕"},
     {id:"services",   label:"Services",      icon:"◇"},
+    {id:"orders",     label:"My Orders",     icon:"📦"},
+    {id:"addfunds",   label:"Add Funds",     icon:"⊕"},
+    {id:"wallet",     label:"Wallet",        icon:"◈"},
     {id:"influencer", label:"Influencer",    icon:"🌟"},
     {id:"support",    label:"Support",       icon:"💬"},
     {id:"settings",   label:"Profile",       icon:"👤"},
@@ -2338,9 +2329,7 @@ const NotifBell = ({ userEmail, setPage }) => {
           fontSize:9,fontWeight:900,color:"#fff",border:"2px solid #06060a",padding:"0 3px",animation:"popIn .3s ease"}}>{unread>9?"9+":unread}</div>}
       </div>
       {open&&(
-        <div style={{position:"absolute",right:0,top:46,width:320,maxHeight:400,overflowY:"auto",
-          background:"#09090f",border:"1px solid rgba(124,58,237,.35)",borderRadius:14,
-          boxShadow:"0 16px 48px rgba(0,0,0,.6)",zIndex:500}}>
+        <div className="notif-dropdown">
           <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
             <span style={{fontWeight:800,color:"#e8e8f2",fontSize:14}}>🔔 Notifications</span>
             {unread>0&&<span style={{fontSize:11,color:C.muted}}>{unread} unread</span>}
@@ -2354,9 +2343,9 @@ const NotifBell = ({ userEmail, setPage }) => {
               onClick={()=>{ setOpen(false); if(n.action) setPage(n.action); }}>
               <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
                 <span style={{fontSize:18,flexShrink:0}}>{typeIcon[n.type]||"📢"}</span>
-                <div style={{flex:1}}>
-                  <div style={{fontWeight:n.read?500:700,color:"#e8e8f2",fontSize:13,marginBottom:2}}>{n.title}</div>
-                  <div style={{fontSize:11,color:C.muted,lineHeight:1.4}}>{n.body}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontWeight:n.read?500:700,color:"#e8e8f2",fontSize:13,marginBottom:2,wordBreak:"break-word"}}>{n.title}</div>
+                  <div style={{fontSize:11,color:C.muted,lineHeight:1.5,wordBreak:"break-word"}}>{n.body}</div>
                   <div style={{fontSize:10,color:C.muted,marginTop:4}}>{n.date}</div>
                 </div>
                 {!n.read&&<div style={{width:7,height:7,borderRadius:"50%",background:"#7c3aed",flexShrink:0,marginTop:3}}/>}
@@ -2485,14 +2474,12 @@ const UserOverview = ({ orders, balance, setPage, userName, announcements, userE
       {/* QUICK ACTIONS */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(190px,1fr))",gap:12,marginBottom:24}}>
         {[
-          {icon:"✦",label:"New Order", sub:"Buy followers, likes & more",page:"neworder",grad:C.gP},
-          {icon:"⊕",label:"Add Funds", sub:"Top up your ₹ wallet",      page:"addfunds",grad:C.gG},
-          {icon:"📦",label:"My Orders", sub:"Track all your orders",       page:"orders",  grad:C.gB},
-          {icon:"💬",label:"Support",   sub:"Chat with our team",          page:"support", grad:C.gGr},
-          {icon:"◇",label:"Services",  sub:"Browse all services",          page:"services",grad:"linear-gradient(135deg,#6366f1,#8b5cf6)"},
-          {icon:"👤",label:"Profile",   sub:"Account settings & referral", page:"settings",grad:"linear-gradient(135deg,#0f766e,#14b8a6)"},
-          {icon:"🌟",label:"Influencer", sub:"Submit proof & earn rewards",    page:"influencer",grad:"linear-gradient(135deg,#f5c842,#d4a017)"},
-          {icon:"🎫",label:"Support",   sub:"Tickets & help center",         page:"support", grad:"linear-gradient(135deg,#7c3aed,#6d28d9)"},
+          {icon:"◇",label:"Services",  sub:"Browse & order services",      page:"services",grad:"linear-gradient(135deg,#6366f1,#8b5cf6)"},
+          {icon:"⊕",label:"Add Funds", sub:"Top up your ₹ wallet",         page:"addfunds",grad:C.gG},
+          {icon:"📦",label:"My Orders", sub:"Track all your orders",        page:"orders",  grad:C.gB},
+          {icon:"💬",label:"Support",   sub:"Tickets & help center",        page:"support", grad:C.gGr},
+          {icon:"👤",label:"Profile",   sub:"Account settings & referral",  page:"settings",grad:"linear-gradient(135deg,#0f766e,#14b8a6)"},
+          {icon:"🌟",label:"Influencer", sub:"Submit proof & earn rewards", page:"influencer",grad:"linear-gradient(135deg,#f5c842,#d4a017)"},
         ].map(q=>(
           <Card key={q.label} onClick={()=>setPage(q.page)} style={{padding:18,cursor:"pointer",display:"flex",alignItems:"center",gap:13,transition:"transform .18s,box-shadow .18s"}}
             onMouseEnter={e=>{ e.currentTarget.style.transform="translateY(-2px)"; e.currentTarget.style.boxShadow="0 8px 30px rgba(0,0,0,.4)"; }}
@@ -2568,6 +2555,37 @@ const OTable = ({ orders, onCancel, adminView=false }) => (
   </div>
 );
 
+// ─── Live Services Hook ───────────────────────────────────────
+// Loads from Firebase services/list — falls back to SERVICES const
+// Runs on every mount so user always sees latest admin changes
+const useLiveServices = () => {
+  const [liveServices, setLiveServices] = useState(SERVICES);
+  const [svcLoading, setSvcLoading] = useState(true);
+  useEffect(()=>{
+    let mounted = true;
+    const load = async () => {
+      try {
+        const fs = await getFS();
+        if(!fs){ setSvcLoading(false); return; }
+        const snap = await fs.collection("services").doc("list").get();
+        if(snap.exists && snap.data().services?.length > 0){
+          const fetched = snap.data().services;
+          console.log("Loaded services from Firebase:", fetched.length, "services");
+          if(mounted) setLiveServices(fetched);
+        } else {
+          console.log("Loaded services: using default SERVICES (no Firebase override yet)");
+        }
+      } catch(e) {
+        console.error("Failed to load services from Firebase:", e);
+      }
+      if(mounted) setSvcLoading(false);
+    };
+    load();
+    return () => { mounted = false; };
+  },[]);
+  return { liveServices, svcLoading };
+};
+
 // ─── User: New Order ──────────────────────────────────────────
 const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) => {
   const [step,setStep]=useState(1);
@@ -2581,7 +2599,8 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage }) =>
   const [linkErr,setLinkErr]=useState("");
   const [loading,setLoading]=useState(false);
 
-  const filtered=(pf==="All"?SERVICES:SERVICES.filter(s=>s.platform===pf)).filter(s=>!s.hidden);
+  const { liveServices, svcLoading } = useLiveServices();
+  const filtered=(pf==="All"?liveServices:liveServices.filter(s=>s.platform===pf)).filter(s=>!s.hidden);
   // Price calc: use tiers if available, else price per unit
   const calcTierPrice = (svc, qty) => {
     if (!svc) return 0;
@@ -3545,23 +3564,26 @@ const UserAddFunds = ({ balance, setBalance, setPage, setTxns, userName="User", 
 
           {/* Payment methods */}
           <div style={{fontSize:11,fontWeight:700,color:C.muted,letterSpacing:".07em",marginBottom:12,textTransform:"uppercase"}}>Payment Method</div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9,marginBottom:22}}>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9,marginBottom:22,boxSizing:"border-box",width:"100%"}}>
             {[
-              {id:"gpay",      icon:"📱", label:"Google Pay / Paytm / PhonePe", sub:"Tap to open app & scan QR"},
-              {id:"upi",       icon:"🔲", label:"UPI QR Code / UPI ID",           sub:"Scan with any UPI app"},
-              {id:"card",      icon:"💳", label:"Debit / Credit Card",            sub:"Pay via card & send screenshot"},
-              {id:"whatsapp",  icon:"💬", label:"WhatsApp / Other",               sub:"Contact us for any other method"},
+              {id:"gpay",      icon:"📱", label:"Google Pay / PhonePe", sub:"Scan QR with any UPI app"},
+              {id:"upi",       icon:"🔲", label:"UPI QR / UPI ID",       sub:"Any UPI app supported"},
+              {id:"card",      icon:"💳", label:"Debit / Credit Card",   sub:"Pay & send screenshot"},
+              {id:"whatsapp",  icon:"💬", label:"WhatsApp / Other",      sub:"Contact us directly"},
             ].map(m=>(
               <div key={m.id} onClick={()=>setMethod(m.id)} style={{
-                display:"flex",alignItems:"center",gap:11,padding:"12px 14px",borderRadius:11,cursor:"pointer",
+                display:"flex",alignItems:"flex-start",gap:9,padding:"11px 10px",
+                borderRadius:11,cursor:"pointer",boxSizing:"border-box",width:"100%",
                 border:`2px solid ${method===m.id?"#d4a017":C.border}`,
-                background:method===m.id?"rgba(212,160,23,.1)":"rgba(255,255,255,.02)",transition:"all .18s"}}>
-                <span style={{fontSize:20}}>{m.icon}</span>
-                <div style={{flex:1,overflow:"hidden"}}>
-                  <div style={{fontWeight:700,color:"#e8e8f2",fontSize:12,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{m.label}</div>
-                  <div style={{fontSize:10,color:C.muted}}>{m.sub}</div>
+                background:method===m.id?"rgba(212,160,23,.1)":"rgba(255,255,255,.02)",
+                transition:"all .18s"}}>
+                <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{m.icon}</span>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontWeight:700,color:"#e8e8f2",fontSize:11,lineHeight:1.3,
+                    wordBreak:"break-word",whiteSpace:"normal"}}>{m.label}</div>
+                  <div style={{fontSize:9,color:C.muted,marginTop:2,lineHeight:1.3}}>{m.sub}</div>
                 </div>
-                {method===m.id&&<span style={{color:C.goldL,fontWeight:900,flexShrink:0}}>✓</span>}
+                {method===m.id&&<span style={{color:C.goldL,fontWeight:900,flexShrink:0,fontSize:12}}>✓</span>}
               </div>
             ))}
           </div>
@@ -3617,11 +3639,12 @@ const SmartServiceBrowser = ({ onOrder, showOrderBtn=true }) => {
   const [search,setSearch]=useState("");
   const [showFilters,setShowFilters]=useState(false);
 
+  const { liveServices } = useLiveServices();
   const toggleQuality=(q)=>setQuality(prev=>prev.includes(q)?prev.filter(x=>x!==q):[...prev,q]);
 
   const getMinPrice=(s)=> s.tiers?s.tiers[0].price:(s.price||0)*100;
 
-  const filtered = SERVICES.filter(s=>{
+  const filtered = liveServices.filter(s=>{
     if(pf!=="All" && s.platform!==pf) return false;
     if(cat!=="All" && s.cat!==cat) return false;
     if(speedF!=="All" && s.speedTag!==speedF) return false;
@@ -3744,7 +3767,7 @@ const SmartServiceBrowser = ({ onOrder, showOrderBtn=true }) => {
 
       {/* Results count */}
       <div style={{fontSize:12,color:C.muted,marginBottom:14}}>
-        Showing <strong style={{color:"#c4b5fd"}}>{filtered.length}</strong> of {SERVICES.length} services
+        Showing <strong style={{color:"#c4b5fd"}}>{filtered.length}</strong> of {liveServices.length} services
         {activeFilters.length>0&&<span> · Filters: {activeFilters.join(", ")}</span>}
       </div>
 
@@ -3863,7 +3886,8 @@ const ServiceCompare = ({ services, onOrder }) => {
 const UserServices = ({ setPage }) => {
   const [view,setView]=useState("grid"); // "grid" | "compare"
   const [pf,setPf]=useState("All");
-  const filtered=(pf==="All"?SERVICES:SERVICES.filter(s=>s.platform===pf)).filter(s=>!s.hidden);
+  const { liveServices, svcLoading } = useLiveServices();
+  const filtered=(pf==="All"?liveServices:liveServices.filter(s=>s.platform===pf)).filter(s=>!s.hidden);
 
   return (
     <div className="page-enter" style={{animation:"fadeIn .4s ease"}}>
@@ -5270,21 +5294,23 @@ const AdminServices = () => {
 
   const openAdd=()=>{ setForm(blank); setMode("add"); setEditIdx(null); };
   const openEdit=(s,i)=>{
+    // Get current price — if service has tiers, show base (first tier) price
+    const currentPrice = s.tiers && s.tiers.length>0 ? s.tiers[0].price : (s.price||"");
     setForm({
       name:s.name, platform:s.platform, cat:s.cat||"Followers",
-      price:s.tiers?s.tiers[0].price:s.price||"",
+      price: currentPrice,
       min:s.min, max:s.max, desc:s.desc||"", speed:s.speed||""
     });
     setEditIdx(i); setMode("edit");
-    // Scroll to form
     setTimeout(()=>document.getElementById("svc-form")?.scrollIntoView({behavior:"smooth"}),50);
   };
-  const save=()=>{
-    if(!form.name){ alert("Please enter a service name"); return; }
+  const save=async()=>{
+    if(!form.name){ Toast.error("Please enter a service name"); return; }
+    const newPrice = parseFloat(form.price)||0;
     const entry={
       id:Date.now(), icon:"✦",
       name:form.name, platform:form.platform, cat:form.cat,
-      price:parseFloat(form.price)||0,
+      price:newPrice,
       min:parseInt(form.min)||100, max:parseInt(form.max)||100000,
       desc:form.desc, speed:form.speed
     };
@@ -5292,18 +5318,47 @@ const AdminServices = () => {
     if(mode==="add"){
       updated = [...svcs, entry];
     } else {
-      updated = svcs.map((x,i)=>i===editIdx?{...x,...entry,id:x.id,icon:x.icon,tiers:x.tiers}:x);
+      updated = svcs.map((x,i)=>{
+        if(i!==editIdx) return x;
+        // Update tiers prices proportionally if service has tiers
+        let newTiers = x.tiers;
+        if(x.tiers && x.tiers.length>0){
+          const oldBasePrice = x.tiers[0].price;
+          if(oldBasePrice>0 && newPrice>0){
+            const ratio = newPrice / oldBasePrice;
+            newTiers = x.tiers.map(t=>({...t, price: parseFloat((t.price * ratio).toFixed(2))}));
+          }
+        }
+        return {...x, ...entry, id:x.id, icon:x.icon, tiers:newTiers,
+          quality:x.quality, badge:x.badge, speedTag:x.speedTag};
+      });
     }
     setSvcs(updated);
-    // Save to Firebase so it persists
-    getFS().then(fs=>{
-      if(fs) fs.collection("services").doc("list").set({services:updated}).catch(console.error);
-    });
-    setMode(null); setEditIdx(null); setForm(blank);
-    alert(`✅ Service ${mode==="add"?"added":"updated"}! Changes saved.`);
+    // Save to Firebase — await so we confirm it worked
+    try{
+      const fs = await getFS();
+      if(!fs) throw new Error("Firebase not connected");
+      await fs.collection("services").doc("list").set({services:updated});
+      setMode(null); setEditIdx(null); setForm(blank);
+      Toast.success(`✅ Service ${mode==="add"?"added":"updated"} — live for all users now!`);
+      console.log("Services saved to Firebase:", updated.length, "services");
+    } catch(e){
+      Toast.error("❌ Save failed: " + e.message);
+      console.error("Service save error:", e);
+    }
   };
-  const del=(i)=>{
-    if(window.confirm("Delete this service? Cannot be undone.")) setSvcs(x=>x.filter((_,j)=>j!==i));
+
+  const del=async(i)=>{
+    if(!window.confirm("Delete this service? Cannot be undone.")) return;
+    const updated = svcs.filter((_,j)=>j!==i);
+    setSvcs(updated);
+    try{
+      const fs = await getFS();
+      if(fs) await fs.collection("services").doc("list").set({services:updated});
+      Toast.success("Service deleted.");
+    } catch(e){
+      Toast.error("Delete failed: " + e.message);
+    }
   };
 
   return (
@@ -5355,7 +5410,8 @@ const AdminServices = () => {
                 {["Followers","Likes","Views","Comments","Engagement"].map(c=><option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <Inp label="Price ₹ (per 1000 units)" value={String(form.price)} onChange={e=>F("price",e.target.value)} placeholder="e.g. 349"/>
+            <Inp label="Base Price ₹ (1st tier / per 1000 units)" value={String(form.price)} onChange={e=>F("price",e.target.value)} placeholder="e.g. 349"
+              hint={mode==="edit"?"Changing this updates ALL tier prices proportionally and goes live immediately for users.":"Price per 1000 units (base tier)"}/>
             <Inp label="Min Quantity" value={String(form.min)} onChange={e=>F("min",e.target.value)} placeholder="1000"/>
             <Inp label="Max Quantity" value={String(form.max)} onChange={e=>F("max",e.target.value)} placeholder="100000"/>
             <Inp label="Delivery Speed" value={form.speed} onChange={e=>F("speed",e.target.value)} placeholder="0–12 hrs"/>
