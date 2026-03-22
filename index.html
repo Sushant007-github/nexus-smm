@@ -63,9 +63,9 @@
     "potentialAction":{"@type":"SearchAction","target":"https://opulentsmm.in/?q={search_term_string}","query-input":"required name=search_term_string"}
   }
   </script>
-  <script crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.23.10/babel.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <!-- Firebase compat SDK - loaded directly so always available -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -74,11 +74,10 @@
 </head>
 <body>
   <div id="root"></div>
-  <script type="text/babel" data-presets="react,env">
-window.onerror = function(message, source, lineno, colno, error) {
-  document.body.innerHTML = '<div style="padding:20px;font-family:Arial;color:red;background:#fff;position:fixed;inset:0;z-index:99999;overflow:auto"><h2>App Crash Detected</h2><p><b>Error:</b> ' + message + '</p><p><b>Line:</b> ' + lineno + '</p><p><b>Source:</b> ' + source + '</p><pre style="font-size:12px;background:#fee;padding:12px;border-radius:6px;overflow:auto">' + (error && error.stack ? error.stack : '') + '</pre></div>';
+  <script type="text/babel" data-presets="react">
+window.onerror = function(msg, src, line, col, err) {
+  document.body.innerHTML = '<div style="padding:20px;font-family:Arial;background:#fff;color:red;position:fixed;inset:0;z-index:99999;overflow:auto"><h2>&#x26A0; App Error</h2><p><b>'+msg+'</b></p><p>Line: '+line+'</p><pre style="background:#fee;padding:12px;font-size:12px;overflow:auto">'+(err&&err.stack?err.stack:'')+'</pre></div>';
 };
-
 const { useState, useEffect, useRef, useCallback } = React;
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2756,10 +2755,6 @@ const UserNewOrder = ({ orders, addOrderSync, balance, setBalance, setPage, init
                   </div>
                 </div>
               )}
-              <div style={{background:"#fff3cd",color:"#856404",padding:"10px 12px",
-                borderRadius:8,marginBottom:12,fontSize:13,lineHeight:1.5,width:"100%"}}>
-                ⚠️ <strong>Important:</strong> Your account must be <strong>PUBLIC</strong> before placing an order. Private accounts will not receive followers or likes.
-              </div>
               <Inp label="Your Link / URL" value={link} onChange={e=>setLink(e.target.value)}
                 placeholder={`e.g. https://instagram.com/yourprofile`} error={linkErr} icon="🔗"
                 hint={`Paste your ${sel.platform} profile or post link`}/>
@@ -7035,4 +7030,10 @@ function App() {
   };
 
   return (
-   
+    <>
+      <GS/>
+      <ToastContainer/>
+      {screen==="landing"    && <Landing goLogin={()=>goScreen("login")} goSignup={()=>goScreen("signup")}/>}
+      {screen==="signup"     && <Signup goLogin={()=>goScreen("login")} onSuccess={(n,e)=>loginUser(n,e)}/>}
+      {screen==="login"      && <Login goSignup={()=>goScreen("signup")} onUserLogin={(n,e)=>loginUser(n,e)} onAdminLogin={()=>goScreen("adminlogin")}/>}
+      {screen==="adminlogin" && <AdminLogin onAdminLogin={loginAdmin} goBack={()=>goScreen("landing"
