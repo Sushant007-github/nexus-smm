@@ -9,6 +9,7 @@ body.order-page #order-warning {
   display: block;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <meta name="description" content="Buy Instagram followers, likes, views and social media services at affordable prices. Fast delivery, secure UPI payments and 24/7 support. India's most trusted SMM panel."/>
   <meta name="keywords" content="SMM panel India, buy Instagram followers, cheap SMM panel, Instagram likes, YouTube views, TikTok followers, social media growth, buy followers India, OpulentSMM"/>
   <meta name="robots" content="index, follow"/>
@@ -89,6 +90,24 @@ font-size:13px;
 ⚠️ Your account must be PUBLIC before placing an order.
 </div>
   <div id="root"></div>
+  <button onclick="testEmail()" style="
+position:fixed;
+bottom:20px;
+right:20px;
+padding:10px 14px;
+background:black;
+color:white;
+border:none;
+border-radius:8px;
+z-index:9999;
+">
+Test Email
+</button>
+  <script>
+(function(){
+  emailjs.init("kJpGHyAXtp83jE5U");
+})();
+</script>
   <script>
 if (window.location.href.includes("order")) {
   document.body.classList.add("order-page");
@@ -96,6 +115,20 @@ if (window.location.href.includes("order")) {
 </script>
   <script type="text/babel" data-presets="react">
 const { useState, useEffect, useRef, useCallback } = React;
+window.testEmail = function() {
+  emailjs.send("service_42ypkd9", "template_6f1wrnp", {
+    type: "Test Notification",
+    name: "Sam",
+    email: "test@example.com",
+    message: "This is a test email from Opulent SMM",
+    time: new Date().toLocaleString()
+  }).then(function(response) {
+    alert("Email sent successfully ✅");
+  }, function(error) {
+    alert("Email failed ❌");
+  });
+}
+
 
 /* ═══════════════════════════════════════════════════════════════
    OPULENTSMM PLATFORM — FINAL SECURE BUILD
