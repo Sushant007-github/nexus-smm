@@ -887,7 +887,7 @@ const Card = ({ children, style={}, glow=false, gold=false, onClick }) => (
   }}>{children}</div>
 );
 
-const Btn = ({ children, onClick, v="purple", size="md", style={}, disabled=false, loading=false, "aria-label":ariaLabel }) => {
+const Btn = ({ children, onClick, v="purple", size="md", style={}, disabled=false, loading=false, ariaLabel }) => {
   const [h,setH]=useState(false);
   const bg = disabled?"rgba(255,255,255,.05)":v==="purple"?C.gP:v==="gold"?C.gG:v==="green"?C.gGr:v==="ghost"?"transparent":"rgba(255,255,255,.07)";
   const col = disabled?C.muted:v==="gold"?"#1a0f00":v==="ghost"?C.purpleL:"#fff";
@@ -1301,7 +1301,7 @@ const Landing = ({ goLogin, goSignup }) => {
         borderBottom:"1px solid rgba(124,58,237,.12)",
         padding:"12px 16px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <Logo/>
-        <Btn v="ghost" onClick={goLogin} size="sm" aria-label="Log in to your OpulentSMM account">Log In</Btn>
+        <Btn v="ghost" onClick={goLogin} size="sm" ariaLabel="Log in to your OpulentSMM account">Log In</Btn>
       </nav>
 
       {/* ── HERO ────────────────────────────────────────────── */}
@@ -1346,10 +1346,10 @@ const Landing = ({ goLogin, goSignup }) => {
 
           {/* CTAs */}
           <div className="hero-cta-wrap" style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",marginBottom:48}}>
-            <Btn v="purple" onClick={goSignup} size="lg" aria-label="Create a free OpulentSMM account and start your social media growth" style={{minWidth:190,animation:"glowPurple 2.5s ease infinite"}}>
+            <Btn v="purple" onClick={goSignup} size="lg" ariaLabel="Create a free OpulentSMM account and start your social media growth" style={{minWidth:190,animation:"glowPurple 2.5s ease infinite"}}>
               Get Started Free
             </Btn>
-            <Btn v="ghost" onClick={()=>document.getElementById("svc").scrollIntoView({behavior:"smooth"})} size="lg" aria-label="View all social media growth services" style={{minWidth:160}}>
+            <Btn v="ghost" onClick={()=>document.getElementById("svc").scrollIntoView({behavior:"smooth"})} size="lg" ariaLabel="View all social media growth services" style={{minWidth:160}}>
               Browse Services
             </Btn>
           </div>
@@ -1467,10 +1467,10 @@ const Landing = ({ goLogin, goSignup }) => {
                 Create a free account to access our full service catalogue, agency pricing tiers, and bulk order discounts.
               </p>
               <div style={{display:"flex",gap:12,flexWrap:"wrap",justifyContent:"center",marginBottom:16}}>
-                <Btn v="purple" onClick={goSignup} size="lg" aria-label="Sign up to unlock all 100+ professional social media growth services" style={{animation:"glowPurple 2.5s ease infinite"}}>
+                <Btn v="purple" onClick={goSignup} size="lg" ariaLabel="Sign up to unlock all 100+ professional social media growth services" style={{animation:"glowPurple 2.5s ease infinite"}}>
                   Login to Unlock All Services
                 </Btn>
-                <Btn v="ghost" onClick={goLogin} size="md" aria-label="Log in to your existing OpulentSMM account">Already a member?</Btn>
+                <Btn v="ghost" onClick={goLogin} size="md" ariaLabel="Log in to your existing OpulentSMM account">Already a member?</Btn>
               </div>
               <div style={{display:"flex",gap:18,flexWrap:"wrap",justifyContent:"center"}}>
                 {["✓ Free to join","✓ Instant access","✓ No hidden fees"].map(t=>(
@@ -1548,7 +1548,7 @@ const Landing = ({ goLogin, goSignup }) => {
             ))}
           </div>
           <div style={{marginTop:42}}>
-            <Btn v="purple" onClick={goSignup} size="lg" aria-label="Get started free on OpulentSMM social media growth platform" style={{animation:"glowPurple 2.5s ease infinite"}}>
+            <Btn v="purple" onClick={goSignup} size="lg" ariaLabel="Get started free on OpulentSMM social media growth platform" style={{animation:"glowPurple 2.5s ease infinite"}}>
               Get Started Free →
             </Btn>
           </div>
@@ -1727,7 +1727,7 @@ const Landing = ({ goLogin, goSignup }) => {
               </div>
             ))}
           </div>
-          <Btn v="gold" onClick={goSignup} size="lg" aria-label="Claim your first deposit bonus on OpulentSMM" style={{animation:"glow 2.5s ease infinite"}}>Claim Bonus Now →</Btn>
+          <Btn v="gold" onClick={goSignup} size="lg" ariaLabel="Claim your first deposit bonus on OpulentSMM" style={{animation:"glow 2.5s ease infinite"}}>Claim Bonus Now →</Btn>
           <p style={{fontSize:11,color:C.muted,marginTop:10}}>*First deposit only · Minimum ₹100</p>
         </div>
       </section>
@@ -1749,10 +1749,10 @@ const Landing = ({ goLogin, goSignup }) => {
                 Join 48,000+ agencies, business owners, and content creators who rely on OpulentSMM for consistent, professional social media growth.
               </p>
               <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap",marginBottom:20}}>
-                <Btn v="purple" onClick={goSignup} size="lg" aria-label="Join OpulentSMM free and start your social media growth campaign" style={{animation:"glowPurple 2.5s ease infinite",minWidth:190}}>
+                <Btn v="purple" onClick={goSignup} size="lg" ariaLabel="Join OpulentSMM free and start your social media growth campaign" style={{animation:"glowPurple 2.5s ease infinite",minWidth:190}}>
                   Join Now — It's Free
                 </Btn>
-                <Btn v="ghost" onClick={goLogin} size="lg" aria-label="Log in to your OpulentSMM account">Log In</Btn>
+                <Btn v="ghost" onClick={goLogin} size="lg" ariaLabel="Log in to your OpulentSMM account">Log In</Btn>
               </div>
               <div style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
                 {["🔒 No credit card","⚡ Instant access","✓ Cancel anytime"].map(t=>(
@@ -6925,4 +6925,5 @@ const AdminAnnounce = ({ announcements, setAnnouncements }) => {
               <div style={{fontSize:10,color:typeColor[form.type],fontWeight:800,letterSpacing:".08em",marginBottom:6}}>
                 PREVIEW — how users will see it:
               </div>
-              <div style={{fontWeight:700,color:"#e8e8f2",fontSize:13,marginBottom:3}}>{form.titl
+              <div style={{fontWeight:700,color:"#e8e8f2",fontSize:13,marginBottom:3}}>{form.title}</div>
+             
