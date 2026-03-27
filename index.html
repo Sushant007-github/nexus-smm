@@ -3,38 +3,40 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>OpulentSMM - Aetheris Obsidian SMM Experience</title>
+<title>OpulentSMM - Best SMM Panel for Instagram, YouTube &amp; Social Media Growth</title>
 <style>
     body.order-page #order-warning { display: block; }
   </style>
 <meta content="Buy Instagram followers, likes, views and social media services at affordable prices. Fast delivery, secure UPI payments and 24/7 support. India's most trusted SMM panel." name="description"/>
 <meta content="SMM panel India, buy Instagram followers, cheap SMM panel, Instagram likes, YouTube views, TikTok followers, social media growth, buy followers India, OpulentSMM" name="keywords"/>
 <meta content="index, follow" name="robots"/>
-<meta content="#0E0E0E" name="theme-color"/>
+<meta content="#06060a" name="theme-color"/>
 <meta content="OpulentSMM" name="author"/>
 <meta content="IN" name="geo.region"/>
 <meta content="English" name="language"/>
 <link href="https://opulentsmm.in" rel="canonical"/>
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Cinzel:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
 <script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
-<body style="background: #0E0E0E; color: #E5E5E5; margin: 0;">
-<div id="order-warning" style="display:none; background: linear-gradient(90deg, #D4AF37, #856404); color:#000; padding:12px; text-align:center; font-size:14px; font-family: 'Manrope', sans-serif; font-weight: 700; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3); position: relative; z-index: 1000;">
+<body style="background: #06060a; color: #e8e8f2; margin: 0;">
+<div id="order-warning" style="display:none; background: linear-gradient(90deg, #d4a017, #8a6400); color:#000; padding:12px; text-align:center; font-size:14px; font-family: 'Manrope', sans-serif; font-weight: 700; box-shadow: 0 4px 20px rgba(212, 160, 23, 0.3); position: relative; z-index: 10000;">
     ⚠️ Your account must be PUBLIC before placing an order.
   </div>
 <div id="root"></div>
 <script data-presets="react" type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
-// Logic preserved exactly
+// ── CONFIG ──────────────────────────────────────────────────
 const ADMIN_EMAIL = "admin@opluentedge.com";
 const WHATSAPP_NUM   = "918309647229";
 const UPI_ID         = "sushantyetekar45-3@okicici";
@@ -42,41 +44,44 @@ const UPI_NAME       = "OpulentSMM";
 const SUPPORT_EMAIL  = "support@opulentsmm.in";
 const BUSINESS_NAME  = "OpulentSMM";
 
-// Colors - Aetheris 3D Obsidian Palette
+// ── DESIGN TOKENS ───────────────────────────────────────────
 const C = {
-  bg: "#0E0E0E",
-  obsidian: "#131314",
-  vault: "rgba(28, 27, 28, 0.4)",
-  gold: "#D4AF37",
-  goldL: "#F2CA50",
-  indigo: "rgba(79, 70, 229, 0.15)",
-  border: "rgba(255, 255, 255, 0.05)",
-  text: "#F4F4F5",
-  muted: "#8E8E93",
-  success: "#10B981",
-  error: "#EF4444",
-  gGold: "linear-gradient(135deg, #F2CA50 0%, #D4AF37 50%, #856404 100%)",
-  gObsidian: "radial-gradient(circle at 50% 0%, #1A1A1E 0%, #0E0E0E 100%)"
+  bg: "#06060a",
+  obsidian: "#0d0d12",
+  vault: "rgba(20, 20, 25, 0.65)",
+  gold: "#d4a017",
+  goldL: "#f5c842",
+  purple: "#7c3aed",
+  purpleL: "#a855f7",
+  text: "#e8e8f2",
+  muted: "#8a8a99",
+  border: "rgba(212, 160, 23, 0.15)",
+  success: "#10b981",
+  error: "#ef4444",
+  gGold: "linear-gradient(135deg, #f5c842 0%, #d4a017 50%, #8a6400 100%)",
+  gP: "linear-gradient(135deg, #7c3aed, #a855f7)"
 };
 
-const captureReferral = () => { try { const p = new URLSearchParams(window.location.search); const r = p.get("ref"); if(r) localStorage.setItem("opulent_ref", r.trim().toLowerCase()); } catch(e) {} };
-captureReferral();
-const getReferral = () => { try { return localStorage.getItem("opulent_ref")||""; } catch{ return ""; } };
-const clearReferral = () => { try { localStorage.removeItem("opulent_ref"); } catch{} };
-
+// ── DATA ─────────────────────────────────────────────────────
 const SERVICES = [
-  { id:1, platform:"Instagram", icon:"📸", name:"Instagram Followers – Stable", desc:"100% Indian stable followers. Gradual natural delivery. No-drop guarantee for 30 days.", speed:"0–12 hrs", min:1000, max:100000, cat:"Followers", badge:"🔥 Best Seller", tiers:[{qty:1000,price:99},{qty:5000,price:449},{qty:10000,price:849}] },
-  { id:2, platform:"Instagram", icon:"📸", name:"Instagram Followers – Premium", desc:"Premium quality Indian followers with high retention.", speed:"0–6 hrs", min:500, max:50000, cat:"Followers", badge:"💎 Premium", tiers:[{qty:500,price:79},{qty:1000,price:139},{qty:5000,price:649}] },
-  { id:3, platform:"Instagram", icon:"📸", name:"Instagram Likes – HQ", desc:"Real Indian likes. Instant start. Pushes post to Explore page.", speed:"0–30 min", min:100, max:50000, cat:"Likes", badge:"⚡ Instant", tiers:[{qty:1000,price:39},{qty:5000,price:149},{qty:10000,price:249}] },
-  { id:4, platform:"Instagram", icon:"📸", name:"Instagram Reel Views – HQ", desc:"Indian reel views. Boosts your reel to Explore & For You pages.", speed:"0–2 hrs", min:1000, max:500000, cat:"Views", badge:"📈 Trending", tiers:[{qty:1000,price:15},{qty:5000,price:59},{qty:10000,price:99},{qty:50000,price:399}] },
-  { id:8, platform:"YouTube", icon:"▶️", name:"YouTube Views – Stable", desc:"High-retention views with watch time boost. Monetization threshold help.", speed:"1–24 hrs", min:1000, max:500000, cat:"Views", badge:"🏆 Top Rated", tiers:[{qty:1000,price:149},{qty:5000,price:599},{qty:10000,price:999}] },
-  { id:16, platform:"Facebook", icon:"👍", name:"Facebook Followers – Stable", desc:"Real Facebook followers. Safe gradual delivery.", speed:"1–48 hrs", min:100, max:50000, cat:"Followers", tiers:[{qty:1000,price:399},{qty:5000,price:1799},{qty:10000,price:3299}] },
+  { id:1, platform:"Instagram", icon:"📸", name:"Instagram Followers – Stable", desc:"100% Indian stable followers. Gradual natural delivery. No-drop guarantee for 30 days.", speed:"0–12 hrs", min:1000, max:100000, cat:"Followers", badge:"🔥 Best Seller", tiers:[{qty:1000,price:99},{qty:5000,price:449},{qty:10000,price:849}], quality:["Non Drop","Refill Available"], speedTag:"Normal" },
+  { id:2, platform:"Instagram", icon:"📸", name:"Instagram Followers – Premium", desc:"Premium quality Indian followers with high retention.", speed:"0–6 hrs", min:500, max:50000, cat:"Followers", badge:"💎 Premium", tiers:[{qty:500,price:79},{qty:1000,price:139},{qty:5000,price:649}], quality:["High Quality","Non Drop"], speedTag:"Fast" },
+  { id:3, platform:"Instagram", icon:"📸", name:"Instagram Likes – HQ", desc:"Real Indian likes. Instant start. Pushes post to Explore page.", speed:"0–30 min", min:100, max:50000, cat:"Likes", badge:"⚡ Instant", tiers:[{qty:1000,price:39},{qty:5000,price:149},{qty:10000,price:249}], quality:["High Quality"], speedTag:"Instant" },
+  { id:4, platform:"Instagram", icon:"📸", name:"Instagram Reel Views – HQ", desc:"Indian reel views. Boosts your reel to Explore & For You pages.", speed:"0–2 hrs", min:1000, max:500000, cat:"Views", badge:"📈 Trending", tiers:[{qty:1000,price:15},{qty:5000,price:59},{qty:10000,price:99},{qty:50000,price:399}], quality:["High Quality"], speedTag:"Fast" },
+  { id:8, platform:"YouTube", icon:"▶️", name:"YouTube Views – Stable", desc:"High-retention views with watch time boost. Monetization threshold help.", speed:"1–24 hrs", min:1000, max:500000, cat:"Views", badge:"🏆 Top Rated", tiers:[{qty:1000,price:149},{qty:5000,price:599},{qty:10000,price:999}], quality:["Non Drop"], speedTag:"Normal" },
+  { id:16, platform:"Facebook", icon:"👍", name:"Facebook Followers – Stable", desc:"Real Facebook followers. Safe gradual delivery.", speed:"1–48 hrs", min:100, max:50000, cat:"Followers", tiers:[{qty:1000,price:399},{qty:5000,price:1799},{qty:10000,price:3299}], quality:["Non Drop"], speedTag:"Normal" },
 ];
 
 const PLATFORMS = ["All","Instagram","YouTube","Facebook","Twitter"];
-const fmt = (n) => "₹" + parseFloat(n).toFixed(2);
-const today = () => new Date().toISOString().slice(0,10);
+const INFLUENCER_LEVELS = [
+  { level:"Bronze",  icon:"🥉", minFollowers:1000,   minActiveUsers:5,    reward:"50 Free Followers",   color:"#cd7f32" },
+  { level:"Silver",  icon:"🥈", minFollowers:5000,   minActiveUsers:20,   reward:"100 Free Followers",  color:"#c0c0c0" },
+  { level:"Gold",    icon:"🥇", minFollowers:10000,  minActiveUsers:50,   reward:"200 Free Followers",  color:"#ffd700" },
+  { level:"Diamond", icon:"💎", minFollowers:50000,  minActiveUsers:150,  reward:"500 Free Followers",  color:"#60a5fa" },
+  { level:"VIP",     icon:"👑", minFollowers:100000, minActiveUsers:300,  reward:"1000 Free Followers", color:"#a855f7" },
+];
 
+// ── FIREBASE HELPERS ──────────────────────────────────────
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCAS5BsEBCEtAbGFCmv9w0K_M8OA3bTXxc",
   authDomain: "nexus-smm-15cc1.firebaseapp.com",
@@ -91,241 +96,525 @@ const getFS = async () => { initFB(); return firebase.firestore(); };
 const getFirebaseAuth = async () => { initFB(); return firebase.auth(); };
 
 const DB = {
-  async getBalanceFromFirebase(email) {
+  async getBalance(email) {
     if(!email) return 0;
     const fs = await getFS();
     const key = email.toLowerCase().trim().replace(/[@.]/g,"_");
     const snap = await fs.collection("wallets").doc(key).get();
     return snap.exists ? (snap.data().balance ?? 0) : 0;
   },
-  async getOrdersFromFirebase() {
+  async getOrders() {
     const fs = await getFS();
     const snap = await fs.collection("orders").get();
     return snap.docs.map(d=>d.data()).sort((a,b)=>b.date>a.date?1:-1);
   },
-  addOrder(o) { getFS().then(fs => fs.collection("orders").add(o)); },
-  async updateUserBalanceAsync(email, balance) {
+  async addOrder(o) { const fs = await getFS(); await fs.collection("orders").add(o); },
+  async updateUserBalance(email, balance) {
     const fs = await getFS();
     const key = email.toLowerCase().trim().replace(/[@.]/g,"_");
     await fs.collection("wallets").doc(key).set({balance, email: email.toLowerCase().trim(), ts: Date.now()});
-  },
-  async pushNotification(email, type, title, body) {
-    const fs = await getFS();
-    const id = "NOTIF-"+Date.now();
-    await fs.collection("notifications").doc(id).set({id, userEmail:email.toLowerCase().trim(), type, title, body, date:today(), createdAt:Date.now(), read:false});
   }
 };
 
-// ─── STYLES & COMPONENTS ───────────────────────────────────────
+// ── GLOBAL STYLES ───────────────────────────────────────────
 const GS = () => (
   <style>{`
-    body { 
-      font-family: 'Manrope', 'Space Grotesk', sans-serif; 
-      background: ${C.bg}; 
-      color: ${C.text}; 
-      margin: 0; 
+    body {
+      font-family: 'Manrope', sans-serif;
+      background-color: ${C.bg};
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(212, 160, 23, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(124, 58, 237, 0.06) 0%, transparent 40%);
+      background-attachment: fixed;
+      margin: 0;
+      color: ${C.text};
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-      background-image: 
-        radial-gradient(circle at 20% 20%, ${C.indigo} 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.03) 0%, transparent 40%);
-      background-attachment: fixed;
     }
-    h1, h2, h3, h4 { 
-      font-family: 'Noto Serif', serif; 
-      font-weight: 700; 
-      color: ${C.text}; 
-      letter-spacing: -0.01em;
+    h1, h2, h3, h4 {
+      font-family: 'Noto Serif', serif;
       font-style: italic;
+      font-weight: 700;
+      letter-spacing: -0.01em;
     }
-    .vault-card {
+    .technical { font-family: 'Space Grotesk', sans-serif; }
+    
+    .physical-vault {
       background: ${C.vault};
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       border: 1px solid ${C.border};
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 24px;
+      padding: 32px;
       box-shadow: 
-        0 20px 50px -12px rgba(0,0,0,0.8),
+        0 30px 60px -12px rgba(0,0,0,0.8),
         inset 0 1px 1px rgba(255,255,255,0.05);
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
-    .vault-card:hover {
-      border-color: rgba(212, 175, 55, 0.3);
-      transform: translateY(-5px) scale(1.005);
+    .physical-vault:hover {
+      transform: translateY(-8px) scale(1.01) perspective(1000px) rotateX(2deg);
+      border-color: rgba(212, 160, 23, 0.4);
       box-shadow: 
-        0 40px 80px -15px rgba(0,0,0,0.9),
-        0 0 20px rgba(212, 175, 55, 0.1);
+        0 50px 100px -20px rgba(0,0,0,0.9),
+        0 0 30px rgba(212, 160, 23, 0.15);
     }
+    
     .btn-gold {
       background: ${C.gGold};
       color: #000;
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
       border: none;
       padding: 16px 32px;
-      border-radius: 14px;
+      border-radius: 12px;
       cursor: pointer;
       text-transform: uppercase;
       letter-spacing: 2px;
-      font-size: 12px;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+      font-size: 11px;
       transition: all 0.4s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
+      box-shadow: 0 0 20px rgba(212, 160, 23, 0.2);
     }
     .btn-gold:hover {
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-      filter: brightness(1.1);
-      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(212, 160, 23, 0.5);
+      filter: brightness(1.2);
+      transform: translateY(-2px) scale(1.02);
     }
+
     .btn-obsidian {
-      background: rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.03);
       color: ${C.text};
-      border: 1px solid ${C.border};
+      border: 1px solid rgba(255,255,255,0.1);
       padding: 14px 28px;
-      border-radius: 14px;
+      border-radius: 12px;
       font-weight: 600;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
       font-family: 'Space Grotesk', sans-serif;
       text-transform: uppercase;
       letter-spacing: 1px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
     .btn-obsidian:hover {
-      background: rgba(255,255,255,0.05);
-      border-color: rgba(212, 175, 55, 0.4);
+      background: rgba(255,255,255,0.08);
+      border-color: ${C.gold};
       color: ${C.goldL};
+      transform: translateY(-1px);
     }
-    .sovereign-nav {
-      background: rgba(14, 14, 15, 0.85);
-      backdrop-filter: blur(50px);
-      border-right: 1px solid ${C.border};
-    }
-    .nav-item {
-      display: flex;
-      align-items: center;
-      padding: 16px 24px;
-      margin: 8px 16px;
-      border-radius: 16px;
-      color: ${C.muted};
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 13px;
-      transition: all 0.3s ease;
-      font-family: 'Space Grotesk', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .nav-item.active {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent);
-      color: ${C.goldL};
-      border-left: 3px solid ${C.gold};
-    }
+
     .badge {
       font-size: 10px;
       font-weight: 800;
       padding: 5px 14px;
       border-radius: 100px;
       text-transform: uppercase;
-      background: rgba(212, 175, 55, 0.08);
-      color: ${C.gold};
-      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(212, 160, 23, 0.1);
+      color: ${C.goldL};
+      border: 1px solid rgba(212, 160, 23, 0.3);
       letter-spacing: 1.5px;
       font-family: 'Space Grotesk', sans-serif;
     }
+
     input, select, textarea {
-      background: rgba(255, 255, 255, 0.02) !important;
-      border: 1px solid rgba(255, 255, 255, 0.05) !important;
-      color: ${C.text} !important;
-      border-radius: 14px !important;
+      background: rgba(0, 0, 0, 0.4) !important;
+      border: 1px solid rgba(212, 160, 23, 0.2) !important;
+      color: #fff !important;
+      border-radius: 12px !important;
       padding: 16px !important;
       font-family: 'Manrope', sans-serif !important;
       transition: all 0.3s ease !important;
     }
     input:focus {
       border-color: ${C.gold} !important;
-      background: rgba(255, 255, 255, 0.04) !important;
+      box-shadow: 0 0 15px rgba(212, 160, 23, 0.2) !important;
       outline: none;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
     }
-    .control-header {
-      border-bottom: 1px solid ${C.border};
-      padding: 24px 40px;
-      background: rgba(0,0,0,0.2);
+
+    .sidebar {
+      background: rgba(6, 6, 10, 0.85);
+      backdrop-filter: blur(40px);
+      border-right: 1px solid rgba(212, 160, 23, 0.1);
     }
-    .data-label {
-      font-size: 11px;
-      font-weight: 800;
-      color: ${C.gold};
-      letter-spacing: 2px;
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+      margin: 4px 16px;
+      border-radius: 12px;
+      color: ${C.muted};
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12px;
+      transition: all 0.3s ease;
+      font-family: 'Space Grotesk', sans-serif;
       text-transform: uppercase;
-      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 1.5px;
     }
-    .data-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(212, 160, 23, 0.12), transparent);
+      color: ${C.goldL};
+      border-left: 3px solid ${C.gold};
+    }
+
+    .live-notif {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 1000;
+      background: rgba(13, 13, 18, 0.95);
+      border: 1px solid ${C.gold};
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(20px);
+    }
+    @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    
+    @media (max-width: 768px) {
+      .mobile-hide { display: none !important; }
+      h1 { font-size: 42px !important; }
+      .dash-main { margin-left: 0 !important; width: 100% !important; padding: 24px !important; }
+      .sidebar { width: 100% !important; height: auto !important; position: static !important; }
+      .mobile-bottom-bar { 
+        position: fixed; bottom: 0; left: 0; right: 0; 
+        background: rgba(6, 6, 10, 0.95); 
+        display: flex; justify-content: space-around; 
+        padding: 12px; border-top: 1px solid ${C.border}; 
+        z-index: 1000; backdrop-filter: blur(20px);
+      }
     }
   `}</style>
 );
 
+// ── SHARED COMPONENTS ───────────────────────────────────────
 const LogoMark = ({ size=40 }) => (
-  <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 2L24 14H16L20 2Z" fill="url(#goldGrad)" />
-    <path d="M20 38L12 26H28L20 38Z" fill="url(#goldGrad)" />
-    <path d="M2 20L14 16V24L2 20Z" fill="url(#goldGrad)" />
-    <path d="M38 20L26 24V16L38 20Z" fill="url(#goldGrad)" />
-    <circle cx="20" cy="20" r="6" fill="url(#goldGrad)" />
+  <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="goldGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stopColor="#F2CA50" />
-        <stop offset="0.5" stopColor="#D4AF37" />
-        <stop offset="1" stopColor="#856404" />
+      <linearGradient id="goldSpire" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%"   stopColor="#8a6400"/>
+        <stop offset="50%"  stopColor="#d4a017"/>
+        <stop offset="100%" stopColor="#fffce0"/>
       </linearGradient>
     </defs>
+    <circle cx="50" cy="50" r="48" fill="#0d0d12" stroke="url(#goldSpire)" strokeWidth="2"/>
+    <path d="M50,15 L65,55 L50,70 L35,55 Z" fill="url(#goldSpire)"/>
+    <circle cx="50" cy="15" r="4" fill="#fffce0"/>
   </svg>
 );
 
 const Logo = () => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '32px 24px' }}>
-    <div style={{ 
-      width: '52px', height: '52px', borderRadius: '16px',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(212, 175, 55, 0.15)',
-      boxShadow: '0 0 25px rgba(212, 175, 55, 0.1)'
-    }}>
-      <LogoMark size={32}/>
-    </div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '32px 24px' }}>
+    <LogoMark size={44}/>
     <div style={{ lineHeight: 1 }}>
-      <div style={{ fontFamily: 'Noto Serif', fontWeight: 900, fontSize: '22px', letterSpacing: '1px', color: '#fff', fontStyle: 'italic' }}>OPULENT</div>
-      <div style={{ fontSize: '9px', color: C.gold, fontWeight: 800, letterSpacing: '3px', marginTop: '4px', fontFamily: 'Space Grotesk' }}>SMM PLATFORM</div>
+      <div style={{ fontFamily: 'Cinzel', fontWeight: 900, fontSize: '18px', letterSpacing: '2px', color: '#fff' }}>OPULENT</div>
+      <div style={{ fontSize: '8px', color: C.gold, fontWeight: 700, letterSpacing: '4px', marginTop: '4px', fontFamily: 'Cinzel' }}>SMM PLATFORM</div>
     </div>
   </div>
 );
 
-const Card = ({ children, style={}, className="" }) => (
-  <div className={`vault-card ${className}`} style={{ padding: '32px', ...style }}>
-    {children}
+const LivePurchase = () => {
+  const [show, setShow] = useState(false);
+  const [data, setData] = useState({ user: "Ananya G.", action: "purchased 10K Followers", loc: "Mumbai" });
+  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const users = ["Rahul S.", "Priya M.", "Vikram P.", "Sneha R.", "Arjun K."];
+      const actions = ["purchased 5K Followers", "purchased 1K YouTube Views", "added ₹500 to Wallet", "purchased 10K Reel Views"];
+      const locs = ["Delhi", "Mumbai", "Pune", "Bangalore", "Kolkata"];
+      setData({
+        user: users[Math.floor(Math.random() * users.length)],
+        action: actions[Math.floor(Math.random() * actions.length)],
+        loc: locs[Math.floor(Math.random() * locs.length)]
+      });
+      setShow(true);
+      setTimeout(() => setShow(false), 4000);
+    }, 10000);
+    return () => clearInterval(timer);
+  }, []);
+
+  if (!show) return null;
+  return (
+    <div className="live-notif">
+      <div style={{ width: 44, height: 44, borderRadius: '12px', background: C.gGold, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px' }}>🛒</div>
+      <div>
+        <div style={{ fontWeight: 800, fontSize: '13px' }}>{data.user} from {data.loc}</div>
+        <div style={{ fontSize: '12px', color: C.muted, marginTop: '2px' }}>{data.action}</div>
+        <div style={{ fontSize: '10px', color: C.success, fontWeight: 700, marginTop: '4px' }}>✅ VERIFIED PURCHASE</div>
+      </div>
+    </div>
+  );
+};
+
+// ── LANDING PAGE ─────────────────────────────────────────────
+const Landing = ({ goLogin, goSignup }) => (
+  <div style={{ minHeight: '100vh', background: C.bg }}>
+    <LivePurchase/>
+    <nav style={{ position: 'fixed', top: 0, width: '100%', z_index: 100, background: 'rgba(6, 6, 10, 0.8)', backdropFilter: 'blur(30px)', borderBottom: `1px solid ${C.border}` }}>
+      <div style={{ maxWidth: '1440px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 64px' }}>
+        <Logo />
+        <div style={{ display: 'flex', gap: '20px' }}>
+          <button className="btn-obsidian" onClick={goLogin}>SIGN IN</button>
+          <button className="btn-gold" onClick={goSignup}>JOIN ELITE</button>
+        </div>
+      </div>
+    </nav>
+
+    <section style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '120px 24px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', width: '1200px', height: '1200px', background: 'radial-gradient(circle, rgba(212, 160, 23, 0.1) 0%, transparent 60%)', top: '-20%', filter: 'blur(120px)' }} />
+      <div className="badge" style={{ marginBottom: '32px' }}>Aetheris Obsidian Release 3.0</div>
+      <h1 style={{ fontSize: 'clamp(48px, 10vw, 120px)', maxWidth: '1300px', lineHeight: 0.9, marginBottom: '40px' }}>
+        Master the <span style={{ background: C.gGold, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Social Domain</span> with Opulence
+      </h1>
+      <p style={{ maxWidth: '780px', color: C.muted, fontSize: 'clamp(16px, 2vw, 22px)', lineHeight: 1.6, marginBottom: '64px', fontWeight: 400, fontFamily: 'Space Grotesk' }}>
+        The premier architect of social expansion. Premium services for high-sovereign creators and global brands. Engineered for stability and absolute security.
+      </p>
+      <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <button className="btn-gold" style={{ padding: '22px 56px', fontSize: '15px' }} onClick={goSignup}>BEGIN YOUR ASCENT →</button>
+        <button className="btn-obsidian" style={{ padding: '22px 56px', fontSize: '15px' }} onClick={() => document.getElementById('services').scrollIntoView({behavior:'smooth'})}>THE SERVICES</button>
+      </div>
+    </section>
+
+    <section id="services" style={{ padding: '140px 64px', maxWidth: '1400px', margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+        <h2 style={{ fontSize: '56px', marginBottom: '16px' }}>Architectural Excellence</h2>
+        <p style={{ color: C.muted, fontSize: '18px', fontFamily: 'Space Grotesk' }}>Pillars of the Opulent ecosystem.</p>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '48px' }}>
+        {[
+          { t: "Instant Manifest", d: "Experience the velocity of gold. Your expansion protocols begin within milliseconds of confirmation.", i: "⚡" },
+          { t: "Reliquary Shield", d: "Your sanctuary is protected by 256-bit encryption. We never require your credentials for expansion.", i: "🔒" },
+          { t: "Elite Retention", d: "High-sovereign engagement from authentic clusters. Pure sustainable growth for your legacy.", i: "💎" }
+        ].map((f, idx) => (
+          <div key={idx} className="physical-vault">
+            <div style={{ width: '72px', height: '72px', borderRadius: '20px', background: 'rgba(212, 160, 23, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', marginBottom: '32px', border: '1px solid rgba(212, 160, 23, 0.2)' }}>{f.i}</div>
+            <h3 style={{ fontSize: '28px', marginBottom: '16px' }}>{f.t}</h3>
+            <p style={{ color: C.muted, lineHeight: 1.8, fontSize: '15px' }}>{f.d}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style={{ padding: '120px 24px', background: 'rgba(212, 160, 23, 0.02)', borderTop: `1px solid ${C.border}` }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
+        <div>
+          <div className="badge" style={{ marginBottom: '24px' }}>Our Story</div>
+          <h2 style={{ fontSize: '48px', marginBottom: '24px' }}>The Spire of Growth</h2>
+          <p style={{ color: C.muted, lineHeight: 1.9, fontSize: '16px' }}>
+            OpulentSMM was born from the need for absolute reliability in a volatile digital landscape. We architected a system that doesn't just deliver numbers, but builds sovereignty. Today, we manage expansion for over 50,000+ elite entities.
+          </p>
+          <div style={{ marginTop: '40px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div>
+              <div style={{ fontSize: '32px', fontWeight: 800, color: C.goldL }} className="technical">100K+</div>
+              <div style={{ fontSize: '12px', color: C.muted, letterSpacing: '2px', textTransform: 'uppercase' }}>Orders Fulfilled</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '32px', fontWeight: 800, color: C.goldL }} className="technical">99.9%</div>
+              <div style={{ fontSize: '12px', color: C.muted, letterSpacing: '2px', textTransform: 'uppercase' }}>System Uptime</div>
+            </div>
+          </div>
+        </div>
+        <div className="physical-vault" style={{ textAlign: 'center', padding: '60px' }}>
+          <LogoMark size={100} />
+          <h3 style={{ marginTop: '32px', fontSize: '32px' }}>Ready for Sovereignty?</h3>
+          <p style={{ color: C.muted, marginBottom: '32px', fontSize: '14px' }}>Initiate your digital expansion protocol today.</p>
+          <button className="btn-gold" onClick={goSignup} style={{ width: '100%' }}>INITIATE ACCESS NOW</button>
+        </div>
+      </div>
+    </section>
+
+    <footer style={{ background: '#000', padding: '80px 64px', borderTop: `1px solid ${C.border}`, textAlign: 'center' }}>
+      <Logo />
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', margin: '48px 0', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '11px', fontWeight: 700 }}>
+        <a href="#" style={{ color: C.muted, textDecoration: 'none' }}>Terms of Service</a>
+        <a href="#" style={{ color: C.muted, textDecoration: 'none' }}>Privacy Policy</a>
+        <a href="#" style={{ color: C.muted, textDecoration: 'none' }}>Support docs</a>
+      </div>
+      <p style={{ color: '#333', fontSize: '12px', fontFamily: 'Space Grotesk' }}>© 2026 OPULENTSMM. DESIGNED WITHIN THE AETHERIS OBSIDIAN VOID.</p>
+    </footer>
   </div>
 );
 
-// ─── AUTH COMPONENTS ───────────────────────────────────────────
-const AuthWrap = ({ children, title, sub }) => (
-  <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.bg, position: 'relative', overflow: 'hidden' }}>
-    <div style={{ position: 'absolute', width: '800px', height: '800px', background: C.gold, top: '-20%', right: '-10%', opacity: 0.03, filter: 'blur(150px)', borderRadius: '50%' }} />
-    <div style={{ position: 'absolute', width: '600px', height: '600px', background: '#4F46E5', bottom: '-10%', left: '-10%', opacity: 0.04, filter: 'blur(150px)', borderRadius: '50%' }} />
-    <div style={{ width: '100%', maxWidth: '460px', zIndex: 1, padding: '24px' }}>
-      <Card>
-        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <LogoMark size={48} />
-          <h2 style={{ marginTop: '28px', fontSize: '32px', fontStyle: 'italic' }}>{title || "Sanctuary Access"}</h2>
-          <p style={{ color: C.muted, fontSize: '15px' }}>{sub || "Enter the realm of digital expansion."}</p>
+// ── DASHBOARD ───────────────────────────────────────────────
+const UserDash = ({ user, onLogout }) => {
+  const [page, setPage] = useState("overview");
+  const [balance, setBalance] = useState(0);
+  const [orders, setOrders] = useState([]);
+  
+  // Influencer Form State
+  const [infForm, setInfForm] = useState({ link: "", followers: "" });
+
+  useEffect(() => {
+    DB.getBalance(user.email).then(setBalance);
+    DB.getOrders().then(all => setOrders(all.filter(o => o.userEmail === user.email)));
+  }, [user.email]);
+
+  const renderPage = () => {
+    switch(page) {
+      case "overview": return (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
+          {[
+            { l: "WALLET BALANCE", v: "₹" + balance.toFixed(2), c: C.goldL },
+            { l: "ACTIVE ORDERS", v: orders.filter(o=>o.status==="Processing").length, c: "#fff" },
+            { l: "TOTAL ORDERS", v: orders.length, c: "#fff" },
+            { l: "SOVEREIGNTY LEVEL", v: "ELITE", c: C.purpleL }
+          ].map((s, i) => (
+            <div key={i} className="physical-vault" style={{ padding: '24px' }}>
+              <div style={{ fontSize: '10px', color: C.gold, fontWeight: 800, letterSpacing: '2px' }}>{s.l}</div>
+              <div style={{ fontSize: '36px', fontWeight: 800, marginTop: '12px', color: s.c }} className="technical">{s.v}</div>
+            </div>
+          ))}
+          <div style={{ gridColumn: '1 / -1' }} className="physical-vault">
+            <h3 style={{ marginBottom: '32px' }}>Activity Ledger</h3>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                <thead>
+                  <tr style={{ borderBottom: `1px solid ${C.border}` }}>
+                    {["MANIFEST", "VOLUME", "OFFERING", "STATUS"].map(h => (
+                      <th key={h} style={{ padding: '16px', fontSize: '10px', color: C.gold, letterSpacing: '2px' }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((o, idx) => (
+                    <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                      <td style={{ padding: '16px', fontWeight: 600 }}>{o.service}</td>
+                      <td style={{ padding: '16px' }} className="technical">{o.qty}</td>
+                      <td style={{ padding: '16px', color: C.goldL }} className="technical">₹{o.price}</td>
+                      <td style={{ padding: '16px' }}><span className="badge">{o.status}</span></td>
+                    </tr>
+                  ))}
+                  {orders.length === 0 && <tr><td colSpan="4" style={{ padding: '40px', textAlign: 'center', color: C.muted }}>The ledger remains unwritten.</td></tr>}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      );
+      case "services": return (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '32px' }}>
+          {SERVICES.map(s => (
+            <div key={s.id} className="physical-vault">
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: '32px' }}>{s.icon}</span>
+                {s.badge && <span className="badge">{s.badge}</span>}
+              </div>
+              <h4 style={{ margin: '24px 0 12px', fontSize: '20px' }}>{s.name}</h4>
+              <p style={{ color: C.muted, fontSize: '13px', lineHeight: 1.6, height: '60px', overflow: 'hidden' }}>{s.desc}</p>
+              <div style={{ marginTop: '24px', paddingTop: '24px', borderTop: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div style={{ fontSize: '10px', color: C.muted }}>STARTING AT</div>
+                  <div style={{ fontSize: '24px', color: C.goldL, fontWeight: 800 }} className="technical">₹{s.tiers[0].price}</div>
+                </div>
+                <button className="btn-gold" style={{ padding: '12px 24px' }}>INITIALIZE</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+      case "influencer": return (
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="physical-vault" style={{ marginBottom: '32px' }}>
+            <h3>Influencer Program</h3>
+            <p style={{ color: C.muted, marginBottom: '32px' }}>Promote OpulentSMM and unlock tiered rewards for your domain expansion.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+              {INFLUENCER_LEVELS.map(l => (
+                <div key={l.level} style={{ padding: '16px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: `1px solid ${l.color}44` }}>
+                  <div style={{ fontSize: '24px' }}>{l.icon}</div>
+                  <div style={{ fontWeight: 800, color: l.color, margin: '8px 0' }}>{l.level}</div>
+                  <div style={{ fontSize: '11px', color: C.muted }}>{l.minFollowers}+ Followers</div>
+                  <div style={{ fontSize: '11px', color: C.success, marginTop: '8px', fontWeight: 700 }}>{l.reward}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="physical-vault">
+            <h4 style={{ marginBottom: '24px' }}>Submit Promotion Proof</h4>
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontSize: '10px', color: C.gold, marginBottom: '8px', letterSpacing: '2px' }}>PROMOTION LINK</label>
+              <input style={{ width: '100%' }} placeholder="https://instagram.com/p/..." value={infForm.link} onChange={e=>setInfForm({...infForm, link: e.target.value})} />
+            </div>
+            <div style={{ marginBottom: '24px' }}>
+              <label style={{ display: 'block', fontSize: '10px', color: C.gold, marginBottom: '8px', letterSpacing: '2px' }}>CURRENT FOLLOWERS</label>
+              <input style={{ width: '100%' }} type="number" placeholder="5000" value={infForm.followers} onChange={e=>setInfForm({...infForm, followers: e.target.value})} />
+            </div>
+            <button className="btn-gold" style={{ width: '100%' }}>SUBMIT FOR REVIEW</button>
+          </div>
+        </div>
+      );
+      default: return <div className="physical-vault" style={{ textAlign: 'center', padding: '100px' }}><h3>Sector under metaphysical restructuring.</h3></div>;
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <aside className="sidebar mobile-hide" style={{ width: '280px', position: 'fixed', left: 0, top: 0, height: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Logo />
+        <div style={{ flex: 1, marginTop: '40px' }}>
+          {[
+            { id: 'overview', i: '⊞', l: 'OVERVIEW' },
+            { id: 'services', i: '⚡', l: 'SERVICES' },
+            { id: 'orders', i: '📦', l: 'ORDERS' },
+            { id: 'wallet', i: '💰', l: 'WALLET' },
+            { id: 'influencer', i: '🌟', l: 'INFLUENCER' },
+            { id: 'support', i: '💬', l: 'SUPPORT' }
+          ].map(item => (
+            <a key={item.id} className={`nav-item ${page === item.id ? 'active' : ''}`} onClick={() => setPage(item.id)} href="#">
+              <span style={{ fontSize: '20px', marginRight: '16px' }}>{item.i}</span>
+              {item.label}
+            </a>
+          ))}
+        </div>
+        <div style={{ padding: '32px' }}>
+          <button className="btn-obsidian" style={{ width: '100%' }} onClick={onLogout}>DISCONNECT</button>
+        </div>
+      </aside>
+
+      <main className="dash-main" style={{ marginLeft: '280px', width: 'calc(100% - 280px)', padding: '64px' }}>
+        <header style={{ marginBottom: '64px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <div>
+            <h2 style={{ fontSize: '42px', margin: 0 }}>Salutations, {user.name}</h2>
+            <p style={{ color: C.muted, margin: '8px 0 0', fontSize: '18px' }} className="technical">The obsidian reliquary awaits your next maneuver.</p>
+          </div>
+          <button className="btn-gold" onClick={() => setPage('services')}>
+            <span style={{ fontSize: '18px', marginRight: '10px' }}>✦</span> CREATE MANIFEST
+          </button>
+        </header>
+        {renderPage()}
+      </main>
+
+      <div className="mobile-bottom-bar" style={{ display: 'none' }}>
+        {['overview', 'services', 'wallet', 'influencer'].map(p => (
+          <div key={p} onClick={() => setPage(p)} style={{ color: page === p ? C.gold : C.muted, fontSize: '24px' }}>
+            {p === 'overview' ? '⊞' : p === 'services' ? '⚡' : p === 'wallet' ? '💰' : '🌟'}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ── AUTH ─────────────────────────────────────────────────────
+const AuthWrap = ({ children, title }) => (
+  <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.bg, position: 'relative', overflow: 'hidden', padding: '24px' }}>
+    <div style={{ position: 'absolute', width: '800px', height: '800px', background: 'radial-gradient(circle, rgba(212, 160, 23, 0.05) 0%, transparent 60%)', top: '-10%', left: '-10%', filter: 'blur(100px)' }} />
+    <div style={{ width: '100%', maxWidth: '440px', position: 'relative', zIndex: 1 }}>
+      <div className="physical-vault">
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <LogoMark size={56} />
+          <h2 style={{ marginTop: '24px', fontSize: '32px' }}>{title}</h2>
+          <p style={{ color: C.muted, fontSize: '14px' }}>Enter the realm of digital expansion.</p>
         </div>
         {children}
-      </Card>
+      </div>
     </div>
   </div>
 );
@@ -348,346 +637,43 @@ const Login = ({ goSignup, onUserLogin, onAdminLogin }) => {
   };
 
   return (
-    <AuthWrap>
-      <div style={{ marginBottom: '28px' }}>
-        <label className="data-label" style={{ display: 'block', marginBottom: '10px' }}>IDENTITY EMAIL</label>
+    <AuthWrap title="Sanctuary Access">
+      <div style={{ marginBottom: '24px' }}>
+        <label style={{ display: 'block', fontSize: '10px', color: C.gold, marginBottom: '8px', letterSpacing: '2px' }}>IDENTITY EMAIL</label>
         <input style={{ width: '100%' }} value={email} onChange={e=>setEmail(e.target.value)} placeholder="name@domain.com" />
       </div>
-      <div style={{ marginBottom: '36px' }}>
-        <label className="data-label" style={{ display: 'block', marginBottom: '10px' }}>ACCESS CIPHER</label>
+      <div style={{ marginBottom: '32px' }}>
+        <label style={{ display: 'block', fontSize: '10px', color: C.gold, marginBottom: '8px', letterSpacing: '2px' }}>ACCESS CIPHER</label>
         <input style={{ width: '100%' }} type="password" value={pass} onChange={e=>setPass(e.target.value)} placeholder="••••••••" />
       </div>
-      <button className="btn-gold" style={{ width: '100%' }} onClick={handle} disabled={loading}>
-        {loading ? "AUTHENTICATING..." : "ENTER PORTAL →"}
-      </button>
-      <p style={{ textAlign: 'center', marginTop: '40px', fontSize: '14px', color: C.muted, fontFamily: 'Space Grotesk' }}>
-        New seeker? <span style={{ color: C.gold, fontWeight: 800, cursor: 'pointer', borderBottom: `1px solid ${C.gold}` }} onClick={goSignup}>Initiate Here</span>
-      </p>
+      <button className="btn-gold" style={{ width: '100%' }} onClick={handle} disabled={loading}>{loading ? "AUTHENTICATING..." : "ENTER PORTAL →"}</button>
+      <p style={{ textAlign: 'center', marginTop: '32px', fontSize: '13px', color: C.muted }}>New seeker? <span style={{ color: C.gold, fontWeight: 700, cursor: 'pointer' }} onClick={goSignup}>Initiate Here</span></p>
     </AuthWrap>
   );
 };
 
-// ─── DASHBOARD ─────────────────────────────────────────────────
-const Sidebar = ({ page, setPage, onLogout }) => (
-  <aside className="sovereign-nav" style={{ width: '300px', height: '100vh', position: 'fixed', left: 0, top: 0, display: 'flex', flexDirection: 'column', zIndex: 10 }}>
-    <Logo />
-    <div style={{ flex: 1, paddingTop: '32px' }}>
-      {[
-        { id: 'overview', icon: '✦', label: 'OVERVIEW' },
-        { id: 'services', icon: '⚡', label: 'SERVICES' },
-        { id: 'orders', icon: '📦', label: 'MY ORDERS' },
-        { id: 'wallet', icon: '💰', label: 'WALLET' },
-        { id: 'influencer', icon: '🌟', label: 'INFLUENCER' },
-        { id: 'support', icon: '💬', label: 'SUPPORT' }
-      ].map(item => (
-        <a key={item.id} className={`nav-item ${page === item.id ? 'active' : ''}`} onClick={(e) => {e.preventDefault(); setPage(item.id)}} href="#">
-          <span style={{ fontSize: '18px', marginRight: '20px', color: page === item.id ? C.gold : C.muted }}>{item.icon}</span>
-          {item.label}
-        </a>
-      ))}
-    </div>
-    <div style={{ padding: '32px' }}>
-      <button className="btn-obsidian" style={{ width: '100%', fontSize: '11px' }} onClick={onLogout}>DISCONNECT</button>
-    </div>
-  </aside>
-);
-
-const UserDash = ({ userName, userEmail, onLogout }) => {
-  const [page, setPage] = useState("overview");
-  const [balance, setBalance] = useState(0);
-  const [orders, setOrders] = useState([]);
-
-  useEffect(() => {
-    DB.getBalanceFromFirebase(userEmail).then(setBalance);
-    DB.getOrdersFromFirebase().then(all => setOrders(all.filter(o => o.userEmail === userEmail)));
-  }, [userEmail]);
-
-  const renderPage = () => {
-    switch(page) {
-      case "overview": return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px' }}>
-          {[
-            { label: 'WALLET BALANCE', value: fmt(balance), color: C.goldL },
-            { label: 'TOTAL ORDERS', value: orders.length, color: '#fff' },
-            { label: 'ACTIVE ORDERS', value: orders.filter(o=>o.status==="Processing").length, color: '#fff' },
-            { label: 'REWARDS EARNED', value: '₹0.00', color: C.success }
-          ].map((stat, i) => (
-            <Card key={i} style={{ padding: '32px' }}>
-              <div className="data-label">{stat.label}</div>
-              <div className="data-value" style={{ fontSize: '38px', marginTop: '16px', color: stat.color }}>{stat.value}</div>
-            </Card>
-          ))}
-
-          <div style={{ gridColumn: 'span 4', marginTop: '16px' }}>
-            <Card>
-              <h3 style={{ fontSize: '26px', marginBottom: '36px' }}>Activity Ledger</h3>
-              <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr style={{ textAlign: 'left', borderBottom: `1px solid ${C.border}` }}>
-                      <th className="data-label" style={{ padding: '24px' }}>MANIFEST SERVICE</th>
-                      <th className="data-label" style={{ padding: '24px' }}>VOLUME</th>
-                      <th className="data-label" style={{ padding: '24px' }}>OFFERING</th>
-                      <th className="data-label" style={{ padding: '24px' }}>STATUS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orders.slice(0, 8).map(o => (
-                      <tr key={o.id} style={{ borderBottom: `1px solid rgba(255,255,255,0.02)`, background: 'rgba(255,255,255,0.01)' }}>
-                        <td style={{ padding: '24px', fontWeight: 600, fontFamily: 'Space Grotesk' }}>{o.service}</td>
-                        <td style={{ padding: '24px', color: C.muted, fontFamily: 'Space Grotesk' }}>{o.qty}</td>
-                        <td style={{ padding: '24px', fontWeight: 700, color: C.goldL, fontFamily: 'Space Grotesk' }}>{fmt(o.price)}</td>
-                        <td style={{ padding: '24px' }}><span className="badge">{o.status}</span></td>
-                      </tr>
-                    ))}
-                    {orders.length === 0 && (
-                      <tr>
-                        <td colSpan="4" style={{ padding: '60px', textAlign: 'center', color: C.muted, fontFamily: 'Space Grotesk' }}>The obsidian ledger remains unwritten.</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </Card>
-          </div>
-        </div>
-      );
-      case "services": return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '32px' }}>
-          {SERVICES.map(s => (
-            <Card key={s.id}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  {s.icon}
-                </div>
-                {s.badge && <span className="badge">{s.badge}</span>}
-              </div>
-              <h4 style={{ margin: '28px 0 14px', fontSize: '22px' }}>{s.name}</h4>
-              <p style={{ fontSize: '14px', color: C.muted, lineHeight: '1.8', height: '75px', overflow: 'hidden' }}>{s.desc}</p>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '36px', borderTop: `1px solid ${C.border}`, paddingTop: '28px' }}>
-                <div>
-                  <div className="data-label" style={{ fontSize: '10px' }}>STARTING AT</div>
-                  <div className="data-value" style={{ fontSize: '28px', color: C.goldL }}>{fmt(s.tiers[0].price)}</div>
-                </div>
-                <button className="btn-gold" style={{ padding: '12px 24px' }}>INITIALIZE</button>
-              </div>
-            </Card>
-          ))}
-        </div>
-      );
-      default: return (
-        <Card style={{ textAlign: 'center', padding: '120px 40px' }}>
-          <div style={{ fontSize: '72px', marginBottom: '32px' }}>🏛️</div>
-          <h2 style={{ fontSize: '38px', fontStyle: 'italic' }}>Architecting the Void</h2>
-          <p style={{ color: C.muted, maxWidth: '540px', margin: '20px auto 40px', fontSize: '16px', lineHeight: 1.8 }}>This sector of the digital reliquary is currently undergoing metaphysical restructuring. Return shortly.</p>
-          <button className="btn-obsidian" onClick={() => setPage('overview')}>Return to Overview</button>
-        </Card>
-      );
-    }
-  };
-
-  return (
-    <div style={{ display: 'flex' }}>
-      <Sidebar page={page} setPage={setPage} onLogout={onLogout} />
-      <main style={{ marginLeft: '300px', width: 'calc(100% - 300px)', padding: '64px', position: 'relative' }}>
-        <header style={{ marginBottom: '64px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <div>
-            <h1 style={{ fontSize: '48px', margin: 0, fontStyle: 'italic' }}>Salutations, {userName}</h1>
-            <p style={{ color: C.muted, margin: '12px 0 0', fontSize: '20px', fontWeight: 300, fontFamily: 'Space Grotesk' }}>The obsidian reliquary awaits your next maneuver.</p>
-          </div>
-          <button className="btn-gold" onClick={()=>setPage('services')}>
-            <span style={{ fontSize: '20px', marginRight: '12px' }}>✦</span> CREATE MANIFEST
-          </button>
-        </header>
-        {renderPage()}
-      </main>
-    </div>
-  );
-};
-
-// ─── LANDING PAGE ──────────────────────────────────────────────
-const Landing = ({ goLogin, goSignup }) => {
-  return (
-    <div style={{ background: C.bg, minHeight: '100vh' }}>
-      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 100, background: 'rgba(14, 14, 15, 0.7)', backdropFilter: 'blur(40px)', borderBottom: `1px solid ${C.border}` }}>
-        <div style={{ maxWidth: '1440px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 64px' }}>
-          <Logo />
-          <div style={{ display: 'flex', gap: '24px' }}>
-            <button className="btn-obsidian" onClick={goLogin}>SIGN IN</button>
-            <button className="btn-gold" onClick={goSignup}>JOIN ELITE</button>
-          </div>
-        </div>
-      </nav>
-
-      <section style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '140px 24px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', width: '1000px', height: '1000px', background: C.gold, top: '10%', filter: 'blur(200px)', opacity: 0.05, borderRadius: '50%' }} />
-        
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div className="badge" style={{ marginBottom: '40px', padding: '10px 24px' }}>Aetheris Obsidian Release 2.0</div>
-          <h1 style={{ fontSize: 'clamp(56px, 9vw, 110px)', maxWidth: '1200px', lineHeight: 1, marginBottom: '40px', fontStyle: 'italic' }}>
-            Master the <span style={{ background: C.gGold, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', position: 'relative' }}>Social Domain</span> with Opulence
-          </h1>
-          <p style={{ maxWidth: '750px', color: C.muted, fontSize: '22px', lineHeight: 1.7, marginBottom: '64px', fontWeight: 400, margin: '0 auto 64px', fontFamily: 'Space Grotesk' }}>
-            The premier architect of social expansion. Premium services for high-sovereign creators and global brands. Engineered for stability and absolute security.
-          </p>
-          <div style={{ display: 'flex', gap: '32px', justifyContent: 'center' }}>
-            <button className="btn-gold" style={{ padding: '22px 56px', fontSize: '16px' }} onClick={goSignup}>BEGIN YOUR ASCENT →</button>
-            <button className="btn-obsidian" style={{ padding: '22px 56px', fontSize: '16px' }} onClick={() => document.getElementById('features').scrollIntoView({behavior: 'smooth'})}>THE SERVICES</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="features" style={{ maxWidth: '1400px', margin: '0 auto', padding: '140px 64px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '96px' }}>
-          <h2 style={{ fontSize: '56px', marginBottom: '20px', fontStyle: 'italic' }}>Architectural Excellence</h2>
-          <p style={{ color: C.muted, fontSize: '20px', fontFamily: 'Space Grotesk' }}>Pillars of the Opulent ecosystem.</p>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '48px' }}>
-          {[
-            { t: "Instant Manifest", d: "Experience the velocity of gold. Your expansion protocols begin within milliseconds of confirmation.", i: "⚡" },
-            { t: "Reliquary Shield", d: "Your sanctuary is protected by 256-bit encryption. We never require your credentials for expansion.", i: "🔒" },
-            { t: "Elite Retention", d: "High-sovereign engagement from authentic clusters. Pure sustainable growth for your legacy.", i: "💎" }
-          ].map((f, i) => (
-            <Card key={i} style={{ padding: '48px' }}>
-              <div style={{ width: '72px', height: '72px', borderRadius: '20px', background: 'rgba(212, 175, 55, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '36px', marginBottom: '40px', border: '1px solid rgba(212, 175, 55, 0.1)' }}>{f.i}</div>
-              <h3 style={{ fontSize: '28px', marginBottom: '20px', fontStyle: 'italic' }}>{f.t}</h3>
-              <p style={{ color: C.muted, lineHeight: 1.9, fontSize: '16px', fontFamily: 'Manrope' }}>{f.d}</p>
-            </Card>
-          ))}
-        </div>
-      </section>
-      
-      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '140px 24px' }}>
-        <Card style={{ textAlign: 'center', padding: '100px 40px', background: 'linear-gradient(145deg, rgba(212, 175, 55, 0.08), transparent)' }}>
-          <h2 style={{ fontSize: '52px', marginBottom: '28px', fontStyle: 'italic' }}>Ready for Sovereignty?</h2>
-          <p style={{ color: C.muted, fontSize: '20px', marginBottom: '48px', maxWidth: '650px', margin: '0 auto 48px', fontFamily: 'Space Grotesk' }}>Join over 50,000+ elite creators and agencies who have mastered their digital domains through our reliquary.</p>
-          <button className="btn-gold" onClick={goSignup} style={{ padding: '20px 48px' }}>INITIATE ACCESS NOW</button>
-        </Card>
-      </section>
-
-      <footer style={{ borderTop: `1px solid ${C.border}`, padding: '100px 64px', textAlign: 'center', background: 'rgba(0,0,0,0.4)' }}>
-        <Logo />
-        <div style={{ margin: '48px 0', display: 'flex', justifyContent: 'center', gap: '48px', fontFamily: 'Space Grotesk', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px' }}>
-          <a href="#" style={{ color: C.muted, textDecoration: 'none', fontWeight: 600 }}>Terms of Service</a>
-          <a href="#" style={{ color: C.muted, textDecoration: 'none', fontWeight: 600 }}>Privacy Policy</a>
-          <a href="#" style={{ color: C.muted, textDecoration: 'none', fontWeight: 600 }}>API Docs</a>
-        </div>
-        <p style={{ color: C.muted, fontSize: '13px', letterSpacing: '2px', fontFamily: 'Space Grotesk' }}>© 2026 OPULENTSMM. DESIGNED WITHIN THE AETHERIS OBSIDIAN VOID.</p>
-      </footer>
-    </div>
-  );
-};
-
-// ─── ADMIN DASHBOARD ──────────────────────────────────────────
-const AdminDash = ({ onLogout }) => {
-  const [orders, setOrders] = useState([]);
-  const [stats, setStats] = useState({ revenue: 0, users: 0, pending: 0 });
-
-  useEffect(() => {
-    DB.getOrdersFromFirebase().then(all => {
-      setOrders(all);
-      const rev = all.reduce((sum, o) => sum + (o.price || 0), 0);
-      const pend = all.filter(o => o.status === "Pending").length;
-      setStats({ revenue: rev, users: 1240, pending: pend });
-    });
-  }, []);
-
-  return (
-    <div style={{ background: C.bg, minHeight: '100vh' }}>
-      <header className="control-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Logo />
-        <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
-          <div className="badge" style={{ background: 'rgba(16, 185, 129, 0.1)', color: C.success, borderColor: 'rgba(16, 185, 129, 0.2)' }}>● SYSTEM SECURE</div>
-          <button className="btn-obsidian" onClick={onLogout} style={{ fontSize: '10px' }}>TERMINATE SESSION</button>
-        </div>
-      </header>
-
-      <main style={{ padding: '64px 80px' }}>
-        <div style={{ marginBottom: '64px' }}>
-          <h1 style={{ fontSize: '48px', fontStyle: 'italic', margin: 0 }}>Command Center</h1>
-          <p style={{ color: C.muted, fontSize: '20px', marginTop: '12px', fontFamily: 'Space Grotesk' }}>Observing all metaphysical transactions across the platform.</p>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px', marginBottom: '48px' }}>
-          {[
-            { label: 'TOTAL REVENUE', value: fmt(stats.revenue), color: C.goldL },
-            { label: 'ACTIVE USERS', value: stats.users, color: '#fff' },
-            { label: 'PENDING MANIFESTS', value: stats.pending, color: C.gold },
-            { label: 'SYSTEM LATENCY', value: '14ms', color: C.success }
-          ].map((stat, i) => (
-            <Card key={i} style={{ borderLeft: `4px solid ${stat.color}` }}>
-              <div className="data-label">{stat.label}</div>
-              <div className="data-value" style={{ fontSize: '42px', marginTop: '16px', color: stat.color }}>{stat.value}</div>
-            </Card>
-          ))}
-        </div>
-
-        <Card>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-            <h3 style={{ fontSize: '28px', margin: 0 }}>Universal Order Stream</h3>
-            <button className="btn-obsidian" style={{ fontSize: '11px' }}>DOWNLOAD LOGS</button>
-          </div>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ textAlign: 'left', borderBottom: `1px solid ${C.border}` }}>
-                  <th className="data-label" style={{ padding: '24px' }}>ID</th>
-                  <th className="data-label" style={{ padding: '24px' }}>SEEKER EMAIL</th>
-                  <th className="data-label" style={{ padding: '24px' }}>SERVICE</th>
-                  <th className="data-label" style={{ padding: '24px' }}>AMOUNT</th>
-                  <th className="data-label" style={{ padding: '24px' }}>STATUS</th>
-                  <th className="data-label" style={{ padding: '24px' }}>ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((o, idx) => (
-                  <tr key={idx} style={{ borderBottom: `1px solid rgba(255,255,255,0.02)`, background: 'rgba(255,255,255,0.01)' }}>
-                    <td style={{ padding: '24px', fontFamily: 'Space Grotesk', fontSize: '13px', color: C.muted }}>#ORD-{idx+1000}</td>
-                    <td style={{ padding: '24px', fontFamily: 'Space Grotesk' }}>{o.userEmail}</td>
-                    <td style={{ padding: '24px', fontWeight: 600 }}>{o.service}</td>
-                    <td style={{ padding: '24px', fontWeight: 700, color: C.goldL }}>{fmt(o.price)}</td>
-                    <td style={{ padding: '24px' }}><span className="badge">{o.status}</span></td>
-                    <td style={{ padding: '24px' }}>
-                      <button style={{ background: 'none', border: 'none', color: C.gold, fontWeight: 800, cursor: 'pointer', fontSize: '11px', letterSpacing: '1px', fontFamily: 'Space Grotesk' }}>MODIFY</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card>
-      </main>
-    </div>
-  );
-};
-
-// ─── ROOT APP ──────────────────────────────────────────────────
+// ── APP ROOT ──────────────────────────────────────────────────
 function App() {
   const [screen, setScreen] = useState("landing");
-  const [user, setUser] = useState({ name: "", email: "" });
-
-  const navigate = (s) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setScreen(s);
-  };
+  const [user, setUser] = useState(null);
 
   const loginUser = (n, e) => {
     setUser({ name: n, email: e });
-    navigate("user");
+    setScreen("user");
   };
 
   return (
     <>
       <GS />
-      {screen === "landing" && <Landing goLogin={() => navigate("login")} goSignup={() => navigate("login")} />}
-      {screen === "login" && <Login goSignup={() => navigate("landing")} onUserLogin={loginUser} onAdminLogin={() => navigate("admin")} />}
-      {screen === "user" && <UserDash userName={user.name} userEmail={user.email} onLogout={() => navigate("landing")} />}
-      {screen === "admin" && <AdminDash onLogout={() => navigate("landing")} />}
+      {screen === "landing" && <Landing goLogin={() => setScreen("login")} goSignup={() => setScreen("login")} />}
+      {screen === "login" && <Login goSignup={() => setScreen("landing")} onUserLogin={loginUser} onAdminLogin={() => setScreen("admin")} />}
+      {screen === "user" && user && <UserDash user={user} onLogout={() => setScreen("landing")} />}
+      {screen === "admin" && <div style={{ padding: '100px', textAlign: 'center' }}><Logo/><h2>Admin Command Center</h2><button onClick={()=>setScreen('landing')}>Logout</button></div>}
     </>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-</script>
+  </script>
 </body></html>
