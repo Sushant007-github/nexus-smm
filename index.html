@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>OpulentSMM - Best SMM Panel for Instagram, YouTube &amp; Social Media Growth</title>
+<title>OpulentSMM - Aetheris Obsidian SMM Experience</title>
 <style>
     body.order-page #order-warning { display: block; }
   </style>
@@ -17,7 +17,7 @@
 <link href="https://opulentsmm.in" rel="canonical"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <script crossorigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -26,15 +26,15 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
-<body style="background: #0E0E0E; color: #E5E5E5;">
-<div id="order-warning" style="display:none; background:#856404; color:#fff; padding:10px; text-align:center; font-size:13px; font-family: 'Manrope', sans-serif;">
+<body style="background: #0E0E0E; color: #E5E5E5; margin: 0;">
+<div id="order-warning" style="display:none; background: linear-gradient(90deg, #D4AF37, #856404); color:#000; padding:12px; text-align:center; font-size:14px; font-family: 'Manrope', sans-serif; font-weight: 700; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3); position: relative; z-index: 1000;">
     ⚠️ Your account must be PUBLIC before placing an order.
   </div>
 <div id="root"></div>
 <script data-presets="react" type="text/babel">
 const { useState, useEffect, useRef, useCallback } = React;
 
-// Logic preserves the requested config/business rules
+// Logic preserved exactly
 const ADMIN_EMAIL = "admin@opluentedge.com";
 const WHATSAPP_NUM   = "918309647229";
 const UPI_ID         = "sushantyetekar45-3@okicici";
@@ -42,29 +42,28 @@ const UPI_NAME       = "OpulentSMM";
 const SUPPORT_EMAIL  = "support@opulentsmm.in";
 const BUSINESS_NAME  = "OpulentSMM";
 
-// Colors - Obsidian & Liquid Gold
+// Colors - Aetheris 3D Obsidian Palette
 const C = {
   bg: "#0E0E0E",
-  obsidian: "#121212",
-  glass: "rgba(20, 20, 20, 0.7)",
+  obsidian: "#131314",
+  vault: "rgba(28, 27, 28, 0.4)",
   gold: "#D4AF37",
-  goldL: "#F9E2AF",
-  border: "rgba(212, 175, 55, 0.15)",
-  muted: "#71717A",
+  goldL: "#F2CA50",
+  indigo: "rgba(79, 70, 229, 0.15)",
+  border: "rgba(255, 255, 255, 0.05)",
   text: "#F4F4F5",
+  muted: "#8E8E93",
   success: "#10B981",
   error: "#EF4444",
-  gGold: "linear-gradient(135deg, #D4AF37, #F9E2AF)",
-  gObsidian: "linear-gradient(145deg, #1A1A1A, #0E0E0E)"
+  gGold: "linear-gradient(135deg, #F2CA50 0%, #D4AF37 50%, #856404 100%)",
+  gObsidian: "radial-gradient(circle at 50% 0%, #1A1A1E 0%, #0E0E0E 100%)"
 };
 
-// ... Preservation of existing DB/Logic helpers from source ...
 const captureReferral = () => { try { const p = new URLSearchParams(window.location.search); const r = p.get("ref"); if(r) localStorage.setItem("opulent_ref", r.trim().toLowerCase()); } catch(e) {} };
 captureReferral();
 const getReferral = () => { try { return localStorage.getItem("opulent_ref")||""; } catch{ return ""; } };
 const clearReferral = () => { try { localStorage.removeItem("opulent_ref"); } catch{} };
 
-// Services data (Preserved from source)
 const SERVICES = [
   { id:1, platform:"Instagram", icon:"📸", name:"Instagram Followers – Stable", desc:"100% Indian stable followers. Gradual natural delivery. No-drop guarantee for 30 days.", speed:"0–12 hrs", min:1000, max:100000, cat:"Followers", badge:"🔥 Best Seller", tiers:[{qty:1000,price:99},{qty:5000,price:449},{qty:10000,price:849}] },
   { id:2, platform:"Instagram", icon:"📸", name:"Instagram Followers – Premium", desc:"Premium quality Indian followers with high retention.", speed:"0–6 hrs", min:500, max:50000, cat:"Followers", badge:"💎 Premium", tiers:[{qty:500,price:79},{qty:1000,price:139},{qty:5000,price:649}] },
@@ -77,9 +76,7 @@ const SERVICES = [
 const PLATFORMS = ["All","Instagram","YouTube","Facebook","Twitter"];
 const fmt = (n) => "₹" + parseFloat(n).toFixed(2);
 const today = () => new Date().toISOString().slice(0,10);
-const uid = () => "ORD-" + String(Math.floor(Math.random()*9000)+1000);
 
-// Firebase preservation
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCAS5BsEBCEtAbGFCmv9w0K_M8OA3bTXxc",
   authDomain: "nexus-smm-15cc1.firebaseapp.com",
@@ -123,154 +120,209 @@ const DB = {
 const GS = () => (
   <style>{`
     body { 
-      font-family: 'Manrope', sans-serif; 
+      font-family: 'Manrope', 'Space Grotesk', sans-serif; 
       background: ${C.bg}; 
       color: ${C.text}; 
       margin: 0; 
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      background-image: 
+        radial-gradient(circle at 20% 20%, ${C.indigo} 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.03) 0%, transparent 40%);
+      background-attachment: fixed;
     }
-    h1, h2, h3, h4 { font-family: 'Noto Serif', serif; font-weight: 700; color: ${C.goldL}; }
-    .glass {
-      background: ${C.glass};
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+    h1, h2, h3, h4 { 
+      font-family: 'Noto Serif', serif; 
+      font-weight: 700; 
+      color: ${C.text}; 
+      letter-spacing: -0.01em;
+      font-style: italic;
+    }
+    .vault-card {
+      background: ${C.vault};
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
       border: 1px solid ${C.border};
-      border-radius: 12px;
+      border-radius: 24px;
+      box-shadow: 
+        0 20px 50px -12px rgba(0,0,0,0.8),
+        inset 0 1px 1px rgba(255,255,255,0.05);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
     }
-    .reliquary-card {
-      background: linear-gradient(145deg, rgba(30,30,30,0.4), rgba(15,15,15,0.6));
-      backdrop-filter: blur(24px);
-      border: 1px solid rgba(212, 175, 55, 0.12);
-      border-radius: 16px;
-      box-shadow: 0 10px 40px -10px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
-      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
-    .reliquary-card:hover {
+    .vault-card:hover {
       border-color: rgba(212, 175, 55, 0.3);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px -12px rgba(0,0,0,0.9), 0 0 20px rgba(212, 175, 55, 0.1);
+      transform: translateY(-5px) scale(1.005);
+      box-shadow: 
+        0 40px 80px -15px rgba(0,0,0,0.9),
+        0 0 20px rgba(212, 175, 55, 0.1);
     }
     .btn-gold {
       background: ${C.gGold};
-      color: #1A120B;
+      color: #000;
       font-weight: 800;
       border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
+      padding: 16px 32px;
+      border-radius: 14px;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: 13px;
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-      transition: all 0.3s ease;
+      letter-spacing: 2px;
+      font-size: 12px;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+      transition: all 0.4s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
     }
     .btn-gold:hover {
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+      filter: brightness(1.1);
       transform: scale(1.02);
     }
     .btn-obsidian {
-      background: #1A1A1A;
-      color: ${C.goldL};
+      background: rgba(255,255,255,0.02);
+      color: ${C.text};
       border: 1px solid ${C.border};
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 14px 28px;
+      border-radius: 14px;
       font-weight: 600;
       cursor: pointer;
+      backdrop-filter: blur(10px);
       transition: all 0.3s ease;
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     .btn-obsidian:hover {
-      background: #252525;
-      border-color: ${C.gold};
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(212, 175, 55, 0.4);
+      color: ${C.goldL};
     }
     .sovereign-nav {
-      background: linear-gradient(to right, #121212, #0E0E0E);
+      background: rgba(14, 14, 15, 0.85);
+      backdrop-filter: blur(50px);
       border-right: 1px solid ${C.border};
-      box-shadow: 10px 0 30px rgba(0,0,0,0.5);
     }
     .nav-item {
       display: flex;
       align-items: center;
-      padding: 14px 20px;
-      margin: 4px 12px;
-      border-radius: 10px;
+      padding: 16px 24px;
+      margin: 8px 16px;
+      border-radius: 16px;
       color: ${C.muted};
       text-decoration: none;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
       transition: all 0.3s ease;
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     .nav-item.active {
-      background: rgba(212, 175, 55, 0.08);
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent);
       color: ${C.goldL};
       border-left: 3px solid ${C.gold};
-    }
-    .nav-item:hover:not(.active) {
-      background: rgba(255,255,255,0.03);
-      color: ${C.text};
-    }
-    .skeleton {
-      background: linear-gradient(90deg, #1A1A1A 25%, #252525 50%, #1A1A1A 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-    input, select, textarea {
-      background: #1A1A1A !important;
-      border: 1px solid ${C.border} !important;
-      color: ${C.text} !important;
-      border-radius: 8px !important;
-      padding: 12px !important;
-      font-family: 'Manrope', sans-serif !important;
-    }
-    input:focus {
-      border-color: ${C.gold} !important;
-      outline: none;
     }
     .badge {
       font-size: 10px;
       font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 20px;
+      padding: 5px 14px;
+      border-radius: 100px;
       text-transform: uppercase;
-      background: rgba(212, 175, 55, 0.1);
+      background: rgba(212, 175, 55, 0.08);
       color: ${C.gold};
       border: 1px solid rgba(212, 175, 55, 0.2);
+      letter-spacing: 1.5px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    input, select, textarea {
+      background: rgba(255, 255, 255, 0.02) !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      color: ${C.text} !important;
+      border-radius: 14px !important;
+      padding: 16px !important;
+      font-family: 'Manrope', sans-serif !important;
+      transition: all 0.3s ease !important;
+    }
+    input:focus {
+      border-color: ${C.gold} !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+      outline: none;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+    }
+    .control-header {
+      border-bottom: 1px solid ${C.border};
+      padding: 24px 40px;
+      background: rgba(0,0,0,0.2);
+    }
+    .data-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: ${C.gold};
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .data-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
     }
   `}</style>
 );
 
+const LogoMark = ({ size=40 }) => (
+  <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2L24 14H16L20 2Z" fill="url(#goldGrad)" />
+    <path d="M20 38L12 26H28L20 38Z" fill="url(#goldGrad)" />
+    <path d="M2 20L14 16V24L2 20Z" fill="url(#goldGrad)" />
+    <path d="M38 20L26 24V16L38 20Z" fill="url(#goldGrad)" />
+    <circle cx="20" cy="20" r="6" fill="url(#goldGrad)" />
+    <defs>
+      <linearGradient id="goldGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stopColor="#F2CA50" />
+        <stop offset="0.5" stopColor="#D4AF37" />
+        <stop offset="1" stopColor="#856404" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
 const Logo = () => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '20px' }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '32px 24px' }}>
     <div style={{ 
-      width: '40px', height: '40px', background: C.gGold, borderRadius: '10px',
-      display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
-      boxShadow: '0 0 20px rgba(212, 175, 55, 0.4)'
-    }}>👑</div>
+      width: '52px', height: '52px', borderRadius: '16px',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(212, 175, 55, 0.15)',
+      boxShadow: '0 0 25px rgba(212, 175, 55, 0.1)'
+    }}>
+      <LogoMark size={32}/>
+    </div>
     <div style={{ lineHeight: 1 }}>
-      <div style={{ fontFamily: 'Noto Serif', fontWeight: 900, fontSize: '18px', letterSpacing: '1px', color: '#fff' }}>OPULENT</div>
-      <div style={{ fontSize: '10px', color: C.gold, fontWeight: 700, letterSpacing: '3px' }}>SMM PLATFORM</div>
+      <div style={{ fontFamily: 'Noto Serif', fontWeight: 900, fontSize: '22px', letterSpacing: '1px', color: '#fff', fontStyle: 'italic' }}>OPULENT</div>
+      <div style={{ fontSize: '9px', color: C.gold, fontWeight: 800, letterSpacing: '3px', marginTop: '4px', fontFamily: 'Space Grotesk' }}>SMM PLATFORM</div>
     </div>
   </div>
 );
 
-const Card = ({ children, style={} }) => (
-  <div className="reliquary-card" style={{ padding: '24px', ...style }}>
+const Card = ({ children, style={}, className="" }) => (
+  <div className={`vault-card ${className}`} style={{ padding: '32px', ...style }}>
     {children}
   </div>
 );
 
 // ─── AUTH COMPONENTS ───────────────────────────────────────────
-const AuthWrap = ({ children }) => (
-  <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.bg }}>
-    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05), transparent 70%)', pointerEvents: 'none' }} />
-    <div style={{ width: '100%', maxWidth: '420px', zIndex: 1, padding: '20px' }}>
+const AuthWrap = ({ children, title, sub }) => (
+  <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.bg, position: 'relative', overflow: 'hidden' }}>
+    <div style={{ position: 'absolute', width: '800px', height: '800px', background: C.gold, top: '-20%', right: '-10%', opacity: 0.03, filter: 'blur(150px)', borderRadius: '50%' }} />
+    <div style={{ position: 'absolute', width: '600px', height: '600px', background: '#4F46E5', bottom: '-10%', left: '-10%', opacity: 0.04, filter: 'blur(150px)', borderRadius: '50%' }} />
+    <div style={{ width: '100%', maxWidth: '460px', zIndex: 1, padding: '24px' }}>
       <Card>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <Logo />
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <LogoMark size={48} />
+          <h2 style={{ marginTop: '28px', fontSize: '32px', fontStyle: 'italic' }}>{title || "Sanctuary Access"}</h2>
+          <p style={{ color: C.muted, fontSize: '15px' }}>{sub || "Enter the realm of digital expansion."}</p>
         </div>
         {children}
       </Card>
@@ -297,20 +349,19 @@ const Login = ({ goSignup, onUserLogin, onAdminLogin }) => {
 
   return (
     <AuthWrap>
-      <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>Welcome Back</h2>
-      <div style={{ marginBottom: '20px' }}>
-        <label style={{ fontSize: '12px', fontWeight: 700, color: C.muted, display: 'block', marginBottom: '8px' }}>EMAIL ADDRESS</label>
-        <input style={{ width: '100%' }} value={email} onChange={e=>setEmail(e.target.value)} placeholder="name@example.com" />
+      <div style={{ marginBottom: '28px' }}>
+        <label className="data-label" style={{ display: 'block', marginBottom: '10px' }}>IDENTITY EMAIL</label>
+        <input style={{ width: '100%' }} value={email} onChange={e=>setEmail(e.target.value)} placeholder="name@domain.com" />
       </div>
-      <div style={{ marginBottom: '32px' }}>
-        <label style={{ fontSize: '12px', fontWeight: 700, color: C.muted, display: 'block', marginBottom: '8px' }}>PASSWORD</label>
+      <div style={{ marginBottom: '36px' }}>
+        <label className="data-label" style={{ display: 'block', marginBottom: '10px' }}>ACCESS CIPHER</label>
         <input style={{ width: '100%' }} type="password" value={pass} onChange={e=>setPass(e.target.value)} placeholder="••••••••" />
       </div>
       <button className="btn-gold" style={{ width: '100%' }} onClick={handle} disabled={loading}>
-        {loading ? "Authenticating..." : "Sign In →"}
+        {loading ? "AUTHENTICATING..." : "ENTER PORTAL →"}
       </button>
-      <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: C.muted }}>
-        New here? <span style={{ color: C.gold, fontWeight: 700, cursor: 'pointer' }} onClick={goSignup}>Create Account</span>
+      <p style={{ textAlign: 'center', marginTop: '40px', fontSize: '14px', color: C.muted, fontFamily: 'Space Grotesk' }}>
+        New seeker? <span style={{ color: C.gold, fontWeight: 800, cursor: 'pointer', borderBottom: `1px solid ${C.gold}` }} onClick={goSignup}>Initiate Here</span>
       </p>
     </AuthWrap>
   );
@@ -318,25 +369,25 @@ const Login = ({ goSignup, onUserLogin, onAdminLogin }) => {
 
 // ─── DASHBOARD ─────────────────────────────────────────────────
 const Sidebar = ({ page, setPage, onLogout }) => (
-  <aside className="sovereign-nav" style={{ width: '260px', height: '100vh', position: 'fixed', left: 0, top: 0, display: 'flex', flexDirection: 'column' }}>
+  <aside className="sovereign-nav" style={{ width: '300px', height: '100vh', position: 'fixed', left: 0, top: 0, display: 'flex', flexDirection: 'column', zIndex: 10 }}>
     <Logo />
-    <div style={{ flex: 1, paddingTop: '20px' }}>
+    <div style={{ flex: 1, paddingTop: '32px' }}>
       {[
-        { id: 'overview', icon: '💎', label: 'Overview' },
-        { id: 'services', icon: '⚡', label: 'Services' },
-        { id: 'orders', icon: '📦', label: 'My Orders' },
-        { id: 'wallet', icon: '💰', label: 'Wallet' },
-        { id: 'influencer', icon: '🌟', label: 'Influencer' },
-        { id: 'support', icon: '💬', label: 'Support' }
+        { id: 'overview', icon: '✦', label: 'OVERVIEW' },
+        { id: 'services', icon: '⚡', label: 'SERVICES' },
+        { id: 'orders', icon: '📦', label: 'MY ORDERS' },
+        { id: 'wallet', icon: '💰', label: 'WALLET' },
+        { id: 'influencer', icon: '🌟', label: 'INFLUENCER' },
+        { id: 'support', icon: '💬', label: 'SUPPORT' }
       ].map(item => (
-        <a key={item.id} className={`nav-item ${page === item.id ? 'active' : ''}`} onClick={() => setPage(item.id)} href="#">
-          <span style={{ fontSize: '18px', marginRight: '16px' }}>{item.icon}</span>
+        <a key={item.id} className={`nav-item ${page === item.id ? 'active' : ''}`} onClick={(e) => {e.preventDefault(); setPage(item.id)}} href="#">
+          <span style={{ fontSize: '18px', marginRight: '20px', color: page === item.id ? C.gold : C.muted }}>{item.icon}</span>
           {item.label}
         </a>
       ))}
     </div>
-    <div style={{ padding: '20px' }}>
-      <button className="btn-obsidian" style={{ width: '100%' }} onClick={onLogout}>🚪 Sign Out</button>
+    <div style={{ padding: '32px' }}>
+      <button className="btn-obsidian" style={{ width: '100%', fontSize: '11px' }} onClick={onLogout}>DISCONNECT</button>
     </div>
   </aside>
 );
@@ -354,83 +405,99 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
   const renderPage = () => {
     switch(page) {
       case "overview": return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-          <Card>
-            <div style={{ fontSize: '12px', color: C.muted, fontWeight: 700 }}>WALLET BALANCE</div>
-            <div style={{ fontSize: '32px', fontWeight: 800, marginTop: '8px' }}>{fmt(balance)}</div>
-          </Card>
-          <Card>
-            <div style={{ fontSize: '12px', color: C.muted, fontWeight: 700 }}>TOTAL ORDERS</div>
-            <div style={{ fontSize: '32px', fontWeight: 800, marginTop: '8px' }}>{orders.length}</div>
-          </Card>
-          <Card>
-            <div style={{ fontSize: '12px', color: C.muted, fontWeight: 700 }}>ACTIVE ORDERS</div>
-            <div style={{ fontSize: '32px', fontWeight: 800, marginTop: '8px' }}>{orders.filter(o=>o.status==="Processing").length}</div>
-          </Card>
-          <Card>
-            <div style={{ fontSize: '12px', color: C.muted, fontWeight: 700 }}>REWARDS EARNED</div>
-            <div style={{ fontSize: '32px', fontWeight: 800, marginTop: '8px', color: C.success }}>₹0.00</div>
-          </Card>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px' }}>
+          {[
+            { label: 'WALLET BALANCE', value: fmt(balance), color: C.goldL },
+            { label: 'TOTAL ORDERS', value: orders.length, color: '#fff' },
+            { label: 'ACTIVE ORDERS', value: orders.filter(o=>o.status==="Processing").length, color: '#fff' },
+            { label: 'REWARDS EARNED', value: '₹0.00', color: C.success }
+          ].map((stat, i) => (
+            <Card key={i} style={{ padding: '32px' }}>
+              <div className="data-label">{stat.label}</div>
+              <div className="data-value" style={{ fontSize: '38px', marginTop: '16px', color: stat.color }}>{stat.value}</div>
+            </Card>
+          ))}
 
-          <div style={{ gridColumn: 'span 4' }}>
+          <div style={{ gridColumn: 'span 4', marginTop: '16px' }}>
             <Card>
-              <h3>Recent Activity</h3>
-              <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr style={{ textAlign: 'left', color: C.muted, fontSize: '12px' }}>
-                    <th style={{ padding: '12px' }}>SERVICE</th>
-                    <th style={{ padding: '12px' }}>QUANTITY</th>
-                    <th style={{ padding: '12px' }}>PRICE</th>
-                    <th style={{ padding: '12px' }}>STATUS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.slice(0, 5).map(o => (
-                    <tr key={o.id} style={{ borderTop: `1px solid ${C.border}`, fontSize: '14px' }}>
-                      <td style={{ padding: '12px' }}>{o.service}</td>
-                      <td style={{ padding: '12px' }}>{o.qty}</td>
-                      <td style={{ padding: '12px' }}>{fmt(o.price)}</td>
-                      <td style={{ padding: '12px' }}><span className="badge">{o.status}</span></td>
+              <h3 style={{ fontSize: '26px', marginBottom: '36px' }}>Activity Ledger</h3>
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ textAlign: 'left', borderBottom: `1px solid ${C.border}` }}>
+                      <th className="data-label" style={{ padding: '24px' }}>MANIFEST SERVICE</th>
+                      <th className="data-label" style={{ padding: '24px' }}>VOLUME</th>
+                      <th className="data-label" style={{ padding: '24px' }}>OFFERING</th>
+                      <th className="data-label" style={{ padding: '24px' }}>STATUS</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {orders.slice(0, 8).map(o => (
+                      <tr key={o.id} style={{ borderBottom: `1px solid rgba(255,255,255,0.02)`, background: 'rgba(255,255,255,0.01)' }}>
+                        <td style={{ padding: '24px', fontWeight: 600, fontFamily: 'Space Grotesk' }}>{o.service}</td>
+                        <td style={{ padding: '24px', color: C.muted, fontFamily: 'Space Grotesk' }}>{o.qty}</td>
+                        <td style={{ padding: '24px', fontWeight: 700, color: C.goldL, fontFamily: 'Space Grotesk' }}>{fmt(o.price)}</td>
+                        <td style={{ padding: '24px' }}><span className="badge">{o.status}</span></td>
+                      </tr>
+                    ))}
+                    {orders.length === 0 && (
+                      <tr>
+                        <td colSpan="4" style={{ padding: '60px', textAlign: 'center', color: C.muted, fontFamily: 'Space Grotesk' }}>The obsidian ledger remains unwritten.</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </Card>
           </div>
         </div>
       );
       case "services": return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '32px' }}>
           {SERVICES.map(s => (
             <Card key={s.id}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <span style={{ fontSize: '24px' }}>{s.icon}</span>
+                <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  {s.icon}
+                </div>
                 {s.badge && <span className="badge">{s.badge}</span>}
               </div>
-              <h4 style={{ margin: '16px 0 8px' }}>{s.name}</h4>
-              <p style={{ fontSize: '12px', color: C.muted, lineHeight: '1.6' }}>{s.desc}</p>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
-                <div style={{ fontSize: '18px', fontWeight: 800 }}>{fmt(s.tiers[0].price)}</div>
-                <button className="btn-gold" style={{ padding: '8px 16px', fontSize: '11px' }}>Order Now</button>
+              <h4 style={{ margin: '28px 0 14px', fontSize: '22px' }}>{s.name}</h4>
+              <p style={{ fontSize: '14px', color: C.muted, lineHeight: '1.8', height: '75px', overflow: 'hidden' }}>{s.desc}</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '36px', borderTop: `1px solid ${C.border}`, paddingTop: '28px' }}>
+                <div>
+                  <div className="data-label" style={{ fontSize: '10px' }}>STARTING AT</div>
+                  <div className="data-value" style={{ fontSize: '28px', color: C.goldL }}>{fmt(s.tiers[0].price)}</div>
+                </div>
+                <button className="btn-gold" style={{ padding: '12px 24px' }}>INITIALIZE</button>
               </div>
             </Card>
           ))}
         </div>
       );
-      default: return <div>Under construction</div>;
+      default: return (
+        <Card style={{ textAlign: 'center', padding: '120px 40px' }}>
+          <div style={{ fontSize: '72px', marginBottom: '32px' }}>🏛️</div>
+          <h2 style={{ fontSize: '38px', fontStyle: 'italic' }}>Architecting the Void</h2>
+          <p style={{ color: C.muted, maxWidth: '540px', margin: '20px auto 40px', fontSize: '16px', lineHeight: 1.8 }}>This sector of the digital reliquary is currently undergoing metaphysical restructuring. Return shortly.</p>
+          <button className="btn-obsidian" onClick={() => setPage('overview')}>Return to Overview</button>
+        </Card>
+      );
     }
   };
 
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar page={page} setPage={setPage} onLogout={onLogout} />
-      <main style={{ marginLeft: '260px', width: 'calc(100% - 260px)', padding: '40px' }}>
-        <header style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <main style={{ marginLeft: '300px', width: 'calc(100% - 300px)', padding: '64px', position: 'relative' }}>
+        <header style={{ marginBottom: '64px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           <div>
-            <h1 style={{ fontSize: '28px', margin: 0 }}>Salutations, {userName}</h1>
-            <p style={{ color: C.muted, margin: '4px 0 0' }}>Manage your social domain from the reliquary.</p>
+            <h1 style={{ fontSize: '48px', margin: 0, fontStyle: 'italic' }}>Salutations, {userName}</h1>
+            <p style={{ color: C.muted, margin: '12px 0 0', fontSize: '20px', fontWeight: 300, fontFamily: 'Space Grotesk' }}>The obsidian reliquary awaits your next maneuver.</p>
           </div>
-          <button className="btn-gold" onClick={()=>setPage('services')}>✦ Create New Order</button>
+          <button className="btn-gold" onClick={()=>setPage('services')}>
+            <span style={{ fontSize: '20px', marginRight: '12px' }}>✦</span> CREATE MANIFEST
+          </button>
         </header>
         {renderPage()}
       </main>
@@ -441,51 +508,155 @@ const UserDash = ({ userName, userEmail, onLogout }) => {
 // ─── LANDING PAGE ──────────────────────────────────────────────
 const Landing = ({ goLogin, goSignup }) => {
   return (
-    <div style={{ background: C.bg }}>
-      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 100, background: 'rgba(14, 14, 14, 0.8)', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.border}` }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 20px' }}>
+    <div style={{ background: C.bg, minHeight: '100vh' }}>
+      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 100, background: 'rgba(14, 14, 15, 0.7)', backdropFilter: 'blur(40px)', borderBottom: `1px solid ${C.border}` }}>
+        <div style={{ maxWidth: '1440px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 64px' }}>
           <Logo />
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <button className="btn-obsidian" onClick={goLogin}>Sign In</button>
-            <button className="btn-gold" onClick={goSignup}>Join Now</button>
+          <div style={{ display: 'flex', gap: '24px' }}>
+            <button className="btn-obsidian" onClick={goLogin}>SIGN IN</button>
+            <button className="btn-gold" onClick={goSignup}>JOIN ELITE</button>
           </div>
         </div>
       </nav>
 
-      <section style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '20px' }}>
-        <div style={{ position: 'absolute', top: '20%', filter: 'blur(100px)', opacity: 0.1, background: C.gold, width: '300px', height: '300px', borderRadius: '50%' }} />
-        <h1 style={{ fontSize: 'clamp(40px, 8vw, 80px)', maxWidth: '900px', lineHeight: 1.1, marginBottom: '24px' }}>
-          Master the <span style={{ background: C.gGold, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Social Domain</span> with Opulence
-        </h1>
-        <p style={{ maxWidth: '600px', color: C.muted, fontSize: '18px', lineHeight: 1.6, marginBottom: '40px' }}>
-          Premium social growth services for creators, brands, and agencies. Instant delivery, real engagement, and obsidian-grade security.
-        </p>
-        <div style={{ display: 'flex', gap: '20px' }}>
-          <button className="btn-gold" style={{ padding: '18px 40px', fontSize: '16px' }} onClick={goSignup}>Begin Your Ascent →</button>
-          <button className="btn-obsidian" style={{ padding: '18px 40px', fontSize: '16px' }} onClick={() => document.getElementById('features').scrollIntoView()}>View Services</button>
+      <section style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '140px 24px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', width: '1000px', height: '1000px', background: C.gold, top: '10%', filter: 'blur(200px)', opacity: 0.05, borderRadius: '50%' }} />
+        
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div className="badge" style={{ marginBottom: '40px', padding: '10px 24px' }}>Aetheris Obsidian Release 2.0</div>
+          <h1 style={{ fontSize: 'clamp(56px, 9vw, 110px)', maxWidth: '1200px', lineHeight: 1, marginBottom: '40px', fontStyle: 'italic' }}>
+            Master the <span style={{ background: C.gGold, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', position: 'relative' }}>Social Domain</span> with Opulence
+          </h1>
+          <p style={{ maxWidth: '750px', color: C.muted, fontSize: '22px', lineHeight: 1.7, marginBottom: '64px', fontWeight: 400, margin: '0 auto 64px', fontFamily: 'Space Grotesk' }}>
+            The premier architect of social expansion. Premium services for high-sovereign creators and global brands. Engineered for stability and absolute security.
+          </p>
+          <div style={{ display: 'flex', gap: '32px', justifyContent: 'center' }}>
+            <button className="btn-gold" style={{ padding: '22px 56px', fontSize: '16px' }} onClick={goSignup}>BEGIN YOUR ASCENT →</button>
+            <button className="btn-obsidian" style={{ padding: '22px 56px', fontSize: '16px' }} onClick={() => document.getElementById('features').scrollIntoView({behavior: 'smooth'})}>THE SERVICES</button>
+          </div>
         </div>
       </section>
 
-      <section id="features" style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 20px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
+      <section id="features" style={{ maxWidth: '1400px', margin: '0 auto', padding: '140px 64px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '96px' }}>
+          <h2 style={{ fontSize: '56px', marginBottom: '20px', fontStyle: 'italic' }}>Architectural Excellence</h2>
+          <p style={{ color: C.muted, fontSize: '20px', fontFamily: 'Space Grotesk' }}>Pillars of the Opulent ecosystem.</p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '48px' }}>
           {[
-            { t: "Instant Delivery", d: "Experience the speed of gold. Orders begin processing within milliseconds of confirmation.", i: "⚡" },
-            { t: "Reliquary Security", d: "Your account is your sanctuary. We never ask for passwords and use 256-bit encryption.", i: "🔒" },
-            { t: "Elite Quality", d: "Real engagement from high-tier accounts. No drops, just pure growth for your brand.", i: "💎" }
-          ].map(f => (
-            <Card key={f.t}>
-              <div style={{ fontSize: '40px', marginBottom: '20px' }}>{f.i}</div>
-              <h3>{f.t}</h3>
-              <p style={{ color: C.muted, lineHeight: 1.6 }}>{f.d}</p>
+            { t: "Instant Manifest", d: "Experience the velocity of gold. Your expansion protocols begin within milliseconds of confirmation.", i: "⚡" },
+            { t: "Reliquary Shield", d: "Your sanctuary is protected by 256-bit encryption. We never require your credentials for expansion.", i: "🔒" },
+            { t: "Elite Retention", d: "High-sovereign engagement from authentic clusters. Pure sustainable growth for your legacy.", i: "💎" }
+          ].map((f, i) => (
+            <Card key={i} style={{ padding: '48px' }}>
+              <div style={{ width: '72px', height: '72px', borderRadius: '20px', background: 'rgba(212, 175, 55, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '36px', marginBottom: '40px', border: '1px solid rgba(212, 175, 55, 0.1)' }}>{f.i}</div>
+              <h3 style={{ fontSize: '28px', marginBottom: '20px', fontStyle: 'italic' }}>{f.t}</h3>
+              <p style={{ color: C.muted, lineHeight: 1.9, fontSize: '16px', fontFamily: 'Manrope' }}>{f.d}</p>
             </Card>
           ))}
         </div>
       </section>
       
-      <footer style={{ borderTop: `1px solid ${C.border}`, padding: '60px 20px', textAlign: 'center' }}>
+      <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '140px 24px' }}>
+        <Card style={{ textAlign: 'center', padding: '100px 40px', background: 'linear-gradient(145deg, rgba(212, 175, 55, 0.08), transparent)' }}>
+          <h2 style={{ fontSize: '52px', marginBottom: '28px', fontStyle: 'italic' }}>Ready for Sovereignty?</h2>
+          <p style={{ color: C.muted, fontSize: '20px', marginBottom: '48px', maxWidth: '650px', margin: '0 auto 48px', fontFamily: 'Space Grotesk' }}>Join over 50,000+ elite creators and agencies who have mastered their digital domains through our reliquary.</p>
+          <button className="btn-gold" onClick={goSignup} style={{ padding: '20px 48px' }}>INITIATE ACCESS NOW</button>
+        </Card>
+      </section>
+
+      <footer style={{ borderTop: `1px solid ${C.border}`, padding: '100px 64px', textAlign: 'center', background: 'rgba(0,0,0,0.4)' }}>
         <Logo />
-        <p style={{ color: C.muted, marginTop: '20px' }}>© 2026 OpulentSMM. Aetheris Obsidian Design System.</p>
+        <div style={{ margin: '48px 0', display: 'flex', justifyContent: 'center', gap: '48px', fontFamily: 'Space Grotesk', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px' }}>
+          <a href="#" style={{ color: C.muted, textDecoration: 'none', fontWeight: 600 }}>Terms of Service</a>
+          <a href="#" style={{ color: C.muted, textDecoration: 'none', fontWeight: 600 }}>Privacy Policy</a>
+          <a href="#" style={{ color: C.muted, textDecoration: 'none', fontWeight: 600 }}>API Docs</a>
+        </div>
+        <p style={{ color: C.muted, fontSize: '13px', letterSpacing: '2px', fontFamily: 'Space Grotesk' }}>© 2026 OPULENTSMM. DESIGNED WITHIN THE AETHERIS OBSIDIAN VOID.</p>
       </footer>
+    </div>
+  );
+};
+
+// ─── ADMIN DASHBOARD ──────────────────────────────────────────
+const AdminDash = ({ onLogout }) => {
+  const [orders, setOrders] = useState([]);
+  const [stats, setStats] = useState({ revenue: 0, users: 0, pending: 0 });
+
+  useEffect(() => {
+    DB.getOrdersFromFirebase().then(all => {
+      setOrders(all);
+      const rev = all.reduce((sum, o) => sum + (o.price || 0), 0);
+      const pend = all.filter(o => o.status === "Pending").length;
+      setStats({ revenue: rev, users: 1240, pending: pend });
+    });
+  }, []);
+
+  return (
+    <div style={{ background: C.bg, minHeight: '100vh' }}>
+      <header className="control-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Logo />
+        <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+          <div className="badge" style={{ background: 'rgba(16, 185, 129, 0.1)', color: C.success, borderColor: 'rgba(16, 185, 129, 0.2)' }}>● SYSTEM SECURE</div>
+          <button className="btn-obsidian" onClick={onLogout} style={{ fontSize: '10px' }}>TERMINATE SESSION</button>
+        </div>
+      </header>
+
+      <main style={{ padding: '64px 80px' }}>
+        <div style={{ marginBottom: '64px' }}>
+          <h1 style={{ fontSize: '48px', fontStyle: 'italic', margin: 0 }}>Command Center</h1>
+          <p style={{ color: C.muted, fontSize: '20px', marginTop: '12px', fontFamily: 'Space Grotesk' }}>Observing all metaphysical transactions across the platform.</p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px', marginBottom: '48px' }}>
+          {[
+            { label: 'TOTAL REVENUE', value: fmt(stats.revenue), color: C.goldL },
+            { label: 'ACTIVE USERS', value: stats.users, color: '#fff' },
+            { label: 'PENDING MANIFESTS', value: stats.pending, color: C.gold },
+            { label: 'SYSTEM LATENCY', value: '14ms', color: C.success }
+          ].map((stat, i) => (
+            <Card key={i} style={{ borderLeft: `4px solid ${stat.color}` }}>
+              <div className="data-label">{stat.label}</div>
+              <div className="data-value" style={{ fontSize: '42px', marginTop: '16px', color: stat.color }}>{stat.value}</div>
+            </Card>
+          ))}
+        </div>
+
+        <Card>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
+            <h3 style={{ fontSize: '28px', margin: 0 }}>Universal Order Stream</h3>
+            <button className="btn-obsidian" style={{ fontSize: '11px' }}>DOWNLOAD LOGS</button>
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ textAlign: 'left', borderBottom: `1px solid ${C.border}` }}>
+                  <th className="data-label" style={{ padding: '24px' }}>ID</th>
+                  <th className="data-label" style={{ padding: '24px' }}>SEEKER EMAIL</th>
+                  <th className="data-label" style={{ padding: '24px' }}>SERVICE</th>
+                  <th className="data-label" style={{ padding: '24px' }}>AMOUNT</th>
+                  <th className="data-label" style={{ padding: '24px' }}>STATUS</th>
+                  <th className="data-label" style={{ padding: '24px' }}>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((o, idx) => (
+                  <tr key={idx} style={{ borderBottom: `1px solid rgba(255,255,255,0.02)`, background: 'rgba(255,255,255,0.01)' }}>
+                    <td style={{ padding: '24px', fontFamily: 'Space Grotesk', fontSize: '13px', color: C.muted }}>#ORD-{idx+1000}</td>
+                    <td style={{ padding: '24px', fontFamily: 'Space Grotesk' }}>{o.userEmail}</td>
+                    <td style={{ padding: '24px', fontWeight: 600 }}>{o.service}</td>
+                    <td style={{ padding: '24px', fontWeight: 700, color: C.goldL }}>{fmt(o.price)}</td>
+                    <td style={{ padding: '24px' }}><span className="badge">{o.status}</span></td>
+                    <td style={{ padding: '24px' }}>
+                      <button style={{ background: 'none', border: 'none', color: C.gold, fontWeight: 800, cursor: 'pointer', fontSize: '11px', letterSpacing: '1px', fontFamily: 'Space Grotesk' }}>MODIFY</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      </main>
     </div>
   );
 };
@@ -495,9 +666,8 @@ function App() {
   const [screen, setScreen] = useState("landing");
   const [user, setUser] = useState({ name: "", email: "" });
 
-  // Handle SPA transitions
   const navigate = (s) => {
-    window.scrollTo(0,0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setScreen(s);
   };
 
@@ -512,12 +682,12 @@ function App() {
       {screen === "landing" && <Landing goLogin={() => navigate("login")} goSignup={() => navigate("login")} />}
       {screen === "login" && <Login goSignup={() => navigate("landing")} onUserLogin={loginUser} onAdminLogin={() => navigate("admin")} />}
       {screen === "user" && <UserDash userName={user.name} userEmail={user.email} onLogout={() => navigate("landing")} />}
-      {screen === "admin" && <div style={{ padding: '40px' }}>Admin Panel - Under Construction</div>}
+      {screen === "admin" && <AdminDash onLogout={() => navigate("landing")} />}
     </>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-  </script>
+</script>
 </body></html>
